@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+body {
+	 line-height:1;
+	
+}
+
+
+.pagination {
+	
+	margin-top:0px;
+}
+
+.row {
+	margin-right:0px;
+	margin-left:0px;
+}

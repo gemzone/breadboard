@@ -5,6 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 	
+		<!-- hibernate generalCP -->
 		<!-- 
 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
 		<property name="hibernate.connection.url">jdbc:sqlserver://192.168.0.19:21433;database=bbs;</property>
@@ -17,19 +18,9 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.default_schema">dbo</property>
 		
-		<!--  property name="hibernate.hikari.dataSourceClassName">com.mysql.jdbc.jdbc2.optional.MysqlDataSource</property
-		
-		
-		hikari.driverclassname=com.microsoft.sqlserver.jdbc.SQLServerDriver
-		hikari.jdbc.url=jdbc:sqlserver://192.168.0.19:1433;database=Jbbs;
-		hikari.username=jnk
-		hikari.password=poiu0987
-		hikari.pool.size=5
-		 -->
-		 
+		<!-- hikariCP -->
 		<property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
-		
-		<property name="hibernate.hikari.minimumIdle">5</property>
+		<property name="hibernate.hikari.minimumIdle">10</property>
 		<property name="hibernate.hikari.maximumPoolSize">10</property>
 		<property name="hibernate.hikari.idleTimeout">30000</property>
 		<property name="hibernate.hikari.dataSourceClassName">com.microsoft.sqlserver.jdbc.SQLServerDataSource</property>

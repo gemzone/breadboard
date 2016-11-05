@@ -28,14 +28,14 @@ import io.nzo.orm.HibernateUtil;
 /**
  * Servlet implementation class Test
  */
-@WebServlet("/Test")
-public class Test extends HttpServlet {
+@WebServlet("/admin")
+public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Test() {
+    public Admin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -85,7 +85,7 @@ public class Test extends HttpServlet {
         	tx.rollback();
         }
 
-        JadeTemplate template = JadeConfig.getTemplate("index");
+        JadeTemplate template = JadeConfig.getTemplate("admin/index");
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("company", "neuland");
@@ -93,7 +93,6 @@ public class Test extends HttpServlet {
         String html = JadeConfig.renderTemplate(template, model);
 		
 		out.print(html);
-		
 	}
 
 }

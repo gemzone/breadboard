@@ -1,0 +1,23 @@
+#loginModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='loginModalLabel', aria-hidden='true')
+    .modal-dialog(style="width:360px;")
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                | &#x9;&#x9;&#x9;&#x9;
+                h4#loginModalLabel.modal-title Log in
+            .modal-body
+                form(role='form')
+                    .form-group
+                        .input-group
+                            input#uLogin.form-control(type='text', placeholder='Login')
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='uLogin')
+                                i.fa.fa-user
+                    .form-group
+                        .input-group
+                            input#uPassword.form-control(type='password', placeholder='Password')
+                            | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='uPassword')
+                                i.fa.fa-lock
+                .modal-footer
+                    button.form-control.btn.btn-primary Ok
+                    | &#x9;&#x9;&#x9;&#x9;
