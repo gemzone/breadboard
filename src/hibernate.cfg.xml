@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	
+		<!-- 
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="hibernate.connection.url">jdbc:sqlserver://192.168.0.19:21433;database=bbs;</property>
+		<property name="hibernate.connection.username">test</property>
+		<property name="hibernate.connection.password">poiu0987</property>
+		<property name="hibernate.connection.pool_size">3</property>
+		 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.default_schema">dbo</property>
+		
+		<!--  property name="hibernate.hikari.dataSourceClassName">com.mysql.jdbc.jdbc2.optional.MysqlDataSource</property
+		
+		
+		hikari.driverclassname=com.microsoft.sqlserver.jdbc.SQLServerDriver
+		hikari.jdbc.url=jdbc:sqlserver://192.168.0.19:1433;database=Jbbs;
+		hikari.username=jnk
+		hikari.password=poiu0987
+		hikari.pool.size=5
+		 -->
+		 
+		<property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
+		
+		<property name="hibernate.hikari.minimumIdle">5</property>
+		<property name="hibernate.hikari.maximumPoolSize">10</property>
+		<property name="hibernate.hikari.idleTimeout">30000</property>
+		<property name="hibernate.hikari.dataSourceClassName">com.microsoft.sqlserver.jdbc.SQLServerDataSource</property>
+		<property name="hibernate.hikari.dataSource.url">jdbc:sqlserver://192.168.0.19:21433;database=bbs;</property>
+		<property name="hibernate.hikari.dataSource.user">test</property>
+		<property name="hibernate.hikari.dataSource.password">poiu0987</property>
+		 
+		 
+		<mapping class="io.nzo.booth.entity.model.User"></mapping>
+	</session-factory>
+</hibernate-configuration>
