@@ -58,6 +58,9 @@ public class Test extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
+		
+		request.getSession().setAttribute("asdfasdf", "asdfasdf");
+		
 		// System.getProperty
 		
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -81,25 +84,6 @@ public class Test extends HttpServlet {
         {
         	tx.rollback();
         }
-		
-//        JadeOptions options = new JadeOptions();
-//        options.setBaseDir("views");
-//        
-//        JadeConfiguration config = new JadeConfiguration();
-//        
-//        TemplateLoader loader = new FileTemplateLoader("/views/", "UTF-8");
-//        config.setTemplateLoader(loader);
-        
-        
-      //  JadeConfiguration config = new JadeConfiguration();
-
-       // TemplateLoader loader = new FileTemplateLoader(getServletContext().getRealPath("WEB-INF/views/"), "UTF-8");
-       // config.setTemplateLoader(loader);
-       // config.setMode(Jade4J.Mode.XHTML);  // <input checked="true" />
-        
-        // config.setMode(Jade4J.Mode.HTML);   // <input checked>
-        // config.setMode(Jade4J.Mode.XML);    // <input checked="true"></input>
-
 
         JadeTemplate template = JadeConfig.getTemplate("index");
 

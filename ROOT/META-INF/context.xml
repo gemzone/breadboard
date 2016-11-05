@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<!-- session presistent config -->
+	<!-- gz_user_connection -->
+    <Resource auth="Container"
+	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	    type="javax.sql.DataSource"
+	    factory="com.zaxxer.hikari.HikariJNDIFactory"
+	    jdbcUrl="jdbc:sqlserver://192.168.0.19:21433;database=bbs;"
+	    maximumPoolSize="10"
+	    connectionTestQuery="SELECT 1"
+	    name="bbs" 
+	    username="test"
+	    password="poiu0987" 
+	    whenExhaustedAction="0" />
+
+	<Manager className="org.apache.catalina.session.PersistentManager"
+            saveOnRestart="true"
+            maxIdleSwap="0"
+            maxIdleBackup="1"
+            maxActiveSessions="100000">
+        <Store className="org.apache.catalina.session.JDBCStore"
+                dataSourceName="bbs"
+                sessionTable="gz_user_connection"
+                sessionIdCol="session_id"
+                sessionDataCol="session_data"
+                sessionValidCol="valid_session"
+                sessionMaxInactiveCol="max_inactive"
+                sessionLastAccessedCol="last_access"
+                sessionAppCol="app_name" />
+    </Manager>
+</Context>

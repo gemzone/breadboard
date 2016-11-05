@@ -67,75 +67,11 @@
 		    <artifactId>slf4j-jdk14</artifactId>
 		    <version>1.7.21</version>
 		</dependency>
-		<!-- 
 		<dependency>
 		  <groupId>de.neuland-bfi</groupId>
 		  <artifactId>jade4j</artifactId>
 		  <version>1.2.5</version>
 		</dependency>
-		 -->
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 <!-- jade -->
-		<dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-jexl</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
-            <artifactId>concurrentlinkedhashmap-lru</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-		 <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm -->
-<dependency>
-    <groupId>org.ow2.asm</groupId>
-    <artifactId>asm</artifactId>
-    <version>5.0.3</version>
-</dependency>
-		 <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-analysis -->
-<dependency>
-    <groupId>org.ow2.asm</groupId>
-    <artifactId>asm-analysis</artifactId>
-    <version>5.0.3</version>
-</dependency>
-		 <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-util -->
-<dependency>
-    <groupId>org.ow2.asm</groupId>
-    <artifactId>asm-util</artifactId>
-    <version>5.0.3</version>
-</dependency>
-		 <!-- https://mvnrepository.com/artifact/de.neuland-bfi/jade4j -->
-<dependency>
-    <groupId>de.neuland-bfi</groupId>
-    <artifactId>jade4j</artifactId>
-    <version>1.2.5</version>
-</dependency>
-		 
-		 
-		 
-		 
-		 
 		
 	</dependencies>
 </project>

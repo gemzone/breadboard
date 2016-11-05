@@ -18,6 +18,6 @@
 	<servlet>
 		<servlet-name>JadeConfig</servlet-name>
 		<servlet-class>io.nzo.booth.JadeConfig</servlet-class>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 </web-app>

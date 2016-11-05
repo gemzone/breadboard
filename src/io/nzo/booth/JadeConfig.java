@@ -1,10 +1,3 @@
-/**
- * 
- */
-/**
- * @author Administrator
- *
- */
 package io.nzo.booth;
 
 import java.io.IOException;
@@ -42,5 +35,4 @@ public class JadeConfig extends DefaultServlet
     {
     	return config.renderTemplate(template, model);
     }
-    
 }
