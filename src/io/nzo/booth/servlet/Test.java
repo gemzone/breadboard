@@ -3,6 +3,8 @@ package io.nzo.booth.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import de.neuland.jade4j.Jade4J;
+import de.neuland.jade4j.JadeConfiguration;
+import de.neuland.jade4j.template.FileTemplateLoader;
+import de.neuland.jade4j.template.JadeTemplate;
+import de.neuland.jade4j.template.TemplateLoader;
+import io.nzo.booth.JadeConfig;
 import io.nzo.booth.entity.model.User;
 import io.nzo.orm.HibernateUtil;
 
@@ -45,11 +53,12 @@ public class Test extends HttpServlet {
 		response.setHeader("Last-Modified", new Date().toString());
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0");	// HTTP 1.1
 		response.setHeader("Pragma", "no-cache");	// HTTP 1.0
-		response.setContentType("application/json");
+		// response.setContentType("application/json");
+		response.setContentType("text/html");
 		
 		PrintWriter out = response.getWriter();
 		
-		
+		// System.getProperty
 		
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -72,8 +81,34 @@ public class Test extends HttpServlet {
         {
         	tx.rollback();
         }
-		out.print("{  \"test\" : true }");
 		
+//        JadeOptions options = new JadeOptions();
+//        options.setBaseDir("views");
+//        
+//        JadeConfiguration config = new JadeConfiguration();
+//        
+//        TemplateLoader loader = new FileTemplateLoader("/views/", "UTF-8");
+//        config.setTemplateLoader(loader);
+        
+        
+      //  JadeConfiguration config = new JadeConfiguration();
+
+       // TemplateLoader loader = new FileTemplateLoader(getServletContext().getRealPath("WEB-INF/views/"), "UTF-8");
+       // config.setTemplateLoader(loader);
+       // config.setMode(Jade4J.Mode.XHTML);  // <input checked="true" />
+        
+        // config.setMode(Jade4J.Mode.HTML);   // <input checked>
+        // config.setMode(Jade4J.Mode.XML);    // <input checked="true"></input>
+
+
+        JadeTemplate template = JadeConfig.getTemplate("index");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("company", "neuland");
+
+        String html = JadeConfig.renderTemplate(template, model);
+		
+		out.print(html);
 		
 	}
 
