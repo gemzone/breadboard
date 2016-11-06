@@ -4,13 +4,13 @@
             .modal-header
                 button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
                 | &#x9;&#x9;&#x9;&#x9;
-                h4#loginModalLabel.modal-title Log in
+                h4#loginModalLabel.modal-title Sign in
             .modal-body
                 form(role='form')
                     .form-group
                         .input-group
-                            input#uLogin.form-control(type='text', placeholder='Login')
-                            label.input-group-addon.glyphicon.glyphicon-lock(for='uLogin')
+                            input#uUsername.form-control(type='text', placeholder='Username')
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='uUsername')
                                 i.fa.fa-user
                     .form-group
                         .input-group
@@ -19,5 +19,5 @@
                             label.input-group-addon.glyphicon.glyphicon-lock(for='uPassword')
                                 i.fa.fa-lock
                 .modal-footer
-                    button.form-control.btn.btn-primary Ok
+                    button.form-control.btn.btn-primary sign_in
                     | &#x9;&#x9;&#x9;&#x9;

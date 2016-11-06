@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
 
-@WebServlet("/list")
+@WebServlet("/list-temp")
 public class List extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;

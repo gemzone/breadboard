@@ -1,4 +1,4 @@
-package io.nzo.booth.entity.model;
+package io.nzo.booth.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,9 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // create sequence seq;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name="gz_user")
 public class User implements Serializable 

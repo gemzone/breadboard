@@ -13,37 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
 
-/**
- * Servlet implementation class Test
- */
-@WebServlet("/login-temp")
-public class Login extends HttpServlet
+@WebServlet("/view-temp")
+public class View extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public Login()
-	{
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
-		JadeTemplate template = JadeConfig.getTemplate("login");
+		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, new HashMap<String, Object>());
 		out.print(html);
 	}
-	
+
 }

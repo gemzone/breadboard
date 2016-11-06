@@ -4,7 +4,6 @@ html(lang='ko')
         include ./template/head
     body
         include ./template/login
-        
         .row
             .col-md-8
             .col-md-4(style="text-align:right;")
@@ -63,33 +62,6 @@ html(lang='ko')
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list
             .col-md-6(style="text-align:center;")
-                nav
-                    ul.pagination
-                        li.page-item
-                            a.page-link(href='#', aria-label='Previous')
-                                span(aria-hidden='true') «
-                        li.page-item
-                            a.page-link(href='#') 1
-                        li.page-item
-                            a.page-link(href='#') 2
-                        li.page-item
-                            a.page-link(href='#') 3
-                        li.page-item.active
-                            a.page-link(href='#') 4
-                        li.page-item
-                            a.page-link(href='#') 5
-                        li.page-item
-                            a.page-link(href='#') 6
-                        li.page-item
-                            a.page-link(href='#') 7
-                        li.page-item
-                            a.page-link(href='#') 8
-                        li.page-item
-                            a.page-link(href='#') 9
-                        li.page-item
-                            a.page-link(href='#') 10
-                        li.page-item
-                            a.page-link(href='#', aria-label='Next')
-                                span(aria-hidden='true') »
+                
             .col-md-3(style="text-align:right;")
                 button.btn.btn-secondary.fa.fa-pencil &#32;write

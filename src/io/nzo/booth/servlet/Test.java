@@ -16,19 +16,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import de.neuland.jade4j.Jade4J;
-import de.neuland.jade4j.JadeConfiguration;
-import de.neuland.jade4j.template.FileTemplateLoader;
 import de.neuland.jade4j.template.JadeTemplate;
-import de.neuland.jade4j.template.TemplateLoader;
 import io.nzo.booth.JadeConfig;
-import io.nzo.booth.entity.model.User;
+import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 
 /**
  * Servlet implementation class Test
  */
-@WebServlet("/Test")
+@WebServlet("/Test-temp")
 public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
