@@ -28,7 +28,6 @@
 		<property name="hibernate.hikari.dataSource.user">test</property>
 		<property name="hibernate.hikari.dataSource.password">poiu0987</property>
 		 
-		 
-		<mapping class="io.nzo.booth.entity.model.User"></mapping>
+		<mapping class="io.nzo.booth.model.User"></mapping>
 	</session-factory>
 </hibernate-configuration>

@@ -110,7 +110,7 @@
 		</dependency>
 
 
-		<!-- spring framework -->
+		<!-- spring framework RESTful web service -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -135,6 +135,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        
+        <!-- spring framework thymeleaf 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		-->
 	</dependencies>
 	
 	

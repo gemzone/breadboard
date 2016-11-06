@@ -11,7 +11,6 @@ import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
 
 @Controller
-@EnableAutoConfiguration
 public class BoardController
 {
 	@ResponseBody
