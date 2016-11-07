@@ -59,27 +59,26 @@ public class Test extends HttpServlet {
 		
 		// System.getProperty
 		
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try
-        {
-            User user = new User();
-            
-            user.setUsername("sdf");
-            user.setPasswordSha3("sdfsdf");
-            user.setName("sadfasdfasdfd");
-            user.setEmail("asdfasdv@sdvsdv");
-            user.setComment("코멘트 테스트");
-            user.setHomepage("homepage");
-            user.setCreationTime(new Date());
-            session.save(user);
-            tx.commit();
-        }
-        catch(Exception e)
-        {
-        	tx.rollback();
-        }
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        Transaction tx = session.beginTransaction();
+//        try
+//        {
+//            User user = new User();
+//            user.setUsername("sdf");
+//            user.setPasswordSha2("sdfsdf");
+//            user.setName("sadfasdfasdfd");
+//            user.setEmail("asdfasdv@sdvsdv");
+//            user.setComment("코멘트 테스트");
+//            user.setHomepage("homepage");
+//            user.setCreationTime(new Date());
+//            session.save(user);
+//            tx.commit();
+//        }
+//        catch(Exception e)
+//        {
+//        	tx.rollback();
+//        }
 
         JadeTemplate template = JadeConfig.getTemplate("index");
 

@@ -31,8 +31,8 @@ public class User implements Serializable
 	@Column(name="username")
 	String username;
 	
-	@Column(name="password_sha3")
-	String passwordSha3;
+	@Column(name="password_sha2")
+	String passwordSha2;
 	
 	@Column(name="name")
 	String name;
@@ -79,14 +79,14 @@ public class User implements Serializable
 		this.username = username;
 	}
 
-	public String getPasswordSha3()
+	public String getPasswordSha2()
 	{
-		return passwordSha3;
+		return passwordSha2;
 	}
 
-	public void setPasswordSha3(String passwordSha3)
+	public void setPasswordSha2(String passwordSha2)
 	{
-		this.passwordSha3 = passwordSha3;
+		this.passwordSha2 = passwordSha2;
 	}
 
 	public String getName()
