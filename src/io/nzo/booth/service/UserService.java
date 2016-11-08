@@ -1,6 +1,9 @@
 package io.nzo.booth.service;
 
 import java.math.BigInteger;
+
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,6 +11,7 @@ import org.hibernate.query.NativeQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.User;
@@ -18,11 +22,8 @@ public class UserService
 {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	
 //	Page<City> findCities(CitySearchCriteria criteria, Pageable pageable);
-//
 //	City getCity(String name, String country);
-//
 //	Page<HotelSummary> getHotels(City city, Pageable pageable);
 	
 	@SuppressWarnings({ "rawtypes" })
@@ -34,7 +35,6 @@ public class UserService
         Session session = sessionFactory.openSession();
 
 		Transaction tx = session.beginTransaction();
-       
 		try
 		{
 			Long newIdentity = 0L;
@@ -45,7 +45,7 @@ public class UserService
 	        
 	        {
 				String sql = "INSERT INTO gz_user (user_id, username, password_sha2, name, email ) " +
-							"VALUES (:user_id, :username, HASHBYTES('SHA2_512' , :password ), :name, :email) "; 
+							"VALUES (:user_id, :username, HASHBYTES('SHA2_512',:password ), :name, :email) "; 
 				NativeQuery query = session.createNativeQuery(sql);
 				query.setParameter("user_id", newIdentity);
 				query.setParameter("username", username);
@@ -66,11 +66,43 @@ public class UserService
 	}
 	
 	
-	
-	
-	
-	
-	
+	@SuppressWarnings({ "rawtypes", "deprecation" })
+	public ModelMap getUserWithLogin(String username, String password)
+	{
+		ModelMap map = new ModelMap();
+		
+		User user = null;
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+		try
+		{
+			String sql = "SELECT TOP 1 u.* FROM gz_user u WHERE u.username=:username AND u.password_sha2=HASHBYTES('SHA2_512',:password) "; 
+			NativeQuery query = session.createNativeQuery(sql).addEntity(User.class);
+			query.setParameter("username", username);
+			query.setParameter("password", password);
+			
+			user = (User)query.getSingleResult();
+		
+			user.setPasswordSha2("");
+			map.addAttribute("user", user);
+			map.addAttribute("success", true);
+		} 
+		catch (NoResultException e)
+		{
+			map.addAttribute("reason", e.getMessage());
+			map.addAttribute("error", 1);
+			map.addAttribute("success", false);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			map.addAttribute("error", 2);
+			map.addAttribute("success", false);
+		}
+		return map;
+	}
 	
 	
 	
