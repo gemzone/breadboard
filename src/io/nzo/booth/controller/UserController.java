@@ -1,7 +1,6 @@
 package io.nzo.booth.controller;
 
 import javax.servlet.http.HttpSession;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +23,24 @@ public class UserController
 	@Autowired
 	UserService userService;
 	
+	/**
+	 * 로그인
+	 * @param username
+	 * @param password
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(path="/login", produces="text/json")
 	public String login(@RequestParam(value="username", required=false) String username,
 			@RequestParam(value="password", required=false) String password,
 			Model model, HttpSession session)
 	{
-		if( session.getAttribute("user") != null )
+		if( session.getAttribute("_user") != null )		// 세션 확인
 		{
-			model.addAttribute(session.getAttribute("user"));
+			model.addAttribute(session.getAttribute("_user"));
+			session.setAttribute("user", session.getAttribute("_user"));	// JSON
 		}
 		else
 		{
@@ -40,16 +48,29 @@ public class UserController
 			if( ResultValidation.check(map) ) 
 			{
 				model.addAttribute(map.get("user"));
-				session.setAttribute("user", map.get("user"));		// 세션 등록
+				session.setAttribute("_user", map.get("user"));									// Object
+				// 주의 이거 3개 결과가 다름
+				// JSONObject.valueToString(map.get("user"))		
+				// new JSONObject(map.get("user")).toString()
+				// JSONObject.valueToString(model)
+				// map.get("user") // Jade연동하려면 map 형태로 
+				session.setAttribute("user", map.get("user") );		// JSON
 			}
 			else
 			{
+				session.invalidate();
 				logger.debug( map.get("reason").toString());
 			}
 		}
     	return JSONObject.valueToString(model);	
 	}
-
+	
+	/**
+	 * 로그아웃 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/logout")
 	public ModelAndView logout(Model model, HttpSession session)
 	{

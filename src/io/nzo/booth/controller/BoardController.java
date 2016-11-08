@@ -1,16 +1,17 @@
 package io.nzo.booth.controller;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
 
 @Controller
+@SessionAttributes("user")
 public class BoardController
 {
 	@ResponseBody
@@ -25,16 +26,12 @@ public class BoardController
 //		User user = session.getAttribute("user");
 //		model.addAttribute("user", id);
 		
-		try
-		{
-			JadeTemplate template = JadeConfig.getTemplate("list");
-			String html = JadeConfig.renderTemplate(template, model.asMap());
-			return html;
-		}
-		catch(Exception e)
-		{
-			return "";
-		}
+		// model.addAttribute("user", "sadfasdf" );
+		
+		JadeTemplate template = JadeConfig.getTemplate("list");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	
 	}
 
 }

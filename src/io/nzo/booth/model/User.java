@@ -12,11 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 // create sequence seq;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name="gz_user")
 public class User implements Serializable 

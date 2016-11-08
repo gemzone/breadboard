@@ -28,9 +28,21 @@ public class JadeConfig extends DefaultServlet
         
     }
     
-    public static JadeTemplate getTemplate(String name) throws JadeException, IOException
+    public static JadeTemplate getTemplate(String name)
     {
-    	return config.getTemplate(name);
+    	try
+    	{
+    		return config.getTemplate(name);
+    	}
+    	catch(JadeException e) 
+    	{
+    		e.printStackTrace();
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	return null;
     }
     
     public static String renderTemplate(JadeTemplate template, Map<String, Object> model)

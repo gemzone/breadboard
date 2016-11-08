@@ -1,8 +1,8 @@
 doctype html
-html(lang='ko')
+html(lang="ko")
     head
         include ./template/head
-    body
+    body(ng-app="booth", ng-controller="boothCtrl")
         include ./template/login
         
         .row
@@ -10,6 +10,11 @@ html(lang='ko')
             .col-md-4(style="text-align:right;")
                 button.btn.btn-link.fa.fa-user(onclick="$('#loginModal').modal();") &#32;sign_in
                 //button.btn.btn-link.fa.fa-cog
+        div
+            span content: {{content}}
+        span user: #{user.username}
+        br 
+        span user.name: #{user.creationTime}
         table.table
             thead
                 tr
