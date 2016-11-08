@@ -9,15 +9,15 @@
                 form(role='form')
                     .form-group
                         .input-group
-                            input#uUsername.form-control(type='text', placeholder='Username')
-                            label.input-group-addon.glyphicon.glyphicon-lock(for='uUsername')
+                            input#username.form-control(type='text', placeholder='Username', value="test123")
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='username')
                                 i.fa.fa-user
                     .form-group
                         .input-group
-                            input#uPassword.form-control(type='password', placeholder='Password')
+                            input#password.form-control(type='password', placeholder='Password', value="password123")
                             | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
-                            label.input-group-addon.glyphicon.glyphicon-lock(for='uPassword')
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='password')
                                 i.fa.fa-lock
                 .modal-footer
-                    button.form-control.btn.btn-primary sign_in
+                    button.form-control.btn.btn-primary(ng-click="signIn();") sign_in
                     | &#x9;&#x9;&#x9;&#x9;

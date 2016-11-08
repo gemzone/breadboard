@@ -45,6 +45,26 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     });
 */
 
+    $scope.signOut = function() {
+        location.href="./logout";
+    };
+
+    $scope.signInModal = function() {
+        $("#loginModal").modal();
+    };
+
+    $scope.signIn = function() {
+        $http({
+            method: 'post',
+            url: './login',
+            params: { 
+                username : $("#username").val(), 
+                password : $("#password").val()
+            }
+        }).then(function(response) {
+            location.reload();
+        });
+    };
 
     $scope.start = function() {
         cfpLoadingBar.start();
@@ -55,13 +75,12 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     }
 
     // fake the initial load so first time users can see it right away:
-    // $scope.start();
-    // $scope.complete();
+    $scope.start();
     //$scope.fakeIntro = false;
-    //$timeout(function() {
-     //   $scope.complete();
-      //  $scope.fakeIntro = false;
-    //}, 750);
+    $timeout(function() {
+        $scope.complete();
+        $scope.fakeIntro = false;
+    }, 50);
 });
 
 

@@ -37,10 +37,10 @@ public class UserController
 			@RequestParam(value="password", required=false) String password,
 			Model model, HttpSession session)
 	{
-		if( session.getAttribute("_user") != null )		// 세션 확인
+		if( session.getAttribute("user") != null )		// 세션 확인
 		{
-			model.addAttribute(session.getAttribute("_user"));
-			session.setAttribute("user", session.getAttribute("_user"));	// JSON
+			model.addAttribute(session.getAttribute("user"));
+			//session.setAttribute("user", session.getAttribute("user"));	// JSON
 		}
 		else
 		{
@@ -48,13 +48,13 @@ public class UserController
 			if( ResultValidation.check(map) ) 
 			{
 				model.addAttribute(map.get("user"));
-				session.setAttribute("_user", map.get("user"));									// Object
+				session.setAttribute("user", map.get("user"));									// Object
 				// 주의 이거 3개 결과가 다름
 				// JSONObject.valueToString(map.get("user"))		
 				// new JSONObject(map.get("user")).toString()
 				// JSONObject.valueToString(model)
-				// map.get("user") // Jade연동하려면 map 형태로 
-				session.setAttribute("user", map.get("user") );		// JSON
+				// map.get("user") // Jade연동하려
+				// session.setAttribute("user", map.get("user") );		// JSON
 			}
 			else
 			{
@@ -76,7 +76,7 @@ public class UserController
 	{
 		ModelAndView mv = new ModelAndView();
 		session.invalidate();
-		mv.setViewName("redirect:/login");
+		mv.setViewName("redirect:/list");
 		return mv;
 	}
 }
