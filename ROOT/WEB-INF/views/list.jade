@@ -8,10 +8,11 @@ html(lang="ko")
             .col-md-8
             .col-md-4(style="text-align:right;")
                 if (user)
-                    span.fa.fa-user &#32;#{user.username}
+                    button.btn.btn-link.fa.fa-user(ng-click="userInfo();") &#32;#{user.username}
                     button.btn.btn-link.fa.fa-sign-out(ng-click="signOut();") &#32;sign_out
                 else
                     button.btn.btn-link.fa.fa-sign-in(ng-click="signInModal();") &#32;sign_in
+                    button.btn.btn-link(ng-click="signUpModal();") &#32;sign_up
         table.table
             thead
                 tr
@@ -59,8 +60,6 @@ html(lang="ko")
                             a.page-link(href='#') 8
                         li.page-item
                             a.page-link(href='#') 9
-                        li.page-item
-                            a.page-link(href='#') 10
                         li.page-item
                             a.page-link(href='#', aria-label='Next')
                                 span(aria-hidden='true') »

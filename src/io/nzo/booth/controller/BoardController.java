@@ -1,6 +1,10 @@
 package io.nzo.booth.controller;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.LockMode;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
+import io.nzo.booth.model.User;
+import io.nzo.orm.HibernateUtil;
 
 @Controller
 @SessionAttributes("user")
@@ -16,7 +22,7 @@ public class BoardController
 {
 	@ResponseBody
 	@RequestMapping(path="/list", produces="text/html")
-	public String create(Model model, HttpSession session)
+	public String create(Model model, HttpSession session1)
 	{
 		
 //		userService.createUser();
@@ -27,6 +33,56 @@ public class BoardController
 //		model.addAttribute("user", id);
 		
 		// model.addAttribute("user", "sadfasdf" );
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        sessionFactory.createEntityManager();
+        
+        
+        
+//     	Query q = session.createQuery("from gz_user u where u.user_id=:user_id");
+//      q.setParameter("user_id", 640L);
+        
+        
+        User u = (User)session.get(User.class, 604L);
+        
+        // User u = (User)q.getSingleResult();
+        System.out.println( u.getName() );
+
+		
+		
+		
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+		
+		
 		
 		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, model.asMap());

@@ -6,52 +6,23 @@ var app = angular.module("booth", [
 
 app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     
-    //$scope.fetch = function() {
-//        $scope.subreddit = getRandomSubreddit();
-//        $http({
-//            method: "jsonp",
-//            url: "./login"
-//        }).jsonp("./login")
-//            .success(function(data) {
-//            $scope.posts = data.data.children;
-//        });
-//    };
-
-
-//    $http({
-//        method: 'jsonp',
-//        url: './login',
-//        params: { username : "test123", password : "password123" }
-//    }).success(function(response) {
-//        $scope.content = response.data;
-//    }).error(function(response) {
-//        console.log('error');
-//    });
-
-
-//    $http({
-//        method: 'jsonp',
-//        url: './login',
-//        params: { username : "test123", password : "password123" }
-//    })
-
-/*
-    $http({
-        method: 'post',
-        url: './login',
-        params: { username : "test123", password : "password123" }
-    }).then(function(response) {
-        $scope.content = response.data;
-    });
-*/
-
     $scope.signOut = function() {
         location.href="./logout";
     };
 
     $scope.signInModal = function() {
-        $("#loginModal").modal();
+        $("#signInModal").modal();
     };
+
+    $scope.userInfo = function() {
+        alert("user_info");
+    };
+
+    $scope.signUpModal = function() {
+        $("#signUpModal").modal();
+    };
+
+
 
     $scope.signIn = function() {
         $http({
@@ -74,13 +45,19 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         cfpLoadingBar.complete();
     }
 
-    // fake the initial load so first time users can see it right away:
-    $scope.start();
-    //$scope.fakeIntro = false;
     $timeout(function() {
-        $scope.complete();
-        $scope.fakeIntro = false;
-    }, 50);
+        console.log("timeout");
+    //    $scope.complete();
+    //    $scope.fakeIntro = false;
+    }, 0);
+
+    // fake the initial load so first time users can see it right away:
+    //$scope.start();
+    //$scope.fakeIntro = false;
+    //$timeout(function() {
+    //    $scope.complete();
+    //    $scope.fakeIntro = false;
+    //}, 50);
 });
 
 

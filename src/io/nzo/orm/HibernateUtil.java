@@ -14,8 +14,15 @@ public class HibernateUtil
 	{
 	    try 
 	    {
-	    	StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure( "hibernate.cfg.xml" ).build();
-	        Metadata metadata = new MetadataSources( standardRegistry ).getMetadataBuilder().build();
+	    	StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
+	    			.configure( "hibernate.cfg.xml" )
+	    			.build();
+	    	
+	        Metadata metadata = new MetadataSources(standardRegistry)
+	        		.getMetadataBuilder()
+	        		.build();
+	        
+	        
 	        sessionFactory = metadata.getSessionFactoryBuilder().build();
 	    }
 	    catch (Throwable th)
@@ -27,6 +34,7 @@ public class HibernateUtil
 	
 	public static SessionFactory getSessionFactory()
 	{
+		
 		return sessionFactory;
 	}
 }

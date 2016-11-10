@@ -26,9 +26,22 @@ public class UserService
 //	City getCity(String name, String country);
 //	Page<HotelSummary> getHotels(City city, Pageable pageable);
 	
+	/**
+	 * 유저 신규 등록
+	 * @param username
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @param comment
+	 * @return
+	 */
 	@SuppressWarnings({ "rawtypes" })
-	public User addUser(String username, String password, String name, String email, String comment)
+	public ModelMap addUser(String username, String password, String name, String email, String comment)
 	{
+		// TODO
+		// ModelMap 으로 예외 처리해야함
+		ModelMap map = new ModelMap();
+		
     	User user = null;
     	
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -57,15 +70,33 @@ public class UserService
 			tx.commit();
 			
 			user = (User)session.get(User.class, newIdentity);
-		}
-		catch(Exception e)
+			
+			map.addAttribute("user", user);
+		} 
+		catch (NoResultException e)
 		{
+			map.addAttribute("reason", e.getMessage());
+			map.addAttribute("error", 1);
+			map.addAttribute("success", false);
 			tx.rollback();
 		}
-		return user;
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			map.addAttribute("reason", e.getMessage());
+			map.addAttribute("error", 2);
+			map.addAttribute("success", false);
+			tx.rollback();
+		}
+		return map;
 	}
 	
-	
+	/**
+	 * 로그인 인증
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	@SuppressWarnings({ "rawtypes", "deprecation" })
 	public ModelMap getUserWithLogin(String username, String password)
 	{
@@ -98,6 +129,7 @@ public class UserService
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			map.addAttribute("reason", e.getMessage());
 			map.addAttribute("error", 2);
 			map.addAttribute("success", false);
 		}
@@ -106,7 +138,10 @@ public class UserService
 	
 	
 	
-//	
+	
+	
+	
+	
 //	private final UserJpaRepository userJpaRepository;
 //
 //

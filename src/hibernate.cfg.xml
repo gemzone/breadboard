@@ -17,6 +17,10 @@
 		
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.default_schema">dbo</property>
+		<!-- 
+		<property name="hibernate.implicit_naming_strategy">io.nzo.orm.CustomNamingStrategy</property>
+		 -->
+		<property name="hibernate.physical_naming_strategy">io.nzo.orm.PhysicalNamingStrategy</property>
 		
 		<!-- hikariCP -->
 		<property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>

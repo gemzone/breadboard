@@ -1,10 +1,10 @@
-#loginModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='loginModalLabel', aria-hidden='true')
+#signInModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='loginModalLabel', aria-hidden='true')
     .modal-dialog(style="width:360px;")
         .modal-content
             .modal-header
                 button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
                 | &#x9;&#x9;&#x9;&#x9;
-                h4#loginModalLabel.modal-title Sign in
+                h4#signInModalLabel.modal-title Sign in
             .modal-body
                 form(role='form')
                     .form-group
@@ -15,6 +15,30 @@
                     .form-group
                         .input-group
                             input#password.form-control(type='password', placeholder='Password', value="password123")
+                            | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='password')
+                                i.fa.fa-lock
+                .modal-footer
+                    button.form-control.btn.btn-primary(ng-click="signIn();") sign_in
+                    | &#x9;&#x9;&#x9;&#x9;
+#signUpModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='loginModalLabel', aria-hidden='true')
+    .modal-dialog(style="width:480px;")
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                | &#x9;&#x9;&#x9;&#x9;
+                h4#signUpModalLabel.modal-title Join
+                small The best way to design, build, and ship software.
+            .modal-body
+                form(role='form')
+                    .form-group
+                        .input-group
+                            input#newUsername.form-control(type='text', placeholder='Username', value="test123")
+                            label.input-group-addon.glyphicon.glyphicon-lock(for='username')
+                                i.fa.fa-user
+                    .form-group
+                        .input-group
+                            input#newPassword.form-control(type='password', placeholder='Password', value="password123")
                             | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                             label.input-group-addon.glyphicon.glyphicon-lock(for='password')
                                 i.fa.fa-lock

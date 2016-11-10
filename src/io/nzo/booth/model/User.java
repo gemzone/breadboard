@@ -8,18 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-// create sequence seq;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name="gz_user")
 public class User implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
 
+//	@Column(nullable=false,insertable = false, updatable = false )
+//	public String _tableName;
+	@Transient
+	public String _tableName;
+	
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
     @Column(name="user_id", unique=true, nullable=false)
