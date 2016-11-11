@@ -13,21 +13,6 @@ public class PhysicalNamingStrategy extends PhysicalNamingStrategyStandardImpl
 	@Override  
     public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) 
 	{
-		
-//		System.out.println(context);
-//		System.out.println(context.getExtractedDatabaseMetaData());
-//		
-//		System.out.println( context.getCurrentCatalog() );
-//		System.out.println( context.getCurrentSchema() );
-//		
-//		System.out.println(   addUnderscores("Board")    );
-//		System.out.println(   addUnderscores("BoardPost")    );
-//		System.out.println(   addUnderscores("BoardPostComment")    );
-//		System.out.println(   addUnderscores("Post1")    );
-//		System.out.println(   addUnderscores("Post123123")    );
-		
-		System.out.println(  "getCurrentSchemaCommand: " + context.  );
-		
 		return Identifier.toIdentifier("gz_" + addUnderscores(name.getText()).toLowerCase(), name.isQuoted());  
     }
 
