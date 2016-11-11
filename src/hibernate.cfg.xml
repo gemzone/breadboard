@@ -19,9 +19,10 @@
 		<property name="hibernate.default_schema">dbo</property>
 		<!-- 
 		<property name="hibernate.implicit_naming_strategy">io.nzo.orm.CustomNamingStrategy</property>
-		 -->
-		<property name="hibernate.physical_naming_strategy">io.nzo.orm.PhysicalNamingStrategy</property>
 		
+		
+		<property name="hibernate.physical_naming_strategy">io.nzo.orm.PhysicalNamingStrategy</property>
+		-->
 		<!-- hikariCP -->
 		<property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
 		<property name="hibernate.hikari.minimumIdle">10</property>
@@ -32,6 +33,12 @@
 		<property name="hibernate.hikari.dataSource.user">test</property>
 		<property name="hibernate.hikari.dataSource.password">poiu0987</property>
 		 
-		<mapping class="io.nzo.booth.model.User"></mapping>
+		 
+		 
+		 
+		 
+		<!-- <mapping class="io.nzo.booth.model.User" />  -->
+		<mapping resource="io/nzo/booth/model/User.hbm.xml" />
+		
 	</session-factory>
 </hibernate-configuration>

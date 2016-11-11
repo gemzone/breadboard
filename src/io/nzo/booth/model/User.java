@@ -3,59 +3,36 @@ package io.nzo.booth.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Column;import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 public class User implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
 
-//	@Column(nullable=false,insertable = false, updatable = false )
-//	public String _tableName;
-	@Transient
-	public String _tableName;
+	
+	//@Column(name="user_id", unique=true, nullable=false)
+	
 	
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-    @Column(name="user_id", unique=true, nullable=false)
 	Long userId;
-	
-	@Column(name="username")
 	String username;
-	
-	@Column(name="password_sha2")
 	String passwordSha2;
-	
-	@Column(name="name")
 	String name;
-	
-	@Column(name="email")
 	String email;
-	
-	@Column(name="homepage")
 	String homepage;
-	
-	@Column(name="comment")
 	String comment;
-	
-	@Column(name="point")
 	Integer point = 0;
-	
-	@Column(name="permission")
 	Short permission = 9;
+	Boolean admin = false;
 	
-	@Column(name="is_admin" )
-	Boolean isAdmin = false;
-
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="creation_time")
 	Date creationTime;
 
 	public Long getUserId()
@@ -147,15 +124,15 @@ public class User implements Serializable
 	{
 		this.permission = permission;
 	}
-
-	public Boolean isAdmin()
+	
+	public Boolean getAdmin()
 	{
-		return isAdmin;
+		return admin;
 	}
 
-	public void setAdmin(Boolean isAdmin)
+	public void setAdmin(Boolean admin)
 	{
-		this.isAdmin = isAdmin;
+		this.admin = admin;
 	}
 
 	public Date getCreationTime()

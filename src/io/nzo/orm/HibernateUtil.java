@@ -14,9 +14,10 @@ public class HibernateUtil
 	{
 	    try 
 	    {
-	    	StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-	    			.configure( "hibernate.cfg.xml" )
-	    			.build();
+	    	StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder().configure( "hibernate.cfg.xml" );
+	    	// BootstrapServiceRegistry bootstrapServiceRegistry = standardServiceRegistryBuilder.getBootstrapServiceRegistry();
+	    	
+	    	StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
 	    	
 	        Metadata metadata = new MetadataSources(standardRegistry)
 	        		.getMetadataBuilder()

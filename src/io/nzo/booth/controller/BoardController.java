@@ -40,46 +40,14 @@ public class BoardController
         
         
         
-//     	Query q = session.createQuery("from gz_user u where u.user_id=:user_id");
-//      q.setParameter("user_id", 640L);
-        
-        
         User u = (User)session.get(User.class, 604L);
         
         // User u = (User)q.getSingleResult();
-        System.out.println( u.getName() );
+        System.out.println( u.getUsername() );
+        System.out.println( u.getPasswordSha2() );
 
-		
-		
-		
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        System.out.println( u.getCreationTime() );
+
         
 		
 		
