@@ -3,7 +3,7 @@ package io.nzo.booth.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;import javax.persistence.Entity;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,25 +15,22 @@ public class User implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	
-	//@Column(name="user_id", unique=true, nullable=false)
-	
-	
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	Long userId;
-	String username;
-	String passwordSha2;
-	String name;
-	String email;
-	String homepage;
-	String comment;
-	Integer point = 0;
-	Short permission = 9;
-	Boolean admin = false;
+	private Long userId;
+	
+	private String username;
+	private String passwordSha2;
+	private String name;
+	private String email;
+	private String homepage;
+	private String comment;
+	private Integer point = 0;
+	private Short permission = 9;
+	private Boolean admin = false;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	Date creationTime;
+	private Date creationTime;
 
 	public Long getUserId()
 	{

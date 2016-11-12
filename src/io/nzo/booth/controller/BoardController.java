@@ -1,4 +1,5 @@
 package io.nzo.booth.controller;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.LockMode;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
+import io.nzo.booth.model.Post;
 import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 
@@ -36,21 +38,41 @@ public class BoardController
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        sessionFactory.createEntityManager();
+        EntityManager manager =  sessionFactory.createEntityManager();
         
         
+        /*
+        {javax.persistence.lock.timeout=-1, 
+        		org.hibernate.flushMode=AUTO, 
+        		javax.persistence.cache.retrieveMode=USE, 
+        		javax.persistence.lock.scope=EXTENDED, 
+        		javax.persistence.cache.storeMode=USE}
+        */
+        System.out.println("properties: " + manager.getProperties().toString());
         
         User u = (User)session.get(User.class, 604L);
         
         // User u = (User)q.getSingleResult();
         System.out.println( u.getUsername() );
         System.out.println( u.getPasswordSha2() );
-
         System.out.println( u.getCreationTime() );
 
-        
+
+        {
+        	Post p = (Post)session.get("Post0", 1L);
+    		System.out.println(  p.getText() );	
+        }
 		
-		
+        try
+        {
+        	Post p = (Post)session.get("Post1", 1L);
+    		System.out.println(  p.getText() );
+    		
+        }
+		catch(Exception e)
+        {
+			System.out.println( e.getMessage() );
+        }
 		
 		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, model.asMap());

@@ -16,40 +16,39 @@
 		<property name="permission" column="permission" />
 		<property name="admin" column="admin" />
 		<property name="creationTime" column="creation_time" />
-		
-		<!-- BooleanType
-			BIT
-			boolean, java.lang.Boolean
-			boolean, java.lang.Boolean -->
-		
-		
-		<!-- 
-		
-		
-		 -->
-		<!-- <many-to-one name="mother"
-                    column="mother_id"
-                    update="false"/>
-                    
-               <set name="kittens"
-               inverse="true"
-               order-by="litter_id">
-                   <key column="mother_id"/>
-                   <one-to-many class="Cat"/>
-           </set>
-
-           <subclass name="DomesticCat"
-               discriminator-value="D">
-
-                   <property name="name"
-                       type="string"/>
-
-           </subclass>
-		 -->
-		
 	</class>
 </hibernate-mapping>
 
+
+<!-- BooleanType
+	BIT
+	boolean, java.lang.Boolean
+	boolean, java.lang.Boolean -->
+
+
+<!-- 
+
+
+ -->
+<!-- <many-to-one name="mother"
+                  column="mother_id"
+                  update="false"/>
+                  
+             <set name="kittens"
+             inverse="true"
+             order-by="litter_id">
+                 <key column="mother_id"/>
+                 <one-to-many class="Cat"/>
+         </set>
+
+         <subclass name="DomesticCat"
+             discriminator-value="D">
+
+                 <property name="name"
+                     type="string"/>
+
+         </subclass>
+ -->
 
 <!-- 
 http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html/types.html

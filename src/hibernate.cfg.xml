@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-	
+		
 		<!-- hibernate generalCP -->
 		<!-- 
 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
@@ -32,13 +32,11 @@
 		<property name="hibernate.hikari.dataSource.url">jdbc:sqlserver://192.168.0.19:21433;database=bbs;</property>
 		<property name="hibernate.hikari.dataSource.user">test</property>
 		<property name="hibernate.hikari.dataSource.password">poiu0987</property>
-		 
-		 
-		 
-		 
-		 
+		
 		<!-- <mapping class="io.nzo.booth.model.User" />  -->
 		<mapping resource="io/nzo/booth/model/User.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post0.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post1.hbm.xml" />
 		
 	</session-factory>
 </hibernate-configuration>

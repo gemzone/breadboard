@@ -3,7 +3,6 @@ package io.nzo.booth.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,59 +17,30 @@ public class Post implements Serializable
 	
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	@Column(name="post_id", unique=true, nullable=false)
-	Long postId;
+	private Long postId;
 	
-	@Column(name="user_id")
-	Long userId;
-	
-	// @ManyToOne(cascade=CascadeType.ALL)
-	// @JoinColumn(name="user_id")
-	// User user;
-	
-	@Column(name="title")
-	String title;
-	
-	@Column(name="text")
-	String text;
-	
-	@Column(name="file")
-	String file;
-	
-	@Column(name="link")
-	String link;
-	
-	@Column(name="ip")
-	String ip;
-		
-	@Column(name="view_count")
-	Integer viewCount;
-	
-	@Column(name="up_count")
-	Integer upCount;
-	
-	@Column(name="down_count")
-	Integer downCount;
-	
-	@Column(name="is_notice")
-	Boolean isNotice;
-	
-	@Column(name="is_private")
-	Boolean isPrivate;
+	private Integer boardId;
+	private String uid;
+	private Long virtualId;
+	private Long userId;
+	private Integer categoryId;
+	private Boolean notice;
+	private Boolean secret;
+	private String title;
+	private String text;
+	private String attachment;
+	private String link;
+	private String ip;
+	private Integer hitCount;
+	private Integer upCount;
+	private Integer downCount;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modification_time")
-	Date modificationTime;
-		
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="deletion_time")
-	Date deletionTime;
+	private Date modificationTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="creation_time")
-	Date creation_time;
-	
-	
+	private Date creationTime;
+
 	public Long getPostId()
 	{
 		return postId;
@@ -81,15 +51,75 @@ public class Post implements Serializable
 		this.postId = postId;
 	}
 
-//	public User getUser()
-//	{
-//		return user;
-//	}
-//
-//	public void setUser(User user)
-//	{
-//		this.user = user;
-//	}
+	public Integer getBoardId()
+	{
+		return boardId;
+	}
+
+	public void setBoardId(Integer boardId)
+	{
+		this.boardId = boardId;
+	}
+
+	public String getUid()
+	{
+		return uid;
+	}
+
+	public void setUid(String uid)
+	{
+		this.uid = uid;
+	}
+
+	public Long getVirtualId()
+	{
+		return virtualId;
+	}
+
+	public void setVirtualId(Long virtualId)
+	{
+		this.virtualId = virtualId;
+	}
+
+	public Long getUserId()
+	{
+		return userId;
+	}
+
+	public void setUserId(Long userId)
+	{
+		this.userId = userId;
+	}
+
+	public Integer getCategoryId()
+	{
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId)
+	{
+		this.categoryId = categoryId;
+	}
+
+	public Boolean getNotice()
+	{
+		return notice;
+	}
+
+	public void setNotice(Boolean notice)
+	{
+		this.notice = notice;
+	}
+
+	public Boolean getSecret()
+	{
+		return secret;
+	}
+
+	public void setSecret(Boolean secret)
+	{
+		this.secret = secret;
+	}
 
 	public String getTitle()
 	{
@@ -111,14 +141,14 @@ public class Post implements Serializable
 		this.text = text;
 	}
 
-	public String getFile()
+	public String getAttachment()
 	{
-		return file;
+		return attachment;
 	}
 
-	public void setFile(String file)
+	public void setAttachment(String attachment)
 	{
-		this.file = file;
+		this.attachment = attachment;
 	}
 
 	public String getLink()
@@ -141,14 +171,14 @@ public class Post implements Serializable
 		this.ip = ip;
 	}
 
-	public Integer getViewCount()
+	public Integer getHitCount()
 	{
-		return viewCount;
+		return hitCount;
 	}
 
-	public void setViewCount(Integer viewCount)
+	public void setHitCount(Integer hitCount)
 	{
-		this.viewCount = viewCount;
+		this.hitCount = hitCount;
 	}
 
 	public Integer getUpCount()
@@ -171,26 +201,6 @@ public class Post implements Serializable
 		this.downCount = downCount;
 	}
 
-	public Boolean getIsNotice()
-	{
-		return isNotice;
-	}
-
-	public void setIsNotice(Boolean isNotice)
-	{
-		this.isNotice = isNotice;
-	}
-
-	public Boolean getIsPrivate()
-	{
-		return isPrivate;
-	}
-
-	public void setIsPrivate(Boolean isPrivate)
-	{
-		this.isPrivate = isPrivate;
-	}
-
 	public Date getModificationTime()
 	{
 		return modificationTime;
@@ -201,25 +211,16 @@ public class Post implements Serializable
 		this.modificationTime = modificationTime;
 	}
 
-	public Date getDeletionTime()
+	public Date getCreationTime()
 	{
-		return deletionTime;
+		return creationTime;
 	}
 
-	public void setDeletionTime(Date deletionTime)
+	public void setCreationTime(Date creationTime)
 	{
-		this.deletionTime = deletionTime;
+		this.creationTime = creationTime;
 	}
-
-	public Date getCreation_time()
-	{
-		return creation_time;
-	}
-
-	public void setCreation_time(Date creation_time)
-	{
-		this.creation_time = creation_time;
-	}
-
-
+	
+	
+	
 }
