@@ -3,7 +3,6 @@ package io.nzo.booth.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,41 +16,23 @@ public class Comment implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	@Id         
-    @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	@Column(name="comment_id", unique=true, nullable=false)
-	Long commentId;
-
-	@Column(name="post_id")
-	Long postId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long commentId;
 	
-	@Column(name="user_id")
-	Long userId;
-	
-	@Column(name="text")
-	String text;
-
-	@Column(name="up_count")
-	Integer upCount;
-	
-	@Column(name="down_count")
-	Integer downCount;
-	
-	@Column(name="ip")
-	String ip;
+	private Long postId;
+	private String uid;
+	private Long userId;
+	private String text;
+	private String ip;
+	private Integer upCount;
+	private Integer downCount;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="modification_time", nullable = true)
-	Date modificationTime;
-		
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="deletion_time", nullable = true)
-	Date deletionTime;
+	private Date modificationTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="creation_time")
-	Date creation_time;
-	
-	
+	private Date creation_time;
+
 	public Long getCommentId()
 	{
 		return commentId;
@@ -70,6 +51,16 @@ public class Comment implements Serializable
 	public void setPostId(Long postId)
 	{
 		this.postId = postId;
+	}
+
+	public String getUid()
+	{
+		return uid;
+	}
+
+	public void setUid(String uid)
+	{
+		this.uid = uid;
 	}
 
 	public Long getUserId()
@@ -92,6 +83,16 @@ public class Comment implements Serializable
 		this.text = text;
 	}
 
+	public String getIp()
+	{
+		return ip;
+	}
+
+	public void setIp(String ip)
+	{
+		this.ip = ip;
+	}
+
 	public Integer getUpCount()
 	{
 		return upCount;
@@ -112,16 +113,6 @@ public class Comment implements Serializable
 		this.downCount = downCount;
 	}
 
-	public String getIp()
-	{
-		return ip;
-	}
-
-	public void setIp(String ip)
-	{
-		this.ip = ip;
-	}
-
 	public Date getModificationTime()
 	{
 		return modificationTime;
@@ -130,16 +121,6 @@ public class Comment implements Serializable
 	public void setModificationTime(Date modificationTime)
 	{
 		this.modificationTime = modificationTime;
-	}
-
-	public Date getDeletionTime()
-	{
-		return deletionTime;
-	}
-
-	public void setDeletionTime(Date deletionTime)
-	{
-		this.deletionTime = deletionTime;
 	}
 
 	public Date getCreation_time()
@@ -151,6 +132,7 @@ public class Comment implements Serializable
 	{
 		this.creation_time = creation_time;
 	}
+	
 	
 	
 }

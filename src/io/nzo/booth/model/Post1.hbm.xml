@@ -21,6 +21,7 @@
 		<property name="hitCount" column="hit_count" />
 		<property name="upCount" column="up_count" />
 		<property name="downCount" column="down_count" />
+		<property name="commentCount" column="comment_count" />
 		<property name="modificationTime" column="modification_time" />
 		<property name="creationTime" column="creation_time" />
 	</class>

@@ -35,6 +35,8 @@ public class Post implements Serializable
 	private Integer upCount;
 	private Integer downCount;
 	
+	private Integer commentCount;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modificationTime;
 	
@@ -222,5 +224,13 @@ public class Post implements Serializable
 	}
 	
 	
-	
+	public Integer getCommentCount()
+	{
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount)
+	{
+		this.commentCount = commentCount;
+	}
 }

@@ -79,6 +79,4 @@ public class UserController
 		mv.setViewName("redirect:/list");
 		return mv;
 	}
-	
-	
 }

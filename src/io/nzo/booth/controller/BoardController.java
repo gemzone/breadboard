@@ -24,7 +24,7 @@ public class BoardController
 {
 	@ResponseBody
 	@RequestMapping(path="/list", produces="text/html")
-	public String create(Model model, HttpSession session1)
+	public String list(Model model, HttpSession session1)
 	{
 		
 //		userService.createUser();
@@ -38,18 +38,15 @@ public class BoardController
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        EntityManager manager =  sessionFactory.createEntityManager();
         
-        
-        /*
+/*
         {javax.persistence.lock.timeout=-1, 
         		org.hibernate.flushMode=AUTO, 
         		javax.persistence.cache.retrieveMode=USE, 
         		javax.persistence.lock.scope=EXTENDED, 
         		javax.persistence.cache.storeMode=USE}
-        */
         System.out.println("properties: " + manager.getProperties().toString());
-        
+*/
         User u = (User)session.get(User.class, 604L);
         
         // User u = (User)q.getSingleResult();
@@ -67,7 +64,6 @@ public class BoardController
         {
         	Post p = (Post)session.get("Post1", 1L);
     		System.out.println(  p.getText() );
-    		
         }
 		catch(Exception e)
         {
@@ -77,7 +73,29 @@ public class BoardController
 		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, model.asMap());
 		return html;
-	
 	}
-
+	
+	
+	@ResponseBody
+	@RequestMapping(path="/view", produces="text/html")
+	public String view(Model model, HttpSession session1)
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+    
+    	Post p = (Post)session.get("Post0", 1L);
+    	model.addAttribute("post", p);
+    	
+    	User u = (User)session.get(User.class, p.getUserId());
+    	model.addAttribute("user", u);
+		
+    	
+    	
+    	
+    	System.out.println(model.asMap().toString());
+    	
+		JadeTemplate template = JadeConfig.getTemplate("view");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
 }
