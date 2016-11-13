@@ -22,8 +22,6 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         $("#signUpModal").modal();
     };
 
-
-
     $scope.signIn = function() {
         $http({
             method: 'post',
@@ -38,26 +36,22 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     };
 
     $scope.start = function() {
+        console.log("start");
         cfpLoadingBar.start();
     };
 
     $scope.complete = function () {
+        console.log("complete");
         cfpLoadingBar.complete();
     }
 
+    // fake the initial load so first time users can see it right away:
+    $scope.start();
+    //$scope.fakeIntro = false;
     $timeout(function() {
-        console.log("timeout");
-    //    $scope.complete();
+        $scope.complete();
     //    $scope.fakeIntro = false;
     }, 0);
-
-    // fake the initial load so first time users can see it right away:
-    //$scope.start();
-    //$scope.fakeIntro = false;
-    //$timeout(function() {
-    //    $scope.complete();
-    //    $scope.fakeIntro = false;
-    //}, 50);
 });
 
 

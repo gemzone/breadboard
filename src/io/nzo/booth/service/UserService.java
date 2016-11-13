@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
 import io.nzo.booth.controller.UserController;
+import io.nzo.booth.model.Post;
 import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 
@@ -137,6 +138,18 @@ public class UserService
 	}
 	
 	
+	public ModelMap getUser(Long userId) 
+	{
+		ModelMap map = new ModelMap();
+		User user = null;
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+    	Post post = (Post)session.get("Post0", 1L);
+    	model.addAttribute("post", post);
+		
+		
+	}
 	
 	
 	

@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="io.nzo.booth.model">
-	<class name="gz_post0_comment" table="gz_post0_comment" entity-name="Comment0">
+	<class name="Comment" table="gz_post0_comment" entity-name="Comment0">
 		<id name="commentId" column="comment_id" />
 		<property name="postId" column="post_id" />
 		<property name="uid" column="uid" />

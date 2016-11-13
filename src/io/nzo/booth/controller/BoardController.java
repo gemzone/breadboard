@@ -1,17 +1,15 @@
 package io.nzo.booth.controller;
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
-import org.hibernate.LockMode;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import de.neuland.jade4j.lexer.token.Comment;
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
 import io.nzo.booth.model.Post;
@@ -53,8 +51,7 @@ public class BoardController
         System.out.println( u.getUsername() );
         System.out.println( u.getPasswordSha2() );
         System.out.println( u.getCreationTime() );
-
-
+        
         {
         	Post p = (Post)session.get("Post0", 1L);
     		System.out.println(  p.getText() );	
@@ -83,14 +80,19 @@ public class BoardController
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
     
-    	Post p = (Post)session.get("Post0", 1L);
-    	model.addAttribute("post", p);
+    	Post post = (Post)session.get("Post0", 1L);
+    	model.addAttribute("post", post);
     	
-    	User u = (User)session.get(User.class, p.getUserId());
-    	model.addAttribute("user", u);
-		
+    	// comment list
+    	@SuppressWarnings("unchecked")
+		List<Comment> comments = session.createQuery("from Comment0 where postId = :postId")
+    		.setParameter("postId", post.getPostId())
+    		.getResultList();
+    	model.addAttribute("comments", comments);
     	
-    	
+    	// user
+    	User user = (User)session.get(User.class, post.getUserId());
+    	model.addAttribute("user", user);
     	
     	System.out.println(model.asMap().toString());
     	
@@ -99,3 +101,24 @@ public class BoardController
 		return html;
 	}
 }
+
+
+
+
+
+
+//SELECT COUNT(p.id) AS col_0_0_
+//FROM   Person p
+
+//assertTrue(((Number) entityManager
+//	    .createQuery("select count(id) from Person")
+//	    .getSingleResult()).intValue() == 0);
+
+
+
+// Query q = s.createFilter( collection, "" ); // the trivial filter
+// q.setMaxResults(PAGE_SIZE);
+// q.setFirstResult(PAGE_SIZE * pageNumber);
+// List page = q.list();
+
+

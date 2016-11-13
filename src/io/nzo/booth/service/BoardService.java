@@ -20,13 +20,12 @@ public class BoardService
 	public ModelMap addPost()
 	{
 		
-		
-		
 		return null;
 	}
 	
 	// 글 삭제
-	// deletion_time 만 갱신 
+	// 코멘트 삭제
+	// 첨부 파일 삭제
 	public boolean removePost()
 	{
 		
@@ -34,23 +33,5 @@ public class BoardService
 	}
 	
 	
-	// 데이터 진짜 삭제
-	// 코멘트 삭제
-	// 첨부 파일 삭제
-	public boolean dropPost()
-	{
-		
-		return false;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public 
 }

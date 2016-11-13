@@ -31,7 +31,7 @@ public class Comment implements Serializable
 	private Date modificationTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creation_time;
+	private Date creationTime;
 
 	public Long getCommentId()
 	{
@@ -123,14 +123,14 @@ public class Comment implements Serializable
 		this.modificationTime = modificationTime;
 	}
 
-	public Date getCreation_time()
+	public Date getCreationTime()
 	{
-		return creation_time;
+		return creationTime;
 	}
 
-	public void setCreation_time(Date creation_time)
+	public void setCreationTime(Date creationTime)
 	{
-		this.creation_time = creation_time;
+		this.creationTime = creationTime;
 	}
 	
 	

@@ -28,5 +28,4 @@ public class List extends HttpServlet
 		String html = JadeConfig.renderTemplate(template, new HashMap<String, Object>());
 		out.print(html);
 	}
-
 }

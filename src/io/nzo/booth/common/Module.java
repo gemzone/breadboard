@@ -21,8 +21,6 @@ public class Module
 {
 	public static final Logger logger = LoggerFactory.getLogger(Module.class);
 
-	// public static com.intivsoft.module.util.Cookie__ dwrCookie = new
-	// com.intivsoft.module.util.Cookie__();
 	public static int negativeNumber(int number)
 	{
 		return number * (-1);

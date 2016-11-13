@@ -28,10 +28,16 @@ html(lang='ko')
                         //a(href='#')
                         span.glyphicon.glyphicon-comment
                         |  #{post.commentCount} Comments
-            .card-block(style="border-top:1px solid #e0e0e0;")
-                small.card-title #{user.name} | #{user.creationTime}
-                p.card-text #{post.text}
+            each item in comments
+                .card-block(style="border-top:1px solid #e0e0e0;")
+                    small.card-title #{user.name}
+                    small(style="float:right;") #{user.creationTime}
+                    p.card-text #{item.text}
 
+            .card-block(style="border-top:1px solid #e0e0e0;")
+                | #{user.name}
+                textarea.form-control(style="resize:none;margin-bottom:5px;") text
+                button.btn.btn-secondary comment
         .row(style="margin-bottom:10px;")
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list
