@@ -21,18 +21,13 @@ html(lang="ko")
                     th(style="width:80px;") view_count
                     th(style="width:190px;") creation_time
             tbody
-                tr
-                    td 0
-                    td 
-                        a(href="#") dummy
-                    td 0
-                    td 2016-01-01 11:00:00
-                tr
-                    td 0
-                    td 
-                        a(href="#") dummy
-                    td 0
-                    td 2016-01-01 11:00:00
+                each item in posts
+                    tr
+                        td #{item.postId}
+                        td 
+                            a(href="#") #{item.title}
+                        td #{item.hitCount}
+                        td #{item.creationTime}
         .row
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list

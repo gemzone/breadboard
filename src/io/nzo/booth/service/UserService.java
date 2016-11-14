@@ -141,14 +141,24 @@ public class UserService
 	public ModelMap getUser(Long userId) 
 	{
 		ModelMap map = new ModelMap();
+		
 		User user = null;
+		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        
-    	Post post = (Post)session.get("Post0", 1L);
-    	model.addAttribute("post", post);
-		
-		
+        try
+		{
+	        user = (User)session.get(User.class, 604L);
+	        map.addAttribute("user", user);
+	        map.addAttribute("success", true);
+		} 
+		catch (NoResultException e)
+		{
+			map.addAttribute("reason", e.getMessage());
+			map.addAttribute("error", 1);
+			map.addAttribute("success", false);
+		}
+		return map;
 	}
 	
 	

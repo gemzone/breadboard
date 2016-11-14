@@ -28,35 +28,37 @@ html(lang='ko')
                         //a(href='#')
                         span.glyphicon.glyphicon-comment
                         |  #{post.commentCount} Comments
-            each item in comments
-                .card-block(style="border-top:1px solid #e0e0e0;")
-                    small.card-title #{user.name}
-                    small(style="float:right;") #{user.creationTime}
-                    p.card-text #{item.text}
-
-            .card-block(style="border-top:1px solid #e0e0e0;")
-                | #{user.name}
-                textarea.form-control(style="resize:none;margin-bottom:5px;") text
-                button.btn.btn-secondary comment
         .row(style="margin-bottom:10px;")
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list
             .col-md-6(style="text-align:center;")
                 
             .col-md-3(style="text-align:right;")
-                button.btn.btn-secondary modify
-                button.btn.btn-secondary delete
+                    button.btn.btn-secondary modify
+                    button.btn.btn-secondary delete
+        .card
+            each item in comments
+                .card-block(style="border-bottom:1px solid #e0e0e0;")
+                    small.card-title #{user.name}
+                    small(style="float:right;") #{user.creationTime}
+                    p.card-text #{item.text}
+
+            .card-block
+                | #{user.name}
+                textarea.form-control(style="resize:none;margin-bottom:5px;") text
+                div(style="text-align:right;")
+                    button.btn.btn-secondary comment
 
         table.table(style="border-bottom:1px solid #eceeef;")
             tbody
                 tr
-                    td(style="width:100px;") 이전글
+                    td(style="width:100px;") prev_post
                     td(style="text-align:left;")
                         a(href="#") text link
                     td(style="width:150px;") 1234
                     td(style="text-align:right;width:200px;") 2016-01-01 11:00:00
                 tr
-                    td(style="width:100px;") 다음글
+                    td(style="width:100px;") next_post
                     td(style="text-align:left;")
                         a(href="#") text link
                     td(style="width:150px;") 1234
