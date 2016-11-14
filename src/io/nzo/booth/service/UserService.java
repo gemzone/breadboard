@@ -98,7 +98,7 @@ public class UserService
 	 * @param password
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "deprecation" })
+	@SuppressWarnings({ "rawtypes" })
 	public ModelMap getUserWithLogin(String username, String password)
 	{
 		ModelMap map = new ModelMap();
@@ -111,12 +111,12 @@ public class UserService
 		try
 		{
 			String sql = "SELECT TOP 1 u.* FROM gz_user u WHERE u.username=:username AND u.password_sha2=HASHBYTES('SHA2_512',:password) "; 
-			NativeQuery query = session.createNativeQuery(sql).addEntity(User.class);
+			NativeQuery query = session.createNativeQuery(sql, User.class);
 			query.setParameter("username", username);
 			query.setParameter("password", password);
 			
 			user = (User)query.getSingleResult();
-		
+			
 			user.setPasswordSha2("");
 			map.addAttribute("user", user);
 			map.addAttribute("success", true);

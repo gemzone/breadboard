@@ -16,6 +16,10 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 페이징 계산
+ * @author gemzone (gemzone@naver.com)
+ */
 public class CustomPaging
 {
 	public static final Logger logger = LoggerFactory.getLogger(CustomPaging.class);
@@ -40,8 +44,27 @@ public class CustomPaging
 		totalPageCount = ( totalCount % listCount != 0) ? totalCount / listCount + 1 : totalCount / listCount;
 		startPage = ( currentPage % pageCount != 0) ? ( currentPage / pageCount ) * pageCount + 1 : ( currentPage / pageCount - 1 ) * pageCount + 1;
 		endPage = (startPage + pageCount - 1 > totalPageCount) ? totalPageCount : startPage + pageCount - 1;
+		
+		// 한페이지 앞으로 한페이지 전으로
 		prevPage = (currentPage <= 1) ? 1 :  currentPage - 1;
 		nextPage = (currentPage >= totalPageCount) ? totalPageCount : currentPage + 1;
+		
+		// 페이지 pageCount단위 앞으로 전으로
+		long prevStepPage = (((long) (Math.ceil((double) currentPage / (double) pageCount)) - 1) * pageCount);
+		long nextStepPage = ((((long) Math.ceil((double) currentPage / (double) pageCount)) * pageCount) + 1);
+		
+		// 최하치를 넘으려할경우
+		if( prevStepPage <= 0 )
+		{
+			prevStepPage = 1;
+		}
+
+		// 최대치를 넘길경우
+		if( nextStepPage >= totalPageCount )
+		{
+			nextStepPage = totalPageCount;
+		}
+		
 		
 //		map.addAttribute("totalCount", totalCount);
 //		map.addAttribute("listCount", listCount);
@@ -65,6 +88,8 @@ public class CustomPaging
 		map.put("endPage", endPage);
 		map.put("prevPage", prevPage);
 		map.put("nextPage", nextPage);
+		map.put("prevStepPage", prevStepPage);
+		map.put("nextStepPage", nextStepPage);
 		
 //		map.put("page", currentPage);
 //		map.put("size", listCount);

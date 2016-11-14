@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,19 +47,10 @@ public class BoardController
 	@RequestMapping(path = "/list", produces = "text/html")
 	public String list(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page)
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-
-		// comment list
-		@SuppressWarnings("unchecked")
-		List<Post> posts = session.createQuery("from Post0 where boardId = :boardId")
-				.setParameter("boardId", 1)
-				.getResultList();
-		model.addAttribute("posts", posts);
-
-		model.addAttribute("paging", boardService.findAll(1, page, 10).get("paging"));
-
-		logger.debug(model.asMap().toString());
+		ModelMap map = boardService.findAllWithPaging(1, page, 15);
+		
+		model.addAttribute("posts", map.get("posts"));
+		model.addAttribute("paging", map.get("paging"));
 
 		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, model.asMap());
