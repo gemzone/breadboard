@@ -28,6 +28,16 @@ html(lang="ko")
                             a(href="#") #{item.title}
                         td #{item.hitCount}
                         td #{item.creationTime}
+        //paging: {
+            pageCount: 9,
+            startPage: 1,
+            nextPage: 2,
+            totalPageCount: 22,
+            prevPage: 1,
+            endPage: 9,
+            totalCount: 214,
+            listCount: 10,
+            currentPage: 1
         .row
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list
@@ -35,28 +45,15 @@ html(lang="ko")
                 nav
                     ul.pagination
                         li.page-item
-                            a.page-link(href='#', aria-label='Previous')
-                                span(aria-hidden='true') «
+                            a.page-link(href="#", aria-label="Previous", ng-click="pageMove(#{paging.prevPage});")
+                                span(aria-hidden="true") «
+                        - var i = paging.startPage;
+                        while i <= paging.endPage
+                            li.page-item(class=(i==paging.currentPage ? 'active' : ''))
+                                a.page-link(href="#", ng-click="pageMove("+ i +");")= i 
+                            - i++;
                         li.page-item
-                            a.page-link(href='#') 1
-                        li.page-item
-                            a.page-link(href='#') 2
-                        li.page-item
-                            a.page-link(href='#') 3
-                        li.page-item.active
-                            a.page-link(href='#') 4
-                        li.page-item
-                            a.page-link(href='#') 5
-                        li.page-item
-                            a.page-link(href='#') 6
-                        li.page-item
-                            a.page-link(href='#') 7
-                        li.page-item
-                            a.page-link(href='#') 8
-                        li.page-item
-                            a.page-link(href='#') 9
-                        li.page-item
-                            a.page-link(href='#', aria-label='Next')
-                                span(aria-hidden='true') »
+                            a.page-link(href="#", aria-label="Next", ng-click="pageMove(#{paging.nextPage});")
+                                span(aria-hidden="true") »
             .col-md-3(style="text-align:right;")
                 button.btn.btn-secondary.fa.fa-pencil &#32;write

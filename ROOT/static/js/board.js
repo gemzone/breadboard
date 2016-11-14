@@ -35,6 +35,13 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         });
     };
 
+
+    $scope.pageMove = function(page) {
+        location.href='./list?page=' + page;
+    };
+    
+
+
     $scope.start = function() {
         console.log("start");
         cfpLoadingBar.start();

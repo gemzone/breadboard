@@ -23,7 +23,7 @@ public class JadeConfig extends DefaultServlet
         TemplateLoader loader = new FileTemplateLoader(ContextManager.servletContext.getRealPath("WEB-INF/views/"), "UTF-8");
         config.setTemplateLoader(loader);
         config.setMode(Jade4J.Mode.XHTML);  // <input checked="true" />
-        config.setPrettyPrint(true);
+        config.setPrettyPrint(false);
         config.setCaching(false);
         
     }
