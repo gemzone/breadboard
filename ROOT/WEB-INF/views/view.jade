@@ -2,7 +2,7 @@ doctype html
 html(lang='ko')
     head
         include ./template/head
-    body
+    body(ng-app="booth", ng-controller="boothCtrl")
         include ./template/login
         .row
             .col-md-8

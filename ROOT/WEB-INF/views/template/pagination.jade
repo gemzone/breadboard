@@ -10,6 +10,18 @@
     currentPage: 1,
     prevStepPage
     nextStepPage
+//ul.pagination
+    li.page-item
+        a.page-link(aria-label="Previous", ng-click="pageMove(#{paging.prevStepPage});")
+            span(aria-hidden="true") «
+    - var i = paging.startPage;
+    while i <= paging.endPage
+        li.page-item(class=(i==paging.currentPage ? 'active' : ''))
+            a.page-link(ng-click="pageMove("+ i +");")= i 
+        - i++;
+    li.page-item
+        a.page-link(aria-label="Next", ng-click="pageMove(#{paging.nextStepPage});")
+            span(aria-hidden="true") »
 ul.pagination
     li.page-item
         a.page-link(aria-label="Previous", ng-click="pageMove(#{paging.prevStepPage});")

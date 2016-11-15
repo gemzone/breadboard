@@ -25,9 +25,16 @@ html(lang="ko")
                     tr
                         td #{item.postId}
                         td 
-                            a(href="#") #{item.title}
+                            a(href="./view?board_id=#{item.boardId}&post_id=#{item.postId}") #{item.title}
                         td #{item.hitCount}
                         td #{item.creationTime}
+            //tbody(ng-show="!isUndefined(posts)")
+                tr(ng-repeat="item in posts")
+                    td {{item.postId}}
+                    td 
+                        a(href="./view?board_id={{item.boardId}}&post_id={{item.postId}}") {{item.title}}
+                    td {{item.hitCount}}
+                    td {{item.creationTime}}
         .row
             .col-md-3
                 button.btn.btn-secondary(onclick="location.href='./list';") list

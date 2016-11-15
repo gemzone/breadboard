@@ -35,12 +35,24 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         });
     };
 
-
     $scope.pageMove = function(page) {
-        location.href='./list?page=' + page;
-    };
-    
 
+        location.href='./list?board_id=1&page=' + page;
+
+
+
+        // angularjs 
+        /*
+        $http({
+            method: 'post',
+            url: './api/list?board_id=1&page=' + page,
+            params: {   }
+        }).then(function(response) {
+            $scope.posts = response.data.posts;
+            $scope.paging = response.data.paging;
+        });
+        */
+    };
 
     $scope.start = function() {
         console.log("start");
@@ -52,13 +64,24 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         cfpLoadingBar.complete();
     }
 
+    // angularjs 방식
+    //$http({
+    //    method: 'post',
+    //    url: './api/list?board_id=1&page=1',
+    //    params: {   }
+    //}).then(function(response) {
+    //    $scope.posts = response.data.posts;
+    //    $scope.paging = response.data.paging;
+    //});
+
+
     // fake the initial load so first time users can see it right away:
-    $scope.start();
+    //$scope.start();
     //$scope.fakeIntro = false;
-    $timeout(function() {
-        $scope.complete();
+    //$timeout(function() {
+    //    $scope.complete();
     //    $scope.fakeIntro = false;
-    }, 0);
+    //}, 0);
 });
 
 

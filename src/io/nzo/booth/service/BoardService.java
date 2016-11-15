@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 
 import io.nzo.booth.common.CustomPaging;
 import io.nzo.booth.controller.UserController;
+import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
 import io.nzo.orm.HibernateUtil;
 
@@ -38,44 +39,45 @@ public class BoardService
 		
 		return false;
 	}
-	
-	public ModelMap findAllWithPaging(int boardId, int page, int size) 
+
+	public ModelMap findAllWithPaging(int boardId, int page, int size)
 	{
 		ModelMap map = new ModelMap();
-		
+
+		if (page <= 0)
+		{
+			page = 1;
+		}
+		if (size <= 0)
+		{
+			size = 15;
+		}
+
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        
-        
-		// NativeQuery<Post> query = session.createNativeQuery(sql).addEntity(Post.class);
-        
-//        Query<Post> query = session.createQuery(sql, Post.class );
-//		query.setParameter("b", ((page - 1) * (size + 1)) );
-//		query.setParameter("e", (page * size) );
-//		List<Post> posts = query.getResultList();
-		
-		@SuppressWarnings({  "rawtypes" })
-		Query query = session.createQuery("from Post0");
-		query.setFirstResult( ((page - 1) * (size)) );
+		Session session = sessionFactory.openSession();
+
+		Board board = (Board) session.get(Board.class, boardId);
+
+		@SuppressWarnings({ "rawtypes" })
+		Query query = session.createQuery("from Post" + board.getTableNumber().toString());
+		query.setFirstResult( ((page - 1) * size)    );
 		query.setFetchSize(size);
 		query.setMaxResults(size);
-		
+
 		@SuppressWarnings("unchecked")
-		List<Post> posts = query.getResultList(); 
-        
-        //List<Post> posts = new ArrayList<Post>();
+		List<Post> posts = query.getResultList();
+
+		// List<Post> posts = new ArrayList<Post>();
 		map.addAttribute("posts", posts);
-		
-        // 전체 카운트 HQL
-        Long postCount = (Long)session.createQuery("select count(p.postId) from Post0 p").getSingleResult();
-        
-        map.addAttribute("paging", CustomPaging.pagination(postCount.longValue(), page, size) );
-        
+
+		// 전체 카운트 HQL
+		Long postCount = (Long) session
+				.createQuery("select count(p.postId) from Post" + board.getTableNumber().toString() + " p")
+				.getSingleResult();
+
+		map.addAttribute("paging", CustomPaging.pagination(postCount.longValue(), page, size));
+
 		return map;
 	}
-	
-	
-	
-	
-	
+
 }

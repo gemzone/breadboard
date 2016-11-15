@@ -43,5 +43,8 @@
 		<mapping resource="io/nzo/booth/model/Comment1.hbm.xml" />
 		<mapping resource="io/nzo/booth/model/Comment2.hbm.xml" />
 		
+		
+		<mapping resource="io/nzo/booth/model/Board.hbm.xml" />
+		
 	</session-factory>
 </hibernate-configuration>

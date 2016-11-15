@@ -54,16 +54,10 @@ public class CustomPaging
 		long nextStepPage = ((((long) Math.ceil((double) currentPage / (double) pageCount)) * pageCount) + 1);
 		
 		// 최하치를 넘으려할경우
-		if( prevStepPage <= 0 )
-		{
-			prevStepPage = 1;
-		}
+		if( prevStepPage <= 0 ) { prevStepPage = 1; }
 
 		// 최대치를 넘길경우
-		if( nextStepPage >= totalPageCount )
-		{
-			nextStepPage = totalPageCount;
-		}
+		if( nextStepPage >= totalPageCount ) { nextStepPage = totalPageCount; }
 		
 		
 //		map.addAttribute("totalCount", totalCount);

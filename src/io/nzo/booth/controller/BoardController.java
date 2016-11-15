@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.neuland.jade4j.lexer.token.Comment;
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
+import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
 import io.nzo.booth.model.User;
 import io.nzo.booth.service.BoardService;
@@ -45,9 +46,11 @@ public class BoardController
 	
 	@ResponseBody
 	@RequestMapping(path = "/list", produces = "text/html")
-	public String list(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page)
+	public String list(Model model, 
+			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
 	{
-		ModelMap map = boardService.findAllWithPaging(1, page, 15);
+		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
 		
 		model.addAttribute("posts", map.get("posts"));
 		model.addAttribute("paging", map.get("paging"));
@@ -57,66 +60,42 @@ public class BoardController
 		return html;
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(path="/list/{page}", produces="text/html")
-//	public String pageList(Model model, 
-//			@PathVariable("page") int page)
-//	{
-//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        
-//    	// comment list
-//    	@SuppressWarnings("unchecked")
-//		List<Post> posts = session.createQuery("from Post0 where boardId = :boardId")
-//    		.setParameter("boardId", 1)
-//    		.getResultList();
-//    	model.addAttribute("posts", posts);
-//    	
-//        model.addAttribute("paging",  boardService.findAll(1, page, 10).get("paging")  );
-//        
-//		JadeTemplate template = JadeConfig.getTemplate("list");
-//		String html = JadeConfig.renderTemplate(template, model.asMap());
-//		return html;
-//		//return JSONObject.valueToString(model); // coArtMapJpaRepository.findAll(pageRequest);
-//	}
-	
-//	@ResponseBody
-//	@RequestMapping(path = "/list/{page}/{size}", produces = "application/json")
-//	public String list(Model model, 
-//			@PathVariable("page") int page,
-//			@PathVariable("size") int size)
-//	{
-//		// Pageable pageable = new PageRequest(page, size, new Sort(Direction.DESC, "rowid"));
-//		
-//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        
-//        model.addAttribute("paging",  boardService.findAll(1, page, 10).get("paging")  );
-//        
-//        System.out.println(String.valueOf(page));
-//        System.out.println(String.valueOf(size));
-//        
-//        
-//        
-//		
-//		return JSONObject.valueToString(model); // coArtMapJpaRepository.findAll(pageRequest);
-//	}
+	@ResponseBody
+	@RequestMapping(path = "/api/list", produces = "application/json")
+	public String listApi(Model model, 
+			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+	{
+		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
+		
+		model.addAttribute("posts", map.get("posts"));
+		model.addAttribute("paging", map.get("paging"));
+		
+		return new JSONObject(model.asMap()).toString();
+	}
 	
 	
 	@ResponseBody
 	@RequestMapping(path = "/view", produces = "text/html")
-	public String view(Model model)
+	public String view(Model model, 
+			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "post_id", required = true) long postId)
 	{
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-
-		Post post = (Post) session.get("Post0", 1L);
+		
+		boardId = 1;
+		
+		Board board = (Board)session.get(Board.class, boardId);
+		
+		Post post = (Post) session.get("Post" + board.getTableNumber().toString(), postId);
 		model.addAttribute("post", post);
-
+		
 		// comment list
 		@SuppressWarnings("unchecked")
-		List<Comment> comments = session.createQuery("from Comment0 where postId = :postId")
-				.setParameter("postId", post.getPostId()).getResultList();
+		List<Comment> comments = session.createQuery("from Comment"+board.getTableNumber().toString()+" where postId = :postId")
+				.setParameter("postId", post.getPostId())
+				.getResultList();
 		model.addAttribute("comments", comments);
 
 		// user
