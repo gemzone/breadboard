@@ -4,18 +4,31 @@ Booth는 공용 Bulletin Board System으로서 개발자와 사용자를 대상�
 
 BBS모듈을 Restful API와 View Template 제공합니다. 
 
-
 ## 개발 및 구축 환경
 
-- SQL Server 2012 (2008+)
+- SQL Server 2016 (2008+)
 - JDK 8+
-- Tomcat 9
+- Tomcat 9+
 
 ## 개발 위키
 
  - http://wiki.nzo.io
+
  
+## 참고자료
+
+- hibernate ORM 5.2.4
+- jade4j 1.2.5
+- hikariCP 2.5.1
+- tinymce 4.4.3
+- angularjs 1.5
+- jquery 3.1.1
+- moment 2.15.2
+- tinymce 4.4.3
+
 ## 라이센스
+
+The GPL License
 
 Copyright (C) 2016 NZO.IO, author 정성훈
 
