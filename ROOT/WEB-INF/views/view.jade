@@ -30,7 +30,7 @@ html(lang='ko')
                         |  #{post.commentCount} Comments
         .row(style="margin-bottom:10px;")
             .col-md-3
-                button.btn.btn-secondary(onclick="location.href='./list';") list
+                button.btn.btn-secondary(ng-click="pageMove();") list
             .col-md-6(style="text-align:center;")
                 
             .col-md-3(style="text-align:right;")
@@ -67,7 +67,7 @@ html(lang='ko')
             
         .row
             .col-md-3
-                button.btn.btn-secondary(onclick="location.href='./list';") list
+                button.btn.btn-secondary(ng-click="pageMove();") list
             .col-md-6(style="text-align:center;")
                 
             .col-md-3(style="text-align:right;")

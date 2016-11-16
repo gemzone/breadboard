@@ -60,19 +60,19 @@ public class BoardController
 		return html;
 	}
 	
-	@ResponseBody
-	@RequestMapping(path = "/api/list", produces = "application/json")
-	public String listApi(Model model, 
-			@RequestParam(value = "board_id", required = true) int boardId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
-	{
-		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
-		
-		model.addAttribute("posts", map.get("posts"));
-		model.addAttribute("paging", map.get("paging"));
-		
-		return new JSONObject(model.asMap()).toString();
-	}
+//	@ResponseBody
+//	@RequestMapping(path = "/api/list", produces = "application/json")
+//	public String listApi(Model model, 
+//			@RequestParam(value = "board_id", required = true) int boardId,
+//			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+//	{
+//		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
+//		
+//		model.addAttribute("posts", map.get("posts"));
+//		model.addAttribute("paging", map.get("paging"));
+//		
+//		return new JSONObject(model.asMap()).toString();
+//	}
 	
 	
 	@ResponseBody
@@ -91,17 +91,17 @@ public class BoardController
 		Post post = (Post) session.get("Post" + board.getTableNumber().toString(), postId);
 		model.addAttribute("post", post);
 		
+		
 		// comment list
-		@SuppressWarnings("unchecked")
-		List<Comment> comments = session.createQuery("from Comment"+board.getTableNumber().toString()+" where postId = :postId")
-				.setParameter("postId", post.getPostId())
-				.getResultList();
+		List<Comment> comments = boardService.commentList(board.getTableNumber(), post.getPostId());
 		model.addAttribute("comments", comments);
-
+		
 		// user
 		User user = (User) session.get(User.class, post.getUserId());
 		model.addAttribute("user", user);
 
+		
+		
 		JadeTemplate template = JadeConfig.getTemplate("view");
 		String html = JadeConfig.renderTemplate(template, model.asMap());
 		return html;

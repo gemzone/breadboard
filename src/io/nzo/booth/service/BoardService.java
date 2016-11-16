@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
+import de.neuland.jade4j.lexer.token.Comment;
 import io.nzo.booth.common.CustomPaging;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.Board;
@@ -40,6 +41,20 @@ public class BoardService
 		return false;
 	}
 
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Comment> commentList(int boardTableNumber, long postId)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		return session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
+			.setParameter("postId", postId)
+			.getResultList();
+	}
+	
+	
+	
 	public ModelMap findAllWithPaging(int boardId, int page, int size)
 	{
 		ModelMap map = new ModelMap();

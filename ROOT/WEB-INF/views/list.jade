@@ -25,7 +25,7 @@ html(lang="ko")
                     tr
                         td #{item.postId}
                         td 
-                            a(href="./view?board_id=#{item.boardId}&post_id=#{item.postId}") #{item.title}
+                            a(href="./view?board_id=#{item.boardId}&post_id=#{item.postId}&page=#{paging.currentPage}") #{item.title}
                         td #{item.hitCount}
                         td #{item.creationTime}
             //tbody(ng-show="!isUndefined(posts)")
@@ -37,7 +37,7 @@ html(lang="ko")
                     td {{item.creationTime}}
         .row
             .col-md-3
-                button.btn.btn-secondary(onclick="location.href='./list';") list
+                button.btn.btn-secondary(ng-click="pageMove();") list
             .col-md-6(style="text-align:center;")
                 nav
                     include ./template/pagination

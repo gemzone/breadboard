@@ -36,11 +36,13 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     };
 
     $scope.pageMove = function(page) {
-
-        location.href='./list?board_id=1&page=' + page;
-
-
-
+        if( page == undefined ) {
+            page = getUrlParameter("page");
+            if( page == undefined ) {
+                page = 1;
+            }
+        }
+        location.href="./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
         // angularjs 
         /*
         $http({

@@ -7,7 +7,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
 
 ## 개발 및 구축 환경
 
-- SQL Server 2008 +
+- SQL Server 2012 (2008+)
 - JDK 8+
 - Tomcat 9
 
