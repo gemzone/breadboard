@@ -2,21 +2,14 @@ package io.nzo.booth.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,64 +40,35 @@ public class BoardController
 	@ResponseBody
 	@RequestMapping(path = "/list", produces = "text/html")
 	public String list(Model model, 
-			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "id", required = true) String id,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
 	{
-		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
+
+		Board board = boardService.getBoard(id);
 		
+		ModelMap map = boardService.findAllWithPaging(board.getBoardId(), page, 15);
+		System.out.println(board.getId());
+		model.addAttribute("board", board);
 		model.addAttribute("posts", map.get("posts"));
 		model.addAttribute("paging", map.get("paging"));
-
+		
 		JadeTemplate template = JadeConfig.getTemplate("list");
 		String html = JadeConfig.renderTemplate(template, model.asMap());
 		return html;
 	}
-	
-	
-	@ResponseBody
-	@RequestMapping(path = "/bbs/", produces = "text/html")
-	public String bbsList(Model model, 
-			@RequestParam(value = "board_id", required = true) int boardId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
-	{
-		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
-		
-		model.addAttribute("posts", map.get("posts"));
-		model.addAttribute("paging", map.get("paging"));
-
-		JadeTemplate template = JadeConfig.getTemplate("list");
-		String html = JadeConfig.renderTemplate(template, model.asMap());
-		return html;
-	}
-	
-	
-//	@ResponseBody
-//	@RequestMapping(path = "/api/list", produces = "application/json")
-//	public String listApi(Model model, 
-//			@RequestParam(value = "board_id", required = true) int boardId,
-//			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
-//	{
-//		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
-//		
-//		model.addAttribute("posts", map.get("posts"));
-//		model.addAttribute("paging", map.get("paging"));
-//		
-//		return new JSONObject(model.asMap()).toString();
-//	}
-	
 	
 	@ResponseBody
 	@RequestMapping(path = "/view", produces = "text/html")
 	public String view(Model model, 
-			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "id", required = true) String id,
 			@RequestParam(value = "post_id", required = true) long postId)
 	{
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		
-		boardId = 1;
+		// Board board = (Board)session.get(Board.class, boardId);
 		
-		Board board = (Board)session.get(Board.class, boardId);
+		Board board = boardService.getBoard(id);
 		
 		Post post = (Post) session.get("Post" + board.getTableNumber().toString(), postId);
 		model.addAttribute("post", post);
@@ -124,6 +88,53 @@ public class BoardController
 		String html = JadeConfig.renderTemplate(template, model.asMap());
 		return html;
 	}
+	
+	
+	
+
+	
+//	@ResponseBody
+//	@RequestMapping(path = "/api/list", produces = "application/json")
+//	public String listWithApi(Model model, 
+//			@RequestParam(value = "board_id", required = true) int boardId,
+//			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+//	{
+//		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
+//		
+//		model.addAttribute("posts", map.get("posts"));
+//		model.addAttribute("paging", map.get("paging"));
+//		
+//		return new JSONObject(model.asMap()).toString();
+//	}
+//	
+//
+//	@ResponseBody
+//	@RequestMapping(path = "/api/view", produces = "application/json")
+//	public String listApi(Model model, 
+//			@RequestParam(value = "board_id", required = true) int boardId,
+//			@RequestParam(value = "post_id", required = true) long postId)
+//	{
+//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//		Session session = sessionFactory.openSession();
+//		
+//		boardId = 1;
+//		
+//		Board board = (Board)session.get(Board.class, boardId);
+//		
+//		Post post = (Post) session.get("Post" + board.getTableNumber().toString(), postId);
+//		model.addAttribute("post", post);
+//		
+//		// comment list
+//		List<Comment> comments = boardService.commentList(board.getTableNumber(), post.getPostId());
+//		model.addAttribute("comments", comments);
+//		
+//		// user
+//		User user = (User) session.get(User.class, post.getUserId());
+//		model.addAttribute("user", user);
+//
+//		
+//		return new JSONObject(model.asMap()).toString();
+//	}
 }
 
 

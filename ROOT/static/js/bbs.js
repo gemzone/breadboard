@@ -1,8 +1,7 @@
-var app = angular.module("booth", [
-        "chieffancypants.loadingBar", "ngAnimate"
-    ]).config(function(cfpLoadingBarProvider) {
-        cfpLoadingBarProvider.includeSpinner = true;
-    });
+var app = angular.module("booth", [ "chieffancypants.loadingBar", "ngAnimate" ])
+    .config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = true;
+});
 
 app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     
@@ -35,28 +34,26 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         });
     };
 
-    $scope.pageMove = function(page) {
+    $scope.pageMove = function(id, page) {
         if( page == undefined ) {
             page = getUrlParameter("page");
             if( page == undefined ) {
                 page = 1;
             }
         }
+        location.href="./list?id=" + getUrlParameter("id") + "&page=" + page;
 
-        //window.location.hash = '#!' + "./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
-        
-        location.href="./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
-        // angularjs 
-        /*
-        $http({
-            method: 'post',
-            url: './api/list?board_id=1&page=' + page,
-            params: {   }
-        }).then(function(response) {
-            $scope.posts = response.data.posts;
-            $scope.paging = response.data.paging;
-        });
-        */
+        // window.location.hash = '#!' + "./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
+        // location.href="./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
+        // angularjs
+        //$http({
+        //    method: 'post',
+        //    url: './api/list?board_id=1&page=' + page,
+        //    params: {   }
+        //}).then(function(response) {
+        //    $scope.posts = response.data.posts;
+        //    $scope.paging = response.data.paging;
+        //});
     };
 
     $scope.start = function() {

@@ -25,6 +25,22 @@ public class BoardService
 {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
+	
+	public Board getBoard(String id) 
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		
+		@SuppressWarnings("rawtypes")
+		Query query = session.createQuery("from Board where id = :id")
+				.setParameter("id", id);
+		query.setFetchSize(1);
+		query.setMaxResults(1);
+		
+		return (Board)query.getSingleResult();
+	}
+	
+	
 	// 글 작성
 	public ModelMap addPost()
 	{
@@ -52,7 +68,6 @@ public class BoardService
 			.setParameter("postId", postId)
 			.getResultList();
 	}
-	
 	
 	
 	public ModelMap findAllWithPaging(int boardId, int page, int size)

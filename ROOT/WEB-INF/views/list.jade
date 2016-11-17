@@ -13,6 +13,8 @@ html(lang="ko")
                 else
                     button.btn.btn-link.fa.fa-sign-in(ng-click="signInModal();") &#32;sign_in
                     button.btn.btn-link(ng-click="signUpModal();") &#32;sign_up
+
+        | #{board.id}
         table.table(style="border-bottom:1px solid #eceeef;")
             thead
                 tr
@@ -25,7 +27,7 @@ html(lang="ko")
                     tr
                         td #{item.postId}
                         td 
-                            a(href="./view?board_id=#{item.boardId}&post_id=#{item.postId}&page=#{paging.currentPage}") #{item.title}
+                            a(href="./view?id=#{board.id}&post_id=#{item.postId}&page=#{paging.currentPage}") #{item.title}
                         td #{item.hitCount}
                         td #{item.creationTime}
             //tbody(ng-show="!isUndefined(posts)")
