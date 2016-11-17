@@ -42,6 +42,9 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
                 page = 1;
             }
         }
+
+        //window.location.hash = '#!' + "./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
+        
         location.href="./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
         // angularjs 
         /*

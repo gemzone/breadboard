@@ -1,8 +1,9 @@
-## booth
+## Booth
 
 Booth는 공용 Bulletin Board System으로서 개발자와 사용자를 대상으로 개발하고있습니다.
 
 BBS모듈을 Restful API와 View Template 제공합니다. 
+
 
 ## 개발 및 구축 환경
 
@@ -15,7 +16,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
  - http://wiki.nzo.io
 
  
-## 참고자료
+## 참고라이브러리
 
 - hibernate ORM 5.2.4
 - jade4j 1.2.5

@@ -60,6 +60,24 @@ public class BoardController
 		return html;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(path = "/bbs/", produces = "text/html")
+	public String bbsList(Model model, 
+			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+	{
+		ModelMap map = boardService.findAllWithPaging(boardId, page, 15);
+		
+		model.addAttribute("posts", map.get("posts"));
+		model.addAttribute("paging", map.get("paging"));
+
+		JadeTemplate template = JadeConfig.getTemplate("list");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
+	
+	
 //	@ResponseBody
 //	@RequestMapping(path = "/api/list", produces = "application/json")
 //	public String listApi(Model model, 
