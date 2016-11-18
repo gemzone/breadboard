@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
 import de.neuland.jade4j.lexer.token.Comment;
-import io.nzo.booth.common.CustomPaging;
+import io.nzo.booth.common.Paging;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
@@ -25,7 +25,7 @@ public class BoardService
 {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	
+	// get board
 	public Board getBoard(String id) 
 	{
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -39,6 +39,54 @@ public class BoardService
 		
 		return (Board)query.getSingleResult();
 	}
+	
+	public Board getBoard(int boardId) 
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		return 	(Board) session.get(Board.class, boardId);
+	}
+	
+	// get posts
+	@SuppressWarnings("unchecked")
+	public List<Post> getPosts(int tableNumber, int page, int size)
+	{
+		if (page <= 0) { page = 1; }
+		if (size <= 0) { size = 15; }
+
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+
+		@SuppressWarnings({ "rawtypes" })
+		Query query = session.createQuery("from Post" + String.valueOf(tableNumber));
+		query.setFirstResult( ((page - 1) * size) );
+		query.setFetchSize(size);
+		query.setMaxResults(size);
+		return query.getResultList();
+	}
+	
+	public Long getPostsTotalCount(int tableNumber) 
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		return (Long) session
+				.createQuery("select count(p.postId) from Post" + String.valueOf(tableNumber) + " p")
+				.getSingleResult();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// 글 작성
@@ -56,8 +104,6 @@ public class BoardService
 		
 		return false;
 	}
-
-	
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> commentList(int boardTableNumber, long postId)
@@ -69,44 +115,15 @@ public class BoardService
 			.getResultList();
 	}
 	
-	
 	public ModelMap findAllWithPaging(int boardId, int page, int size)
 	{
 		ModelMap map = new ModelMap();
-
-		if (page <= 0)
-		{
-			page = 1;
-		}
-		if (size <= 0)
-		{
-			size = 15;
-		}
-
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-
 		Board board = (Board) session.get(Board.class, boardId);
-
-		@SuppressWarnings({ "rawtypes" })
-		Query query = session.createQuery("from Post" + board.getTableNumber().toString());
-		query.setFirstResult( ((page - 1) * size)    );
-		query.setFetchSize(size);
-		query.setMaxResults(size);
-
-		@SuppressWarnings("unchecked")
-		List<Post> posts = query.getResultList();
-
-		// List<Post> posts = new ArrayList<Post>();
-		map.addAttribute("posts", posts);
-
-		// 전체 카운트 HQL
-		Long postCount = (Long) session
-				.createQuery("select count(p.postId) from Post" + board.getTableNumber().toString() + " p")
-				.getSingleResult();
-
-		map.addAttribute("paging", CustomPaging.pagination(postCount.longValue(), page, size));
-
+		map.addAttribute("posts", getPosts(board.getTableNumber(), page, size) );
+		Long postsTotalCount = getPostsTotalCount(board.getTableNumber());
+		map.addAttribute("paging", Paging.pagination(postsTotalCount.longValue(), page, size));
 		return map;
 	}
 

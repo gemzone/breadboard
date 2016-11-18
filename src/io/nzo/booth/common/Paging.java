@@ -11,6 +11,7 @@
  */
 package io.nzo.booth.common;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -20,14 +21,14 @@ import org.slf4j.LoggerFactory;
  * 페이징 계산
  * @author gemzone (gemzone@naver.com)
  */
-public class CustomPaging
+public class Paging
 {
-	public static final Logger logger = LoggerFactory.getLogger(CustomPaging.class);
+	public static final Logger logger = LoggerFactory.getLogger(Paging.class);
 	
 	
-	public static HashMap<String, Long> pagination(long _totalCount, int page, int size) 
+	public static HashMap<String, Object> pagination(long _totalCount, int page, int size) 
 	{
-		HashMap<String, Long> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		
 		//ModelMap map = new ModelMap();
 		
@@ -84,6 +85,14 @@ public class CustomPaging
 		map.put("nextPage", nextPage);
 		map.put("prevStepPage", prevStepPage);
 		map.put("nextStepPage", nextStepPage);
+
+		ArrayList<Long> pages = new ArrayList<>();
+		
+		for( long i = startPage; i <= endPage; i++) 
+		{
+			pages.add(i);
+		}
+		map.put("pages", pages);
 		
 //		map.put("page", currentPage);
 //		map.put("size", listCount);

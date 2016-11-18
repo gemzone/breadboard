@@ -4,7 +4,7 @@ html(lang="ko")
         include ./template/head
     body(ng-app="booth", ng-controller="boothCtrl")
         include ./template/login
-        .row
+        //.row
             .col-md-8
             .col-md-4(style="text-align:right;")
                 if (user)
@@ -13,9 +13,7 @@ html(lang="ko")
                 else
                     button.btn.btn-link.fa.fa-sign-in(ng-click="signInModal();") &#32;sign_in
                     button.btn.btn-link(ng-click="signUpModal();") &#32;sign_up
-
-        | #{board.id}
-        table.table(style="border-bottom:1px solid #eceeef;")
+        table.table.table-hover(style="border-bottom:1px solid #eceeef;")
             thead
                 tr
                     th(style="width:100px;min-width:80px;")  post_id
@@ -23,23 +21,14 @@ html(lang="ko")
                     th(style="width:80px;") view_count
                     th(style="width:200px;") creation_time
             tbody
-                each item in posts
-                    tr
-                        td #{item.postId}
-                        td 
-                            a(href="./view?id=#{board.id}&post_id=#{item.postId}&page=#{paging.currentPage}") #{item.title}
-                        td #{item.hitCount}
-                        td #{item.creationTime}
-            //tbody(ng-show="!isUndefined(posts)")
                 tr(ng-repeat="item in posts")
-                    td {{item.postId}}
-                    td 
-                        a(href="./view?board_id={{item.boardId}}&post_id={{item.postId}}") {{item.title}}
-                    td {{item.hitCount}}
-                    td {{item.creationTime}}
+                    td(ng-bind="item.postId")
+                    td(ng-bind="item.title")
+                    td(ng-bind="item.hitCount")
+                    td(ng-bind="item.creationTime")
         .row
             .col-md-3
-                button.btn.btn-secondary(ng-click="pageMove();") list
+                button.btn.btn-secondary(ng-click="pageMove(board.id, paging.currentPage);") list
             .col-md-6(style="text-align:center;")
                 nav
                     include ./template/pagination

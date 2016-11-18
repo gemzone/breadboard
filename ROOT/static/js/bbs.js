@@ -3,8 +3,8 @@ var app = angular.module("booth", [ "chieffancypants.loadingBar", "ngAnimate" ])
     cfpLoadingBarProvider.includeSpinner = true;
 });
 
-app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
-    
+app.controller("boothCtrl", function ($scope, $http, $timeout, $location, cfpLoadingBar) {
+
     $scope.signOut = function() {
         location.href="./logout";
     };
@@ -35,25 +35,21 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
     };
 
     $scope.pageMove = function(id, page) {
-        if( page == undefined ) {
-            page = getUrlParameter("page");
-            if( page == undefined ) {
-                page = 1;
+        $http({
+            method: "post",
+            url: "./api/list",
+            params: { 
+                id : id,
+                page : page
             }
-        }
-        location.href="./list?id=" + getUrlParameter("id") + "&page=" + page;
-
-        // window.location.hash = '#!' + "./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
-        // location.href="./list?board_id=" + getUrlParameter("board_id") + "&page=" + page;
-        // angularjs
-        //$http({
-        //    method: 'post',
-        //    url: './api/list?board_id=1&page=' + page,
-        //    params: {   }
-        //}).then(function(response) {
-        //    $scope.posts = response.data.posts;
-        //    $scope.paging = response.data.paging;
-        //});
+        }).then(function(response) {
+            $scope.posts = response.data.posts;
+            $scope.paging = response.data.paging;
+            $scope.board = response.data.board;
+            console.log($scope.board);
+            console.log($scope.posts);
+            console.log($scope.paging);
+        });
     };
 
     $scope.start = function() {
@@ -66,24 +62,9 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, cfpLoadingBar) {
         cfpLoadingBar.complete();
     }
 
-    // angularjs 방식
-    //$http({
-    //    method: 'post',
-    //    url: './api/list?board_id=1&page=1',
-    //    params: {   }
-    //}).then(function(response) {
-    //    $scope.posts = response.data.posts;
-    //    $scope.paging = response.data.paging;
-    //});
+    console.log($location);
 
-
-    // fake the initial load so first time users can see it right away:
-    //$scope.start();
-    //$scope.fakeIntro = false;
-    //$timeout(function() {
-    //    $scope.complete();
-    //    $scope.fakeIntro = false;
-    //}, 0);
+    $scope.pageMove("test", 1 );
 });
 
 
