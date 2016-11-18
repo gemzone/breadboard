@@ -65,6 +65,15 @@ public class BoardService
 		return query.getResultList();
 	}
 	
+	public Post getPost(int tableNumber, long postId)
+	{
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		return (Post) session.get("Post" + String.valueOf(tableNumber), postId);
+	}
+	
+	
+	
 	public Long getPostsTotalCount(int tableNumber) 
 	{
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -75,6 +84,15 @@ public class BoardService
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	public List<Comment> getComments(int boardTableNumber, long postId)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		return session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
+			.setParameter("postId", postId)
+			.getResultList();
+	}
 	
 	
 	
@@ -105,15 +123,6 @@ public class BoardService
 		return false;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Comment> commentList(int boardTableNumber, long postId)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
-		return session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
-			.setParameter("postId", postId)
-			.getResultList();
-	}
 	
 	public ModelMap findAllWithPaging(int boardId, int page, int size)
 	{

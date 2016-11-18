@@ -92,31 +92,24 @@ public class BoardController
 		return new JSONObject(model.asMap()).toString();
 	}
 	
-
 	@ResponseBody
 	@RequestMapping(path = "/api/view", produces = "application/json")
 	public String listApi(Model model, 
-			@RequestParam(value = "board_id", required = true) int boardId,
+			@RequestParam(value = "id", required = true) String id,
 			@RequestParam(value = "post_id", required = true) long postId)
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
 		
-		boardId = 1;
+		Post post = boardService.getPost(board.getTableNumber(), postId);
 		
-		Board board = (Board)session.get(Board.class, boardId);
-		
-		Post post = (Post) session.get("Post" + board.getTableNumber().toString(), postId);
 		model.addAttribute("post", post);
 		
-		// comment list
-		List<Comment> comments = boardService.commentList(board.getTableNumber(), post.getPostId());
+		List<Comment> comments = boardService.getComments(board.getTableNumber(), postId);
 		model.addAttribute("comments", comments);
 		
 		// user
-		User user = (User) session.get(User.class, post.getUserId());
-		model.addAttribute("user", user);
-		
+		model.addAttribute("user", userService.getUser(post.getUserId()));
 		return new JSONObject(model.asMap()).toString();
 	}
 }

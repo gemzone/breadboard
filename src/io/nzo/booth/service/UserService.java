@@ -99,12 +99,8 @@ public class UserService
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes" })
-	public ModelMap getUserWithLogin(String username, String password)
+	public User getUserWithLogin(String username, String password)
 	{
-		ModelMap map = new ModelMap();
-		
-		User user = null;
-		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -115,50 +111,46 @@ public class UserService
 			query.setParameter("username", username);
 			query.setParameter("password", password);
 			
-			user = (User)query.getSingleResult();
-			
+			User user = (User)query.getSingleResult();
 			user.setPasswordSha2("");
-			map.addAttribute("user", user);
-			map.addAttribute("success", true);
+			return user;
 		} 
 		catch (NoResultException e)
 		{
-			map.addAttribute("reason", e.getMessage());
-			map.addAttribute("error", 1);
-			map.addAttribute("success", false);
+			return null;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			map.addAttribute("reason", e.getMessage());
-			map.addAttribute("error", 2);
-			map.addAttribute("success", false);
+			return null;
 		}
-		return map;
 	}
 	
 	
-	public ModelMap getUser(Long userId) 
+	public User getUser(Long userId) 
 	{
-		ModelMap map = new ModelMap();
-		
-		User user = null;
+//		ModelMap map = new ModelMap();
+//		
+//		User user = null;
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        try
-		{
-	        user = (User)session.get(User.class, 604L);
-	        map.addAttribute("user", user);
-	        map.addAttribute("success", true);
-		} 
-		catch (NoResultException e)
-		{
-			map.addAttribute("reason", e.getMessage());
-			map.addAttribute("error", 1);
-			map.addAttribute("success", false);
-		}
-		return map;
+        
+        return (User)session.get(User.class, userId);
+//        
+//        try
+//		{
+//	        user = 
+//	        map.addAttribute("user", user);
+//	        map.addAttribute("success", true);
+//		} 
+//		catch (NoResultException e)
+//		{
+//			map.addAttribute("reason", e.getMessage());
+//			map.addAttribute("error", 1);
+//			map.addAttribute("success", false);
+//		}
+//		return map;
 	}
 	
 	

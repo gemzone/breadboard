@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import io.nzo.booth.common.ResultValidation;
+import io.nzo.booth.model.User;
 import io.nzo.booth.service.UserService;
 
 @Controller
@@ -32,23 +33,25 @@ public class UserController
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(path="/login", produces="text/json")
+	@RequestMapping(path="/login", produces="application/json")
 	public String login(@RequestParam(value="username", required=false) String username,
 			@RequestParam(value="password", required=false) String password,
 			Model model, HttpSession session)
 	{
 		if( session.getAttribute("user") != null )		// 세션 확인
 		{
-			model.addAttribute(session.getAttribute("user"));
+			User user = (User)session.getAttribute("user");
+			model.addAttribute(user);
 			//session.setAttribute("user", session.getAttribute("user"));	// JSON
 		}
 		else
 		{
-			ModelMap map = userService.getUserWithLogin(username, password);
-			if( ResultValidation.check(map) ) 
+			User user = userService.getUserWithLogin(username, password);
+			
+			if( user != null ) 
 			{
-				model.addAttribute(map.get("user"));
-				session.setAttribute("user", map.get("user"));									// Object
+				model.addAttribute(user);
+				session.setAttribute("user", user);
 				// 주의 이거 3개 결과가 다름
 				// JSONObject.valueToString(map.get("user"))		
 				// new JSONObject(map.get("user")).toString()
@@ -59,7 +62,7 @@ public class UserController
 			else
 			{
 				session.invalidate();
-				logger.debug( map.get("reason").toString());
+				logger.debug("");
 			}
 		}
     	return JSONObject.valueToString(model);	

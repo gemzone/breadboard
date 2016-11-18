@@ -9,7 +9,6 @@
 	<name>booth</name>
 
 
-
 	<!-- spring framework -->
 	<pluginRepositories>
 		<pluginRepository>
@@ -19,19 +18,6 @@
 	</pluginRepositories>
 
 	<repositories>
-		<repository>
-			<id>saro.public</id>
-			<name>public</name>
-			<url>https://dp-nexus.saro.me/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-
-
 		<!-- spring framework -->
 		<repository>
 			<id>spring-releases</id>
@@ -89,12 +75,6 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>sqljdbc42</artifactId>
-			<version>4.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->

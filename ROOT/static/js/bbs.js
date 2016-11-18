@@ -34,6 +34,7 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, $location, cfpLoa
         });
     };
 
+
     $scope.pageMove = function(id, page) {
         $http({
             method: "post",
@@ -62,15 +63,10 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, $location, cfpLoa
         cfpLoadingBar.complete();
     }
 
-    console.log($location);
+    // console.log($location);
 
-    $scope.pageMove("test", 1 );
+     $scope.pageMove("test", 1 );
 });
-
-
-
-
-
 
 /*
 $(document).on({
