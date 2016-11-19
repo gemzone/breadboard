@@ -14,55 +14,17 @@
     <link href="./static/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <script src="./static/js/angular.min.js"></script>
     <script src="./static/js/angular-animate.min.js"></script>
+    <!-- angular module -->
+    <script src="./static/js/angular-sanitize.js"></script>
+    <script src="./static/js/angular-bind-html-compile.js"></script>
     <script src="./static/js/loading-bar.js"></script>
     <link href="./static/css/loading-bar.css" rel="stylesheet" />
+
     <script src="./static/js/jquery.i18n.properties.js"></script>
     <script src="./static/js/bbs.js"></script>
     <script src="./static/js/common.js"></script>
     <link href="./static/css/bbs-default.css" rel="stylesheet" />
 </head>
-<body ng-app="booth" ng-controller="boothCtrl">
-
-    <table style="border-bottom: 1px solid #eceeef;" class="table table-hover">
-        <thead>
-            <tr>
-                <th style="width: 100px; min-width: 80px;">post_id</th>
-                <th>title</th>
-                <th style="width: 80px;">view_count</th>
-                <th style="width: 200px;">creation_time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="item in posts">
-                <td ng-bind="item.postId"></td>
-                <td>
-                    <a ng-href="" ng-bind="item.title"></a>
-                </td>
-                <td ng-bind="item.hitCount"></td>
-                <td ng-bind="item.creationTime"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="row">
-        <div class="col-md-3">
-            <button ng-click="pageMove(board.id, paging.currentPage);" class="btn btn-secondary">list</button>
-        </div>
-        <div style="text-align: center;" class="col-md-6">
-            <nav>
-                <ul ng-show="!isUndefined(paging)" class="pagination">
-                    <li class="page-item">
-                        <a aria-label="Previous" ng-click="pageMove(board.id, paging.prevStepPage);" class="page-link"><span aria-hidden="true">«</span></a>
-                    </li>
-                    <li ng-repeat="item in paging.pages" ng-class="(paging.currentPage == item ? 'active' : '')" class="page-item"><a ng-click="pageMove(board.id, item);" class="page-link">{{item}} </a></li>
-                    <li class="page-item"><a aria-label="Next" ng-click="pageMove(board.id, paging.nextStepPage);" class="page-link"><span aria-hidden="true">»</span></a></li>
-                </ul>
-
-            </nav>
-        </div>
-        <div style="text-align: right;" class="col-md-3">
-            <button class="btn btn-secondary fa fa-pencil">&#32;write</button>
-        </div>
-    </div>
-
+<body ng-app="booth" ng-controller="boothCtrl" data-ng-init="init()" bind-html-compile="body">
 </body>
 </html>

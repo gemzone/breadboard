@@ -1,36 +1,30 @@
-doctype html
-html(lang="ko")
-    head
-        include ./template/head
-    body(ng-app="booth", ng-controller="boothCtrl")
-        include ./template/login
-        //.row
-            .col-md-8
-            .col-md-4(style="text-align:right;")
-                if (user)
-                    button.btn.btn-link.fa.fa-user(ng-click="userInfo();") &#32;#{user.username}
-                    button.btn.btn-link.fa.fa-sign-out(ng-click="signOut();") &#32;sign_out
-                else
-                    button.btn.btn-link.fa.fa-sign-in(ng-click="signInModal();") &#32;sign_in
-                    button.btn.btn-link(ng-click="signUpModal();") &#32;sign_up
-        table.table.table-hover(style="border-bottom:1px solid #eceeef;")
-            thead
-                tr
-                    th(style="width:100px;min-width:80px;")  post_id
-                    th title
-                    th(style="width:80px;") view_count
-                    th(style="width:200px;") creation_time
-            tbody
-                tr(ng-repeat="item in posts")
-                    td(ng-bind="item.postId")
-                    td(ng-bind="item.title")
-                    td(ng-bind="item.hitCount")
-                    td(ng-bind="item.creationTime")
-        .row
-            .col-md-3
-                button.btn.btn-secondary(ng-click="pageMove(board.id, paging.currentPage);") list
-            .col-md-6(style="text-align:center;")
-                nav
-                    include ./template/pagination
-            .col-md-3(style="text-align:right;")
-                button.btn.btn-secondary.fa.fa-pencil &#32;write
+table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
+    thead
+        tr
+            th(style='width: 100px; min-width: 80px;') post_id
+            th title
+            th(style='width: 80px;') view_count
+            th(style='width: 200px;') creation_time
+    tbody
+        tr(ng-repeat='item in posts')
+            td(ng-bind='item.postId')
+            td
+                a(ng-href="#", ng-click='view(board.id, item.postId);', ng-bind='item.title')
+            td(ng-bind='item.hitCount')
+            td(ng-bind='item.creationTime')
+.row
+    .col-md-3
+        button.btn.btn-secondary(ng-click='pageMove(board.id, paging.currentPage);') list
+    .col-md-6(style='text-align: center;')
+        nav
+            ul.pagination(ng-show='!isUndefined(paging)')
+                li.page-item
+                    a.page-link(aria-label='Previous', ng-click='pageMove(board.id, paging.prevStepPage);')
+                        span(aria-hidden='true') «
+                li.page-item(ng-repeat='item in paging.pages', ng-class="(paging.currentPage == item ? 'active' : '')")
+                    a.page-link(ng-click='pageMove(board.id, item);') {{item}} 
+                li.page-item
+                    a.page-link(aria-label='Next', ng-click='pageMove(board.id, paging.nextStepPage);')
+                        span(aria-hidden='true') »
+    .col-md-3(style='text-align: right;')
+        button.btn.btn-secondary.fa.fa-pencil  write

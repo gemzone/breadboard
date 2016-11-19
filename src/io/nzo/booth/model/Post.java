@@ -17,7 +17,7 @@ public class Post implements Serializable
 	
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	private Long postId;
+	private Long postId = 0L;
 	
 	private Integer boardId;
 	private String uid;

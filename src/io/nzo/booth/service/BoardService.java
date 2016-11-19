@@ -2,6 +2,8 @@ package io.nzo.booth.service;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,23 +30,38 @@ public class BoardService
 	// get board
 	public Board getBoard(String id) 
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
+		Board board = null;
 		
-		@SuppressWarnings("rawtypes")
-		Query query = session.createQuery("from Board where id = :id")
-				.setParameter("id", id);
-		query.setFetchSize(1);
-		query.setMaxResults(1);
-		
-		return (Board)query.getSingleResult();
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			@SuppressWarnings("rawtypes")
+			Query query = session.createQuery("from Board where id = :id")
+					.setParameter("id", id);
+			query.setFetchSize(1);
+			query.setMaxResults(1);
+			
+			board = (Board)query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return board;
 	}
 	
 	public Board getBoard(int boardId) 
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		return 	(Board) session.get(Board.class, boardId);
+		Board board = null;
+		
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			board = (Board) session.get(Board.class, boardId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return board;
 	}
 	
 	// get posts
@@ -53,58 +70,135 @@ public class BoardService
 	{
 		if (page <= 0) { page = 1; }
 		if (size <= 0) { size = 15; }
-
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-
-		@SuppressWarnings({ "rawtypes" })
-		Query query = session.createQuery("from Post" + String.valueOf(tableNumber));
-		query.setFirstResult( ((page - 1) * size) );
-		query.setFetchSize(size);
-		query.setMaxResults(size);
-		return query.getResultList();
+		
+		List<Post> posts = null;
+		
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			@SuppressWarnings({ "rawtypes" })
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber));
+			query.setFirstResult( ((page - 1) * size) );
+			query.setFetchSize(size);
+			query.setMaxResults(size);
+			posts = query.getResultList();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return posts;
 	}
 	
 	public Post getPost(int tableNumber, long postId)
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		return (Post) session.get("Post" + String.valueOf(tableNumber), postId);
+		Post post = null;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			post = (Post) session.get("Post" + String.valueOf(tableNumber), postId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return post;
+	}
+
+	/**
+	 * 다음게시물
+	 * @param tableNumber
+	 * @param postId
+	 * @return
+	 */
+	public Post getNextPost(int tableNumber, long postId)
+	{
+		Post post = null;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			// TODO 여기에 orderby asc 붙이는걸 나중에 다른방법으로 해결해야함
+			@SuppressWarnings({ "rawtypes" })
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId > " + postId + " order by postId asc");
+			query.setFetchSize(1);
+			query.setMaxResults(1);
+
+			post = (Post) query.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			post = new Post();
+			post.setTitle("next_post_not_found");
+			return post;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return post;
 	}
 	
-	
+	/**
+	 * 이전 게시물
+	 * @param tableNumber
+	 * @param postId
+	 * @return
+	 */
+	public Post getPrevPost(int tableNumber, long postId)
+	{
+		Post post = null;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			@SuppressWarnings({ "rawtypes" })
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId < " + postId );
+			query.setFetchSize(1);
+			query.setMaxResults(1);
+
+			post = (Post) query.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			post = new Post();
+			post.setTitle("prev_post_not_found");
+			return post;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return post;
+	}
 	
 	public Long getPostsTotalCount(int tableNumber) 
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		return (Long) session
-				.createQuery("select count(p.postId) from Post" + String.valueOf(tableNumber) + " p")
-				.getSingleResult();
+		Long count = 0L;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			count = (Long) session
+					.createQuery("select count(p.postId) from Post" + String.valueOf(tableNumber) + " p")
+					.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> getComments(int boardTableNumber, long postId)
 	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
-		return session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
-			.setParameter("postId", postId)
-			.getResultList();
+		List<Comment> comments = null;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			comments = session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
+					.setParameter("postId", postId)
+					.getResultList();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return comments;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	// 글 작성

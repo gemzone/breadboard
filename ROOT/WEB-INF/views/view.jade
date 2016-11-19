@@ -1,74 +1,72 @@
-doctype html
-html(lang='ko')
-    head
-        include ./template/head
-    body(ng-app="booth", ng-controller="boothCtrl")
-        include ./template/login
-        .row
-            .col-md-8
-            .col-md-4(style="text-align:right;")
-                button.btn.btn-link.fa.fa-user(onclick="$('#loginModal').modal();") &#32;sign_in
-                //button.btn.btn-link.fa.fa-cog
+.card
+    .card-block
+        h4(style="margin-bottom:0px;", ng-bind="post.title")
+        small(style="float:right;", ng-bind="postUser.creationTime")
+        small(ng-bind="postUser.name")
+        p.card-text(style="margin-top: 1rem;", ng-bind="post.text")
+        br 
+        //p.pull-right
+            span.tag.tag-default keyword
+            |  
+            span.tag.tag-default tag
+            |  
+            span.tag.tag-default post
+        ul.list-inline
+            li.list-inline-item
+                //a(href='#')
+                span.glyphicon.glyphicon-comment(ng-bind="post.commentCount")
+                | &#32;Comments
+.row(style="margin-bottom:10px;")
+    .col-md-3
+        button.btn.btn-secondary(ng-click="list(board.id, paging.currentPage);") list
+    .col-md-6(style="text-align:center;")
+        
+    .col-md-3(style="text-align:right;")
+            button.btn.btn-secondary modify
+            | &#32;
+            button.btn.btn-secondary delete
 
-        .card
-            .card-block
-                h4(style="margin-bottom:0px;") #{post.title}
-                small(style="float:right;") #{user.creationTime}
-                small #{user.name}
-                p.card-text(style="margin-top: 1rem;") #{post.text}
-                br 
-                p.pull-right
-                    span.tag.tag-default keyword
-                    |  
-                    span.tag.tag-default tag
-                    |  
-                    span.tag.tag-default post
-                ul.list-inline
-                    li.list-inline-item
-                        //a(href='#')
-                        span.glyphicon.glyphicon-comment
-                        |  #{post.commentCount} Comments
-        .row(style="margin-bottom:10px;")
-            .col-md-3
-                button.btn.btn-secondary(ng-click="pageMove();") list
-            .col-md-6(style="text-align:center;")
-                
-            .col-md-3(style="text-align:right;")
-                    button.btn.btn-secondary modify
-                    button.btn.btn-secondary delete
-        .card
-            each item in comments
-                .card-block(style="border-bottom:1px solid #e0e0e0;")
-                    small.card-title #{user.name}
-                    small(style="float:right;") #{user.creationTime}
-                    p.card-text #{item.text}
+// commentId:3
+    creationTime:"2016-11-13 21:57:46.553"
+    downCount:0
+    ip:"0:0:0:0:0:ffff:0:0                     "
+    modificationTime:"2016-11-13 21:57:46.553"
+    postId:1
+    text:"ㄴㅇㅍㅇㄴㅍㅇㅍㄴㅇㄴㅍㅍㄴㅇㅍㄴㅇㅍㅇㄴㅍㅇㄴㅍㄴㅇㅍㄴㅇ"
+    uid:"EAC4476B-24FE-401E-959F-D31A0B18D475"
+    upCount:0
+.card
 
-            .card-block
-                | #{user.name}
-                textarea.form-control(style="resize:none;margin-bottom:5px;") text
-                div(style="text-align:right;")
-                    button.btn.btn-secondary comment
-
-        table.table(style="border-bottom:1px solid #eceeef;")
-            tbody
-                tr
-                    td(style="width:100px;") prev_post
-                    td(style="text-align:left;")
-                        a(href="#") text link
-                    td(style="width:150px;") 1234
-                    td(style="text-align:right;width:200px;") 2016-01-01 11:00:00
-                tr
-                    td(style="width:100px;") next_post
-                    td(style="text-align:left;")
-                        a(href="#") text link
-                    td(style="width:150px;") 1234
-                    td(style="text-align:right;width:200px;") 2016-01-01 11:00:00
-        div
-            
-        .row
-            .col-md-3
-                button.btn.btn-secondary(ng-click="pageMove();") list
-            .col-md-6(style="text-align:center;")
-                
-            .col-md-3(style="text-align:right;")
-                button.btn.btn-secondary.fa.fa-pencil &#32;write
+    .card-block(style="border-bottom:1px solid #e0e0e0;", ng-repeat="item in postComments")
+        small.card-title user.name
+        small(style="float:right;", ng-bind="item.creationTime")
+        p.card-text(ng-bind="item.text")
+    // session user 잇어야함
+    //.card-block
+        span(ng-bind="user.name")
+        textarea.form-control(style="resize:none;margin-bottom:5px;") text
+        div(style="text-align:right;")
+            button.btn.btn-secondary comment
+table.table(style="border-bottom:1px solid #eceeef;")
+    tbody
+        tr(ng-show="nextPost.postId > 0")
+            td(style="width:100px;", ng-bind="nextPost.postId") 
+            td(style="text-align:left;")
+                a(ng-href="#", ng-click='view(board.id, nextPost.postId);', ng-bind="nextPost.title")
+            td(style="width:150px;") name 
+            td(style="text-align:right;width:200px;", ng-bind="nextPost.creationTime") 
+        tr(ng-show="prevPost.postId > 0")
+            td(style="width:100px;", ng-bind="prevPost.postId") 
+            td(style="text-align:left;")
+                a(href="#", ng-click="view(board.id, prevPost.postId);", ng-bind="prevPost.title") text link
+            td(style="width:150px;") name 
+            td(style="text-align:right;width:200px;", ng-bind="prevPost.creationTime") 
+div
+    
+.row
+    .col-md-3
+        button.btn.btn-secondary(ng-click="list(board.id, paging.currentPage);") list
+    .col-md-6(style="text-align:center;")
+        
+    .col-md-3(style="text-align:right;")
+        button.btn.btn-secondary.fa.fa-pencil &#32;write

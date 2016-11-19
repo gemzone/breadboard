@@ -40,39 +40,23 @@ public class BoardController
 	BoardService boardService;
 	
 	
-//	@ResponseBody
-//	@RequestMapping(path = "/list", produces = "text/html")
-//	public String list(Model model) 
-	//, 
-		//	@RequestParam(value = "id", required = true) String id,
-			//@RequestParam(value = "page", required = false, defaultValue = "1") int page)
-//	{
-//		Board board = boardService.getBoard(id);
-		
-//		ModelMap map = boardService.findAllWithPaging(board.getBoardId(), page, 15);
-//		
-//		// Paging.pagination(postsTotalCount.longValue(), page, size)
-//		
-//		System.out.println(board.getId());
-//		model.addAttribute("board", board);
-//		model.addAttribute("posts", map.get("posts"));
-//		model.addAttribute("paging", map.get("paging"));
-		
-//		JadeTemplate template = JadeConfig.getTemplate("list");
-//		String html = JadeConfig.renderTemplate(template, model.asMap());
-//		return html;
-//	}
+	@ResponseBody
+	@RequestMapping(path = "/list", produces = "text/html")
+	public String list(Model model) 
+	{
+		JadeTemplate template = JadeConfig.getTemplate("list");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
 	
-//	@ResponseBody
-//	@RequestMapping(path = "/view", produces = "text/html")
-//	public String view(Model model, 
-//			@RequestParam(value = "id", required = true) String id,
-//			@RequestParam(value = "post_id", required = true) long postId)
-//	{
-//		JadeTemplate template = JadeConfig.getTemplate("view");
-//		String html = JadeConfig.renderTemplate(template, model.asMap());
-//		return html;
-//	}
+	@ResponseBody
+	@RequestMapping(path = "/view", produces = "text/html")
+	public String view(Model model)
+	{
+		JadeTemplate template = JadeConfig.getTemplate("view");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
 	
 	
 	@ResponseBody
@@ -96,7 +80,7 @@ public class BoardController
 	@RequestMapping(path = "/api/view", produces = "application/json")
 	public String listApi(Model model, 
 			@RequestParam(value = "id", required = true) String id,
-			@RequestParam(value = "post_id", required = true) long postId)
+			@RequestParam(value = "postId", required = true) long postId)
 	{
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
@@ -106,27 +90,14 @@ public class BoardController
 		model.addAttribute("post", post);
 		
 		List<Comment> comments = boardService.getComments(board.getTableNumber(), postId);
-		model.addAttribute("comments", comments);
+		model.addAttribute("postComments", comments);
 		
 		// user
-		model.addAttribute("user", userService.getUser(post.getUserId()));
+		model.addAttribute("postUser", userService.getUser(post.getUserId()));
+		
+		model.addAttribute("nextPost", boardService.getNextPost(board.getTableNumber(), postId));
+		model.addAttribute("prevPost", boardService.getPrevPost(board.getTableNumber(), postId));
+		
 		return new JSONObject(model.asMap()).toString();
 	}
 }
-
-
-//SELECT COUNT(p.id) AS col_0_0_
-//FROM   Person p
-
-//assertTrue(((Number) entityManager
-//	    .createQuery("select count(id) from Person")
-//	    .getSingleResult()).intValue() == 0);
-
-
-
-// Query q = s.createFilter( collection, "" ); // the trivial filter
-// q.setMaxResults(PAGE_SIZE);
-// q.setFirstResult(PAGE_SIZE * pageNumber);
-// List page = q.list();
-
-

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 
+	<Resources cachingAllowed="true" cacheMaxSize="100000" />
+
 	<!-- session presistent config -->
 	<!-- gz_user_connection -->
     <Resource auth="Container"

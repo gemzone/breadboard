@@ -85,9 +85,8 @@ public class Paging
 		map.put("nextPage", nextPage);
 		map.put("prevStepPage", prevStepPage);
 		map.put("nextStepPage", nextStepPage);
-
-		ArrayList<Long> pages = new ArrayList<>();
 		
+		ArrayList<Long> pages = new ArrayList<>();
 		for( long i = startPage; i <= endPage; i++) 
 		{
 			pages.add(i);
