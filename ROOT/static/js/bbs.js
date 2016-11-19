@@ -4,12 +4,22 @@ var app = angular.module("booth", [ "chieffancypants.loadingBar", "ngAnimate", "
 });
 
 app.controller("boothCtrl", function ($scope, $http, $timeout, $location, $sce, cfpLoadingBar) {
+    $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
     // in controller
     $scope.init = function () {
         $scope.view("test", 1);
   //  $scope.list("test", 1);
     };
+
+
+    $scope.write = function(id, postId) {
+        $http.get("./write").success(function(response, status, headers, config) {
+            $scope.body = $sce.trustAsHtml(response);
+        }).error(function(err, status, headers, config){
+        });
+    };
+
 
     $scope.view = function(id, postId) {
         $http.get("./view").success(function(response, status, headers, config) {
@@ -19,14 +29,31 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, $location, $sce, 
         $scope.pageView.apply(this, arguments);
     };
 
+
     $scope.list = function(id, page){
         $http.get("./list").success(function(response, status, headers, config) {
-            $scope.body = $sce.trustAsHtml(response);    
+            $scope.body = $sce.trustAsHtml(response);
         }).error(function(err, status, headers, config){
         });
         $scope.pageMove.apply(this, arguments);
     };
-    
+
+    $scope.addPost = function(id) {
+        tinyMCE.triggerSave();
+        $.ajax({
+            type: "post",
+            url: "./addPost",
+            data: { 
+                    id : "test",
+                    title : $("#postTitle").val(), 
+                    text : $("#postText").val()
+            }, success:function(data){
+                $scope.list(id, 1);
+            }
+        });
+    };
+
+
     $scope.signOut = function() {
         location.href="./logout";
     };
@@ -83,8 +110,12 @@ app.controller("boothCtrl", function ($scope, $http, $timeout, $location, $sce, 
             params: { id : id, postId : postId }
         }).then(function(response) {
             $scope.board = response.data.board;
+            
+            
 
             $scope.post = response.data.post;
+            $scope.postTextHtml = $sce.trustAsHtml(response.data.post.text);
+
             $scope.postComments = response.data.postComments;
 
             $scope.nextPost = response.data.nextPost;

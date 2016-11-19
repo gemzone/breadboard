@@ -6,6 +6,8 @@ import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import io.nzo.booth.common.Paging;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
+import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 
 // Board, Post, Comment
@@ -202,10 +205,38 @@ public class BoardService
 	
 	
 	// 글 작성
-	public ModelMap addPost()
+	public boolean addPost(String id, Long userId, int categoryId, boolean notice, boolean secret, String title, String text, String attachment, String link, String ip)
 	{
+
+		Board board = getBoard(id);
 		
-		return null;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "INSERT INTO gz_post" + board.getTableNumber().toString() + " (board_id, uid, user_id, category_id, notice, secret, title, text, attachment, link, ip) " +
+			     " VALUES (:board_id, NEWID(), :user_id, :category_id, :notice, :secret, :title, :text, :attachment, :link, :ip) ";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("board_id", board.getBoardId());
+			query.setParameter("user_id", null);
+			query.setParameter("category_id", categoryId);
+			query.setParameter("notice", notice);
+			query.setParameter("secret", secret);
+			query.setParameter("title", title);
+			query.setParameter("text", text);
+			query.setParameter("attachment", attachment);
+			query.setParameter("link", link);
+			query.setParameter("ip", ip);
+			
+			System.out.println("hibernate executeUpdate: " + query.executeUpdate() );
+			
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	// 글 삭제

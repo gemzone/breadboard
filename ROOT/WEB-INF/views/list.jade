@@ -27,4 +27,4 @@ table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
                     a.page-link(aria-label='Next', ng-click='pageMove(board.id, paging.nextStepPage);')
                         span(aria-hidden='true') »
     .col-md-3(style='text-align: right;')
-        button.btn.btn-secondary.fa.fa-pencil  write
+        button.btn.btn-secondary.fa.fa-pencil(ng-click="write();") &#32;write

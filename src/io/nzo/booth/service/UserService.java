@@ -42,15 +42,11 @@ public class UserService
 		// TODO
 		// ModelMap 으로 예외 처리해야함
 		ModelMap map = new ModelMap();
-		
     	User user = null;
-    	
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-
-		Transaction tx = session.beginTransaction();
-		try
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
+
+			Transaction tx = session.beginTransaction();
 			Long newIdentity = 0L;
 	        {
 	        	NativeQuery query = session.createNativeQuery("SELECT (ISNULL(MAX([user_id]), 0) + 1) FROM gz_user");
@@ -79,7 +75,6 @@ public class UserService
 			map.addAttribute("reason", e.getMessage());
 			map.addAttribute("error", 1);
 			map.addAttribute("success", false);
-			tx.rollback();
 		}
 		catch (Exception e)
 		{
@@ -87,7 +82,6 @@ public class UserService
 			map.addAttribute("reason", e.getMessage());
 			map.addAttribute("error", 2);
 			map.addAttribute("success", false);
-			tx.rollback();
 		}
 		return map;
 	}
@@ -101,10 +95,7 @@ public class UserService
 	@SuppressWarnings({ "rawtypes" })
 	public User getUserWithLogin(String username, String password)
 	{
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-
-		try
+        try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			String sql = "SELECT TOP 1 u.* FROM gz_user u WHERE u.username=:username AND u.password_sha2=HASHBYTES('SHA2_512',:password) "; 
 			NativeQuery query = session.createNativeQuery(sql, User.class);
@@ -117,44 +108,38 @@ public class UserService
 		} 
 		catch (NoResultException e)
 		{
-			return null;
+			return new User();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return null;
+			return new User();
 		}
 	}
 	
-	
 	public User getUser(Long userId) 
 	{
-//		ModelMap map = new ModelMap();
-//		
-//		User user = null;
-		
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        
-        return (User)session.get(User.class, userId);
-//        
-//        try
-//		{
-//	        user = 
-//	        map.addAttribute("user", user);
-//	        map.addAttribute("success", true);
-//		} 
-//		catch (NoResultException e)
-//		{
-//			map.addAttribute("reason", e.getMessage());
-//			map.addAttribute("error", 1);
-//			map.addAttribute("success", false);
-//		}
-//		return map;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+        	if( userId == null )
+        	{
+        		return new User();
+        	} 
+        	else 
+        	{
+        		return (User)session.get(User.class, userId);
+        	}
+		} 
+		catch (NoResultException e)
+		{
+			return new User();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return new User();
+		}
 	}
-	
-	
-	
 	
 	
 //	private final UserJpaRepository userJpaRepository;

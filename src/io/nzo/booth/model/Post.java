@@ -21,19 +21,19 @@ public class Post implements Serializable
 	
 	private Integer boardId;
 	private String uid;
-	private Long virtualId;
-	private Long userId;
-	private Integer categoryId;
-	private Boolean notice;
-	private Boolean secret;
-	private String title;
-	private String text;
-	private String attachment;
-	private String link;
-	private String ip;
-	private Integer hitCount;
-	private Integer upCount;
-	private Integer downCount;
+	private Long virtualId = 0L;
+	private Long userId = null;
+	private Integer categoryId = 1;
+	private Boolean notice = false;
+	private Boolean secret = false;
+	private String title = "";
+	private String text = "";
+	private String attachment = "";
+	private String link = "";
+	private String ip = "0:0:0:0:0:ffff:0:0";
+	private Integer hitCount = 0;
+	private Integer upCount = 0;
+	private Integer downCount = 0;
 	
 	private Integer commentCount;
 	

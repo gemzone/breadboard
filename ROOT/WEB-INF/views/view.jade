@@ -3,7 +3,7 @@
         h4(style="margin-bottom:0px;", ng-bind="post.title")
         small(style="float:right;", ng-bind="postUser.creationTime")
         small(ng-bind="postUser.name")
-        p.card-text(style="margin-top: 1rem;", ng-bind="post.text")
+        p.card-text(style="margin-top: 1rem;", bind-html-compile="post.postTextHtml")
         br 
         //p.pull-right
             span.tag.tag-default keyword
@@ -40,7 +40,7 @@
     .card-block(style="border-bottom:1px solid #e0e0e0;", ng-repeat="item in postComments")
         small.card-title user.name
         small(style="float:right;", ng-bind="item.creationTime")
-        p.card-text(ng-bind="item.text")
+        p.card-text(ng-bind-html="item.text")
     // session user 잇어야함
     //.card-block
         span(ng-bind="user.name")
@@ -69,4 +69,4 @@ div
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")
-        button.btn.btn-secondary.fa.fa-pencil &#32;write
+        button.btn.btn-secondary.fa.fa-pencil(ng-click="write();") &#32;write

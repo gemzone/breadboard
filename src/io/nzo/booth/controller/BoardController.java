@@ -2,20 +2,19 @@ package io.nzo.booth.controller;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import de.neuland.jade4j.lexer.token.Comment;
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
@@ -25,7 +24,6 @@ import io.nzo.booth.model.Post;
 import io.nzo.booth.model.User;
 import io.nzo.booth.service.BoardService;
 import io.nzo.booth.service.UserService;
-import io.nzo.orm.HibernateUtil;
 
 @Controller
 @SessionAttributes("user")
@@ -39,6 +37,14 @@ public class BoardController
 	@Autowired
 	BoardService boardService;
 	
+	@ResponseBody
+	@RequestMapping(path = "/board", produces = "text/html")
+	public String board(Model model) 
+	{
+		JadeTemplate template = JadeConfig.getTemplate("board");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
 	
 	@ResponseBody
 	@RequestMapping(path = "/list", produces = "text/html")
@@ -56,6 +62,33 @@ public class BoardController
 		JadeTemplate template = JadeConfig.getTemplate("view");
 		String html = JadeConfig.renderTemplate(template, model.asMap());
 		return html;
+	}
+	
+	@ResponseBody
+	@RequestMapping(path = "/write", produces = "text/html")
+	public String write(Model model)
+	{
+		JadeTemplate template = JadeConfig.getTemplate("write");
+		String html = JadeConfig.renderTemplate(template, model.asMap());
+		return html;
+	}
+	
+
+	@ResponseBody
+	@RequestMapping(path = "/addPost", method = RequestMethod.POST, produces = "application/json")
+	public String addPost(Model model,
+			HttpSession session,
+			@RequestParam(value = "id", required = true ) String id,
+			@RequestParam(value = "title", required = false, defaultValue = "") String title,
+			@RequestParam(value = "text", required = false, defaultValue = "") String text)
+	{
+		if( title.length() > 250 ) {
+			title = title.substring(0, 250);
+		}
+		
+		//User user = (User) session.getAttribute("user");
+		boardService.addPost(id, 0L, 1, false, false, title, text, "", "", "");
+		return new JSONObject().toString();
 	}
 	
 	
