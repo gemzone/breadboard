@@ -18,23 +18,13 @@
                 | &#32;Comments
 .row(style="margin-bottom:10px;")
     .col-md-3
-        button.btn.btn-secondary(ng-click="pageMove(board.id, paging.currentPage);") list
+        button.btn.btn-secondary(ng-click="pagePosts(board.id);") list
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")
-            button.btn.btn-secondary modify
-            | &#32;
+            //button.btn.btn-secondary modify
+            //| &#32;
             button.btn.btn-secondary delete
-
-// commentId:3
-    creationTime:"2016-11-13 21:57:46.553"
-    downCount:0
-    ip:"0:0:0:0:0:ffff:0:0                     "
-    modificationTime:"2016-11-13 21:57:46.553"
-    postId:1
-    text:"ㄴㅇㅍㅇㄴㅍㅇㅍㄴㅇㄴㅍㅍㄴㅇㅍㄴㅇㅍㅇㄴㅍㅇㄴㅍㄴㅇㅍㄴㅇ"
-    uid:"EAC4476B-24FE-401E-959F-D31A0B18D475"
-    upCount:0
 .card
 
     .card-block(style="border-bottom:1px solid #e0e0e0;", ng-repeat="item in postComments")
@@ -52,20 +42,18 @@ table.table(style="border-bottom:1px solid #eceeef;")
         tr(ng-show="nextPost.postId > 0")
             td(style="width:100px;", ng-bind="nextPost.postId") 
             td(style="text-align:left;")
-                a(ng-href="#!", ng-click='view(board.id, nextPost.postId);', ng-bind="nextPost.title")
+                a(ng-href="#!/view?id={{board.id}}&page={{page}}&postId={{nextPost.postId}}", ng-bind="nextPost.title")
             td(style="width:150px;") name 
             td(style="text-align:right;width:200px;", ng-bind="nextPost.creationTime") 
         tr(ng-show="prevPost.postId > 0")
             td(style="width:100px;", ng-bind="prevPost.postId") 
             td(style="text-align:left;")
-                a(href="#", ng-click="view(board.id, prevPost.postId);", ng-bind="prevPost.title") text link
+                a(ng-href="#!/view?id={{board.id}}&page={{page}}&postId={{prevPost.postId}}", ng-bind="prevPost.title") text link
             td(style="width:150px;") name 
             td(style="text-align:right;width:200px;", ng-bind="prevPost.creationTime") 
-div
-    
 .row
     .col-md-3
-        button.btn.btn-secondary(ng-click="pageMove(board.id, paging.currentPage);") list
+        button.btn.btn-secondary(ng-click="pagePosts(board.id);") list
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")

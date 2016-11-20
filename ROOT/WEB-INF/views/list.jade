@@ -1,4 +1,3 @@
-
 table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
     thead
         tr
@@ -10,7 +9,7 @@ table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
         tr(ng-repeat='item in posts')
             td(ng-bind='item.postId')
             td
-                a(ng-href="#!/view", ng-click='pageView(board.id, item.postId);', ng-bind='item.title')
+                a(ng-href="#!/view?id={{board.id}}&page={{paging.currentPage}}&postId={{item.postId}}", ng-bind='item.title')
             td(ng-bind='item.hitCount')
             td(ng-bind='item.creationTime')
 .row
@@ -28,4 +27,4 @@ table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
                     a.page-link(aria-label='Next', ng-click='list(board.id, paging.nextStepPage);')
                         span(aria-hidden='true') »
     .col-md-3(style='text-align: right;')
-        button.btn.btn-secondary.fa.fa-pencil(ng-click="write();") &#32;write
+        button.btn.btn-secondary.fa.fa-pencil(ng-click="write(board.id);") &#32;write

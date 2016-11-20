@@ -3,6 +3,7 @@ package io.nzo.booth.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,62 +40,59 @@ public class BoardController
 	BoardService boardService;
 	
 	@ResponseBody
-	@RequestMapping(path = "/board", produces = "text/html")
+	@RequestMapping(path = "/board", produces = MediaType.TEXT_HTML)
 	public String board(Model model) 
 	{
 		JadeTemplate template = JadeConfig.getTemplate("board");
-		String html = JadeConfig.renderTemplate(template, model.asMap());
-		return html;
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/view/list", produces = "text/html")
+	@RequestMapping(path = "/e/list", produces = MediaType.TEXT_HTML)
 	public String list(Model model) 
 	{
 		JadeTemplate template = JadeConfig.getTemplate("list");
-		String html = JadeConfig.renderTemplate(template, model.asMap());
-		return html;
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/view/view", produces = "text/html")
+	@RequestMapping(path = "/e/view", produces = MediaType.TEXT_HTML)
 	public String view(Model model)
 	{
 		JadeTemplate template = JadeConfig.getTemplate("view");
-		String html = JadeConfig.renderTemplate(template, model.asMap());
-		return html;
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/view/write", produces = "text/html")
+	@RequestMapping(path = "/e/write", produces = MediaType.TEXT_HTML)
 	public String write(Model model)
 	{
 		JadeTemplate template = JadeConfig.getTemplate("write");
-		String html = JadeConfig.renderTemplate(template, model.asMap());
-		return html;
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	
 	@ResponseBody
-	@RequestMapping(path = "/addPost", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(path = "/gz/postAdd", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON )
 	public String addPost(Model model,
 			HttpSession session,
 			@RequestParam(value = "id", required = true ) String id,
-			@RequestParam(value = "title", required = false, defaultValue = "") String title,
-			@RequestParam(value = "text", required = false, defaultValue = "") String text)
+			@RequestParam(value = "title", required = false) String title,
+			@RequestBody(required = false) String text)
 	{
 		if( title.length() > 250 ) {
 			title = title.substring(0, 250);
 		}
+		// TODO 이부분 해결안됨
 		
 		//User user = (User) session.getAttribute("user");
-		boardService.addPost(id, 0L, 1, false, false, title, text, "", "", "");
+		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
 		return new JSONObject().toString();
 	}
 	
 	
 	@ResponseBody
-	@RequestMapping(path = "/api/list", produces = "application/json")
+	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
 	public String listWithApi(Model model, 
 			@RequestParam(value = "id", required = true) String id,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
@@ -110,7 +109,7 @@ public class BoardController
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/api/view", produces = "application/json")
+	@RequestMapping(path = "/gz/view", produces = MediaType.APPLICATION_JSON)
 	public String listApi(Model model, 
 			@RequestParam(value = "id", required = true) String id,
 			@RequestParam(value = "postId", required = true) long postId)
@@ -133,4 +132,28 @@ public class BoardController
 		
 		return new JSONObject(model.asMap()).toString();
 	}
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(path = "/gz/board", produces = MediaType.APPLICATION_JSON)
+	public String listApi(Model model, 
+			@RequestParam(value = "id", required = true) String id)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		return new JSONObject(model.asMap()).toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
