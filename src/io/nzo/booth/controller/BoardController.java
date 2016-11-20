@@ -47,7 +47,7 @@ public class BoardController
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/list", produces = "text/html")
+	@RequestMapping(path = "/view/list", produces = "text/html")
 	public String list(Model model) 
 	{
 		JadeTemplate template = JadeConfig.getTemplate("list");
@@ -56,7 +56,7 @@ public class BoardController
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/view", produces = "text/html")
+	@RequestMapping(path = "/view/view", produces = "text/html")
 	public String view(Model model)
 	{
 		JadeTemplate template = JadeConfig.getTemplate("view");
@@ -65,7 +65,7 @@ public class BoardController
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/write", produces = "text/html")
+	@RequestMapping(path = "/view/write", produces = "text/html")
 	public String write(Model model)
 	{
 		JadeTemplate template = JadeConfig.getTemplate("write");
@@ -73,7 +73,7 @@ public class BoardController
 		return html;
 	}
 	
-
+	
 	@ResponseBody
 	@RequestMapping(path = "/addPost", method = RequestMethod.POST, produces = "application/json")
 	public String addPost(Model model,
