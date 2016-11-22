@@ -40,11 +40,25 @@ public class BoardController
 	BoardService boardService;
 	
 	@ResponseBody
-	@RequestMapping(path = "/board", produces = MediaType.TEXT_HTML)
-	public String board(Model model) 
+	@RequestMapping(path = "/board")
+	public String board(Model model, 
+			@RequestParam(value = "spf", required = false ) String spf)
 	{
-		JadeTemplate template = JadeConfig.getTemplate("board");
-		return JadeConfig.renderTemplate(template, model.asMap());
+		if( "navigate".equals(spf) )
+		{
+			JadeTemplate template = JadeConfig.getTemplate("board");
+			
+			
+			
+			
+			return new JSONObject().put("title", "test").toString();
+		}
+		else
+		{
+			JadeTemplate template = JadeConfig.getTemplate("board");
+			return JadeConfig.renderTemplate(template, model.asMap());
+		}
+		
 	}
 	
 	@ResponseBody
