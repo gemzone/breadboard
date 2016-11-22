@@ -1,16 +1,15 @@
 package io.nzo.booth.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +22,6 @@ import io.nzo.booth.JadeConfig;
 import io.nzo.booth.common.Paging;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
-import io.nzo.booth.model.User;
 import io.nzo.booth.service.BoardService;
 import io.nzo.booth.service.UserService;
 
@@ -33,40 +31,44 @@ public class BoardController
 {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@Autowired
-	UserService userService;
+	String url = "http://127.0.0.1:8080";
+	String app = "booth";
 	
-	@Autowired
-	BoardService boardService;
+	
+	@Autowired UserService userService;
+	@Autowired BoardService boardService;
 	
 	@ResponseBody
-	@RequestMapping(path = "/board")
-	public String board(Model model, 
-			@RequestParam(value = "spf", required = false ) String spf)
+	@RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
+	public String board(Model model, @PathVariable("id") String id)
 	{
-		if( "navigate".equals(spf) )
-		{
-			JadeTemplate template = JadeConfig.getTemplate("board");
-			
-			
-			
-			
-			return new JSONObject().put("title", "test").toString();
-		}
-		else
-		{
-			JadeTemplate template = JadeConfig.getTemplate("board");
-			return JadeConfig.renderTemplate(template, model.asMap());
-		}
-		
+		model.addAttribute("url", url);
+		model.addAttribute("app", app);
+		model.addAttribute("id", id);
+		JadeTemplate template = JadeConfig.getTemplate("board");
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/e/list", produces = MediaType.TEXT_HTML)
-	public String list(Model model) 
+	@RequestMapping(path = "/{id}/list", produces = MediaType.TEXT_HTML)
+	public String list(Model model,
+			@PathVariable("id") String id,
+			@RequestParam(value = "spf", required = false ) String spf) 
 	{
-		JadeTemplate template = JadeConfig.getTemplate("list");
-		return JadeConfig.renderTemplate(template, model.asMap());
+		String head = JadeConfig.renderTemplate(JadeConfig.getTemplate("head"), model.asMap());
+		String board = JadeConfig.renderTemplate(JadeConfig.getTemplate("list"), model.asMap());	// board = id
+		if( "navigate".equals(spf) ) 
+		{
+			JSONObject json = new JSONObject();
+			json.put("title", "게시물 목록");
+			json.put("head", head);
+			json.put("body", new JSONObject().put(id, board));
+			return json.toString();
+		}
+		else
+		{
+			return "";
+		}
 	}
 	
 	@ResponseBody
