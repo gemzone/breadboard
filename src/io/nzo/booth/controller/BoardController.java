@@ -88,9 +88,10 @@ public class BoardController
 	}
 	
 	
+	// add / modify
 	@ResponseBody
-	@RequestMapping(path = "/gz/postAdd", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON )
-	public String addPost(Model model,
+	@RequestMapping(path = "/gz/post", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON )
+	public String setPostAdd(Model model,
 			HttpSession session,
 			@RequestParam(value = "id", required = true ) String id,
 			@RequestParam(value = "title", required = false) String title,
@@ -105,6 +106,48 @@ public class BoardController
 		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
 		return new JSONObject().toString();
 	}
+	
+	
+	// remove
+	@ResponseBody
+	@RequestMapping(path = "/gz/post", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON )
+	public String setPostRemove(Model model,
+			HttpSession session,
+			@RequestParam(value = "id", required = true ) String id,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestBody(required = false) String text)
+	{
+		if( title.length() > 250 ) {
+			title = title.substring(0, 250);
+		}
+		// TODO 이부분 해결안됨
+		
+		//User user = (User) session.getAttribute("user");
+		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
+		return new JSONObject().toString();
+	}
+	
+	
+
+	// get
+	@ResponseBody
+	@RequestMapping(path = "/gz/post", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON )
+	public String getPost(Model model,
+			HttpSession session,
+			@RequestParam(value = "id", required = true ) String id,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestBody(required = false) String text)
+	{
+		if( title.length() > 250 ) {
+			title = title.substring(0, 250);
+		}
+		// TODO 이부분 해결안됨
+		
+		//User user = (User) session.getAttribute("user");
+		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
+		return new JSONObject().toString();
+	}
+	
 	
 	
 	@ResponseBody
