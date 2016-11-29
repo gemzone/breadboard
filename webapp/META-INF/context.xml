@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 
-    <context:property-placeholder location="classpath:application.properties"/>
-
-
-
+	<!-- white list 
+	<Valve allow="10.1.1.126|123.123.123.*" className="org.apache.catalina.valves.RemoteAddrValve"/>
+	-->
 	<Resources cachingAllowed="true" cacheMaxSize="100000" />
 
 	<!-- session presistent config -->

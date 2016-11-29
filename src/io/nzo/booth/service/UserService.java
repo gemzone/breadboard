@@ -37,8 +37,7 @@ public class UserService
 	@SuppressWarnings({ "rawtypes" })
 	public ModelMap addUser(String username, String password, String name, String email, String comment)
 	{
-		// TODO
-		// ModelMap 으로 예외 처리해야함
+		// TODO ModelMap 으로 예외 처리해야함
 		ModelMap map = new ModelMap();
     	User user = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )

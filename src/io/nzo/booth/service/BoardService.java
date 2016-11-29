@@ -12,7 +12,9 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 
 import de.neuland.jade4j.lexer.token.Comment;
 import io.nzo.booth.common.Paging;
@@ -24,7 +26,8 @@ import io.nzo.orm.HibernateUtil;
 
 // Board, Post, Comment
 
-
+@Service
+@Validated
 @Component
 public class BoardService
 {
@@ -209,9 +212,10 @@ public class BoardService
 	
 	
 	// 글 작성
-	public boolean postAdd(String id, Long userId, int categoryId, boolean notice, boolean secret, String title, String text, String attachment, String link, String ip)
+	public boolean postAdd(String id, Post post)
 	{
-
+		// Long userId, int categoryId, boolean notice, boolean secret, String title, String text, String attachment, String link, String ip
+		
 		Board board = getBoard(id);
 		
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
@@ -223,14 +227,14 @@ public class BoardService
 			NativeQuery query = session.createNativeQuery(sql);
 			query.setParameter("board_id", board.getBoardId());
 			query.setParameter("user_id", null);
-			query.setParameter("category_id", categoryId);
-			query.setParameter("notice", notice);
-			query.setParameter("secret", secret);
-			query.setParameter("title", title);
-			query.setParameter("text", text);
-			query.setParameter("attachment", attachment);
-			query.setParameter("link", link);
-			query.setParameter("ip", ip);
+			query.setParameter("category_id", post.getCategoryId());
+			query.setParameter("notice", post.getNotice());
+			query.setParameter("secret", post.getSecret());
+			query.setParameter("title", post.getTitle());
+			query.setParameter("text", post.getText());
+			query.setParameter("attachment", post.getAttachment());
+			query.setParameter("link", post.getLink());
+			query.setParameter("ip", post.getIp());
 			
 			System.out.println("hibernate executeUpdate: " + query.executeUpdate() );
 			

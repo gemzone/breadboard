@@ -4,14 +4,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
+@Configuration
 @SpringBootApplication
+@PropertySource("classpath:application.properties")
 public class Application 
 {
+	//@Value("${spring.mvc.view.prefix}")
+    //private static String prefix;
+	
 	public static void main(String[] args) 
 	{
-		System.out.println("SpringApplication.run(BoothApplication.class, args);");
+		System.out.println("SpringApplication.run(BoothApplication.class, args);");	//  + prefix);
 		SpringApplication.run(Application.class, args);
 	}
 	

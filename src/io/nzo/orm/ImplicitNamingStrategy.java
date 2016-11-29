@@ -15,8 +15,6 @@ public class ImplicitNamingStrategy extends ImplicitNamingStrategyLegacyJpaImpl
 		System.out.println( source.getOwningEntityNaming() );
 		System.out.println( source.getOwningPhysicalTableName() );
 		
-		
-		// TODO Auto-generated method stub
 		return super.determineCollectionTableName(source);
 	}
 	

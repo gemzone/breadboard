@@ -45,7 +45,7 @@ public class ContextManager implements ServletContextListener
 	//	long value = 1;
 		
 		/*
-		// TODO Auto-generated method stub
+		
 		scheduler = Executors.newSingleThreadScheduledExecutor();
 		scheduler.scheduleAtFixedRate(new Runnable() 
 		{

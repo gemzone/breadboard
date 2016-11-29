@@ -27,7 +27,6 @@ public class Login extends HttpServlet
 	public Login()
 	{
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -37,7 +36,6 @@ public class Login extends HttpServlet
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 

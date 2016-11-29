@@ -30,7 +30,6 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		
-	
 		<resources>
 		    <resource>
 		        <directory>resources</directory>
@@ -51,7 +50,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<warSourceDirectory>ROOT</warSourceDirectory>
+					<warSourceDirectory>webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
 
@@ -71,6 +70,8 @@
 		<version>1.4.1.RELEASE</version>
 	</parent>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 

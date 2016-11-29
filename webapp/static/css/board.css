@@ -14,8 +14,6 @@ li a{
 }
 */
 
-
-
 .pagination {
 	
 	margin-top:0px;
@@ -62,8 +60,7 @@ li a{
 }
 
 
-
-.progress,.card-block,.card,.pagination,.page-link {
+.card-block,.card,.pagination,.page-link {
     border-radius: 0px !important;
 }
 

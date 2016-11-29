@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -131,22 +129,95 @@ public class BoardController
 	
 //	// add / modify
 	@ResponseBody
-	@RequestMapping(path = "/gz/post", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON )
+	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON )
 	public String setPostAdd(Model model,
 			HttpSession session,
-			@RequestParam(value = "id", required = true ) String id,
-			@RequestParam(value = "title", required = false) String title,
-			@RequestBody(required = false) String text)
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
+			@RequestParam(value = "title", required = false, defaultValue="" ) String title,
+			@RequestParam(value = "text", required = false, defaultValue="" ) String text)
 	{
-		if( title.length() > 250 ) {
-			title = title.substring(0, 250);
-		}
-		// TODO 이부분 해결안됨
+		// System.out.println(  );
 		
-		//User user = (User) session.getAttribute("user");
-		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
+//		if( title.length() > 250 ) {
+//			title = title.substring(0, 250);
+//		}
+		
+		Post post = new Post();
+		post.setTitle(title);
+		post.setText(text);
+		
+		boardService.postAdd(id, post);
 		return new JSONObject().toString();
 	}
+	
+	
+	// 게시물 보기
+	@ResponseBody
+	@RequestMapping(path = "/gz/post", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON)
+	public String listApi(Model model, 
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
+			@RequestParam(value = "postId", required = true) long postId)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		Post post = boardService.getPost(board.getTableNumber(), postId);
+		
+		model.addAttribute("post", post);
+		
+		List<Comment> comments = boardService.getComments(board.getTableNumber(), postId);
+		model.addAttribute("postComments", comments);
+		
+		// user
+		model.addAttribute("postUser", userService.getUser(post.getUserId()));
+		
+		model.addAttribute("nextPost", boardService.getNextPost(board.getTableNumber(), postId));
+		model.addAttribute("prevPost", boardService.getPrevPost(board.getTableNumber(), postId));
+		
+		return new JSONObject(model.asMap()).toString();
+	}
+	
+	
+	
+	
+	
+
+	@ResponseBody
+	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
+	public String listWithApi(Model model, 
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		model.addAttribute("posts", boardService.getPosts(board.getTableNumber(), page, 15));
+		
+		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
+		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 15));
+				
+		return new JSONObject(model.asMap()).toString();
+	}
+
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(path = "/gz/board", produces = MediaType.APPLICATION_JSON)
+	public String listApi(Model model, 
+			@RequestParam(value = "id", required = false, defaultValue="") String id)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		return new JSONObject(model.asMap()).toString();
+	}
+	
+	
+	
+	
+	
 //	
 //	
 //	// remove
@@ -191,58 +262,7 @@ public class BoardController
 	
 	
 	
-	@ResponseBody
-	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
-	public String listWithApi(Model model, 
-			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
-	{
-		Board board = boardService.getBoard(id);
-		model.addAttribute("board", board);
-		
-		model.addAttribute("posts", boardService.getPosts(board.getTableNumber(), page, 15));
-		
-		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
-		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 15));
-				
-		return new JSONObject(model.asMap()).toString();
-	}
 	
-	@ResponseBody
-	@RequestMapping(path = "/gz/view", produces = MediaType.APPLICATION_JSON)
-	public String listApi(Model model, 
-			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
-			@RequestParam(value = "postId", required = true) long postId)
-	{
-		Board board = boardService.getBoard(id);
-		model.addAttribute("board", board);
-		
-		Post post = boardService.getPost(board.getTableNumber(), postId);
-		
-		model.addAttribute("post", post);
-		
-		List<Comment> comments = boardService.getComments(board.getTableNumber(), postId);
-		model.addAttribute("postComments", comments);
-		
-		// user
-		model.addAttribute("postUser", userService.getUser(post.getUserId()));
-		
-		model.addAttribute("nextPost", boardService.getNextPost(board.getTableNumber(), postId));
-		model.addAttribute("prevPost", boardService.getPrevPost(board.getTableNumber(), postId));
-		
-		return new JSONObject(model.asMap()).toString();
-	}
-	
-	@ResponseBody
-	@RequestMapping(path = "/gz/board", produces = MediaType.APPLICATION_JSON)
-	public String listApi(Model model, 
-			@RequestParam(value = "id", required = false, defaultValue="") String id)
-	{
-		Board board = boardService.getBoard(id);
-		model.addAttribute("board", board);
-		
-		return new JSONObject(model.asMap()).toString();
-	}
 	
 	
 	
