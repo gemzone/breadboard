@@ -18,7 +18,8 @@
                 | &#32;Comments
 .row(style="margin-bottom:10px;")
     .col-md-3
-        button.btn.btn-secondary(ng-click="pagePosts(board.id);") list
+        a(ng-href="#!/list?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary list
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")
@@ -53,8 +54,10 @@ table.table(style="border-bottom:1px solid #eceeef;")
             td(style="text-align:right;width:200px;", ng-bind="prevPost.creationTime") 
 .row
     .col-md-3
-        button.btn.btn-secondary(ng-click="pagePosts(board.id);") list
+        a(ng-href="#!/list?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary list
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")
-        button.btn.btn-secondary.fa.fa-pencil(ng-click="write();") &#32;write
+        a(ng-href="#!/write?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary.fa.fa-pencil &#32;write

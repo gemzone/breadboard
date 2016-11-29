@@ -45,6 +45,10 @@ public class BoardService
 			
 			board = (Board)query.getSingleResult();
 		}
+		catch(NoResultException e)
+		{
+			logger.debug(e.getMessage());
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();

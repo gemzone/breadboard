@@ -14,17 +14,19 @@ table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
             td(ng-bind='item.creationTime')
 .row
     .col-md-3
-        button.btn.btn-secondary(ng-click='list(board.id, paging.currentPage);') list
+        a(ng-href="#!/list?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary list
     .col-md-6(style='text-align: center;')
         nav
             ul.pagination(ng-show='!isUndefined(paging)')
                 li.page-item
-                    a.page-link(aria-label='Previous', ng-click='list(board.id, paging.prevStepPage);')
+                    a.page-link(aria-label='Previous', ng-href="#!/list?id={{board.id}}&page={{paging.prevStepPage}}")
                         span(aria-hidden='true') «
                 li.page-item(ng-repeat='item in paging.pages', ng-class="(paging.currentPage == item ? 'active' : '')")
-                    a.page-link(ng-click='list(board.id, item);') {{item}} 
+                    a.page-link(ng-href="#!/list?id={{board.id}}&page={{item}}") {{item}} 
                 li.page-item
-                    a.page-link(aria-label='Next', ng-click='list(board.id, paging.nextStepPage);')
+                    a.page-link(aria-label='Next', ng-href="#!/list?id={{board.id}}&page={{paging.nextStepPage}}")
                         span(aria-hidden='true') »
     .col-md-3(style='text-align: right;')
-        button.btn.btn-secondary.fa.fa-pencil(ng-click="write(board.id);") &#32;write
+        a(ng-href="#!/write?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary.fa.fa-pencil &#32;write

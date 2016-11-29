@@ -35,40 +35,27 @@ public class BoardController
 	String app = "booth";
 	
 	
-	@Autowired UserService userService;
-	@Autowired BoardService boardService;
+	@Autowired 
+	UserService userService;
+	
+	@Autowired 
+	BoardService boardService;
+	
 	
 	@ResponseBody
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
-	public String board(Model model, @PathVariable("id") String id)
+	@RequestMapping(path = "/", produces = MediaType.TEXT_HTML)
+	public String board(Model model) 
 	{
-		model.addAttribute("url", url);
-		model.addAttribute("app", app);
-		model.addAttribute("id", id);
 		JadeTemplate template = JadeConfig.getTemplate("board");
 		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
-	@RequestMapping(path = "/{id}/list", produces = MediaType.TEXT_HTML)
-	public String list(Model model,
-			@PathVariable("id") String id,
-			@RequestParam(value = "spf", required = false ) String spf) 
+	@RequestMapping(path = "/e/list", produces = MediaType.TEXT_HTML)
+	public String list(Model model) 
 	{
-		String head = JadeConfig.renderTemplate(JadeConfig.getTemplate("head"), model.asMap());
-		String board = JadeConfig.renderTemplate(JadeConfig.getTemplate("list"), model.asMap());	// board = id
-		if( "navigate".equals(spf) ) 
-		{
-			JSONObject json = new JSONObject();
-			json.put("title", "게시물 목록");
-			json.put("head", head);
-			json.put("body", new JSONObject().put(id, board));
-			return json.toString();
-		}
-		else
-		{
-			return "";
-		}
+		JadeTemplate template = JadeConfig.getTemplate("list");
+		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
 	@ResponseBody
@@ -88,7 +75,61 @@ public class BoardController
 	}
 	
 	
-	// add / modify
+	
+	
+//	@ResponseBody
+//	@RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
+//	public String board(Model model, @PathVariable("id") String id)
+//	{
+//		model.addAttribute("url", url);
+//		model.addAttribute("app", app);
+//		model.addAttribute("id", id);
+//		JadeTemplate template = JadeConfig.getTemplate("board");
+//		return JadeConfig.renderTemplate(template, model.asMap());
+//	}
+//	
+//	@ResponseBody
+//	@RequestMapping(path = "/{id}/list", produces = MediaType.TEXT_HTML)
+//	public String list(Model model,
+//			@PathVariable("id") String id,
+//			@RequestParam(value = "spf", required = false ) String spf) 
+//	{
+//		String head = JadeConfig.renderTemplate(JadeConfig.getTemplate("head"), model.asMap());
+//		String board = JadeConfig.renderTemplate(JadeConfig.getTemplate("list"), model.asMap());	// board = id
+//		if( "navigate".equals(spf) ) 
+//		{
+//			JSONObject json = new JSONObject();
+//			json.put("title", "게시물 목록");
+//			json.put("head", head);
+//			json.put("body", new JSONObject().put(id, board));
+//			return json.toString();
+//		}
+//		else
+//		{
+//			return "";
+//		}
+//	}
+//	
+//	@ResponseBody
+//	@RequestMapping(path = "/e/view", produces = MediaType.TEXT_HTML)
+//	public String view(Model model)
+//	{
+//		JadeTemplate template = JadeConfig.getTemplate("view");
+//		return JadeConfig.renderTemplate(template, model.asMap());
+//	}
+//	
+//	@ResponseBody
+//	@RequestMapping(path = "/e/write", produces = MediaType.TEXT_HTML)
+//	public String write(Model model)
+//	{
+//		JadeTemplate template = JadeConfig.getTemplate("write");
+//		return JadeConfig.renderTemplate(template, model.asMap());
+//	}
+	
+	
+	
+	
+//	// add / modify
 	@ResponseBody
 	@RequestMapping(path = "/gz/post", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON )
 	public String setPostAdd(Model model,
@@ -106,54 +147,54 @@ public class BoardController
 		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
 		return new JSONObject().toString();
 	}
-	
-	
-	// remove
-	@ResponseBody
-	@RequestMapping(path = "/gz/post", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON )
-	public String setPostRemove(Model model,
-			HttpSession session,
-			@RequestParam(value = "id", required = true ) String id,
-			@RequestParam(value = "title", required = false) String title,
-			@RequestBody(required = false) String text)
-	{
-		if( title.length() > 250 ) {
-			title = title.substring(0, 250);
-		}
-		// TODO 이부분 해결안됨
-		
-		//User user = (User) session.getAttribute("user");
-		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
-		return new JSONObject().toString();
-	}
-	
-	
-
-	// get
-	@ResponseBody
-	@RequestMapping(path = "/gz/post", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON )
-	public String getPost(Model model,
-			HttpSession session,
-			@RequestParam(value = "id", required = true ) String id,
-			@RequestParam(value = "title", required = false) String title,
-			@RequestBody(required = false) String text)
-	{
-		if( title.length() > 250 ) {
-			title = title.substring(0, 250);
-		}
-		// TODO 이부분 해결안됨
-		
-		//User user = (User) session.getAttribute("user");
-		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
-		return new JSONObject().toString();
-	}
+//	
+//	
+//	// remove
+//	@ResponseBody
+//	@RequestMapping(path = "/gz/post", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON )
+//	public String setPostRemove(Model model,
+//			HttpSession session,
+//			@RequestParam(value = "id", required = true ) String id,
+//			@RequestParam(value = "title", required = false) String title,
+//			@RequestBody(required = false) String text)
+//	{
+//		if( title.length() > 250 ) {
+//			title = title.substring(0, 250);
+//		}
+//		// TODO 이부분 해결안됨
+//		
+//		//User user = (User) session.getAttribute("user");
+//		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
+//		return new JSONObject().toString();
+//	}
+//	
+//	
+//
+//	// get
+//	@ResponseBody
+//	@RequestMapping(path = "/gz/post", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON )
+//	public String getPost(Model model,
+//			HttpSession session,
+//			@RequestParam(value = "id", required = true ) String id,
+//			@RequestParam(value = "title", required = false) String title,
+//			@RequestBody(required = false) String text)
+//	{
+//		if( title.length() > 250 ) {
+//			title = title.substring(0, 250);
+//		}
+//		// TODO 이부분 해결안됨
+//		
+//		//User user = (User) session.getAttribute("user");
+//		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
+//		return new JSONObject().toString();
+//	}
 	
 	
 	
 	@ResponseBody
 	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
 	public String listWithApi(Model model, 
-			@RequestParam(value = "id", required = true) String id,
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
 	{
 		Board board = boardService.getBoard(id);
@@ -163,14 +204,14 @@ public class BoardController
 		
 		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
 		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 15));
-		
+				
 		return new JSONObject(model.asMap()).toString();
 	}
 	
 	@ResponseBody
 	@RequestMapping(path = "/gz/view", produces = MediaType.APPLICATION_JSON)
 	public String listApi(Model model, 
-			@RequestParam(value = "id", required = true) String id,
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
 			@RequestParam(value = "postId", required = true) long postId)
 	{
 		Board board = boardService.getBoard(id);
@@ -192,25 +233,16 @@ public class BoardController
 		return new JSONObject(model.asMap()).toString();
 	}
 	
-	
-	
-	
 	@ResponseBody
 	@RequestMapping(path = "/gz/board", produces = MediaType.APPLICATION_JSON)
 	public String listApi(Model model, 
-			@RequestParam(value = "id", required = true) String id)
+			@RequestParam(value = "id", required = false, defaultValue="") String id)
 	{
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
 		
 		return new JSONObject(model.asMap()).toString();
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

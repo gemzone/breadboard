@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
 import io.nzo.booth.controller.UserController;
-import io.nzo.booth.model.Post;
 import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 

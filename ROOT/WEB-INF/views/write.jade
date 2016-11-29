@@ -3,8 +3,10 @@
     textarea(style="resize:none;height:300px;width:100%;", id="postText", ui-tinymce="tinymceOptions", ng-model="tinymceModel")
 .row
     .col-md-3
-        button.btn.btn-secondary(ng-click="list(board.id);") list
+        a(ng-href="#!/list?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary list
     .col-md-6(style="text-align:center;")
         
     .col-md-3(style="text-align:right;")
-        button.btn.btn-secondary.fa.fa-pencil(ng-click="postAdd(board.id);") &#32;write
+        a(ng-href="#!/write?id={{board.id}}&page={{paging.currentPage}}")
+            button.btn.btn-secondary.fa.fa-pencil &#32;write
