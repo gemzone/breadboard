@@ -26,8 +26,6 @@ import io.nzo.orm.HibernateUtil;
 
 // Board, Post, Comment
 
-@Service
-@Validated
 @Component
 public class BoardService
 {

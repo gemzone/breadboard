@@ -111,7 +111,7 @@ boardApp.controller("boardPostWriteController", function ($scope, $routeParams, 
     $scope.board = function (id) {
         $http({
             method: "post",
-            url: "./gz/board",
+            url: "gz/board",
             params: { id : id }
         }).then(function(response) {
             $scope.board = response.data.board;
@@ -147,14 +147,10 @@ boardApp.controller("boardPostWriteController", function ($scope, $routeParams, 
         }).success(function(response) {
             
         }).finally(function() {
-            $location.path("/list").search({id: id, page : $scope.page });
+            $scope.page = 1;
+            $location.path("/list").search({id: id, page : 1 });
         });
     };
-
-    // $scope.list = function(id, page) {
-    //    $location.path("/list").search({id: id, page : $scope.page });
-    // }
-
 
 });
 
