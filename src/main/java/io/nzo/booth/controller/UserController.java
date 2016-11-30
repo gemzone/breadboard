@@ -1,6 +1,7 @@
 package io.nzo.booth.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -8,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +35,7 @@ public class UserController
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(path="/login", produces="application/json")
+	@RequestMapping(path="/gz/login", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON )
 	public String login(@RequestParam(value="username", required=false) String username,
 			@RequestParam(value="password", required=false) String password,
 			Model model, HttpSession session)
@@ -73,7 +76,7 @@ public class UserController
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/logout")
+	@RequestMapping(path = "/gz/logout", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON)
 	public ModelAndView logout(Model model, HttpSession session)
 	{
 		ModelAndView mv = new ModelAndView();
@@ -81,4 +84,45 @@ public class UserController
 		mv.setViewName("redirect:/list");
 		return mv;
 	}
+	
+	// user add
+	@ResponseBody
+	@RequestMapping(path = "/gz/user/add", method = RequestMethod.POST)
+	public String userAdd(Model model, 
+			@RequestParam(value="username", required = true) String username,
+			@RequestParam(value="password", required = true) String password,
+			@RequestParam(value="name", required = true) String name,
+			@RequestParam(value="email", required = true) String email)
+	{
+		JSONObject result = new JSONObject();
+		try
+		{
+			User user = new User();
+			user.setUsername(username);
+			user.setPasswordSha2(password);
+			user.setName(name);
+			user.setEmail(email);
+			
+			// 중복체크
+			User userDuplicate = userService.getUserForUsername(user.getUsername());
+			if( userDuplicate == null )
+			{
+				result.put("success", (userService.create(user) > 0));
+			}
+			else
+			{
+				result.put("success", false);
+				result.put("error", "Duplicate username");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result.put("error", e.getMessage());
+			result.put("success", false);
+		}
+		return result.toString();
+	}
+	
+	
 }

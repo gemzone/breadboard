@@ -8,7 +8,6 @@ var boardApp = angular.module("board", [
 ]).config(function($routeProvider, $locationProvider, cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 0;
     cfpLoadingBarProvider.includeSpinner = true;
-    
     $locationProvider.hashPrefix("!");
     $routeProvider.when("/list", {
         templateUrl : "e/list",
@@ -69,9 +68,7 @@ boardApp.controller("boardPostViewController", function ($scope, $routeParams, $
 });
 
 boardApp.controller("boardPostWriteController", function ($scope, $routeParams, $http, $timeout, $location, $sce) {
-    var ctrl = this;
 
-    $scope.page = $routeParams.page;
     $scope.$on("$routeChangeSuccess", function(e, current, pre) {
         $scope.board($routeParams.id);
     });
@@ -86,40 +83,21 @@ boardApp.controller("boardPostWriteController", function ($scope, $routeParams, 
         });
     }
 
-    //$scope.view = function(id, page, postId) {
-    //    $scope.page = page;
-    //    $location.search({id: id, page: page, postId : postId });
-    //}
-
-    //$scope.pagePosts = function(id) {
-    //    $location.path("/list").search({ id : id, page : $scope.page});
-    //};
-    //$scope.tinymceModel = "";
     $scope.tinymceOptions = {
         plugins: 'link image code',
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
     };
 
     $scope.postAdd = function(id) {
-        $http({
-            method: "post",
-            url: "gz/post/add",
-            params: {
-                id: id,
-                title: $("#postTitle").val(),
-                text: $(tinymce.settings.selector).val()
-            },
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-            }
-        }).success(function(response) {
-            $scope.page = 1;
+        $http.post( "gz/post/add", {
+            id: id,
+            title: $("#postTitle").val(),
+            text: $(tinymce.settings.selector).val()
+        }).then(function() {
             $location.path("/list").search({id: id, page : 1 });
-        }).finally(function() {
-
+        }, function(e){
+            alert(e);
         });
-
     };
-
 });
 

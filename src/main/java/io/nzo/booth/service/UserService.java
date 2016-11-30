@@ -35,52 +35,50 @@ public class UserService
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes" })
-	public ModelMap addUser(String username, String password, String name, String email, String comment)
+	public int create(User user)
 	{
-		// TODO ModelMap 으로 예외 처리해야함
-		ModelMap map = new ModelMap();
-    	User user = null;
+		int update = 0;
+		
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 
 			Transaction tx = session.beginTransaction();
-			Long newIdentity = 0L;
-	        {
-	        	NativeQuery query = session.createNativeQuery("SELECT (ISNULL(MAX([user_id]), 0) + 1) FROM gz_user");
-	        	newIdentity = ((BigInteger) query.getSingleResult()).longValue();
-	        }
+//			Long newIdentity = 0L;
+//	        {
+//	        	NativeQuery query = session.createNativeQuery("SELECT (ISNULL(MAX([user_id]), 0) + 1) FROM gz_user");
+//	        	newIdentity = ((BigInteger) query.getSingleResult()).longValue();
+//	        }
 	        
+//			int executeUpdate()
+//			Execute an update or delete statement.
+//			Returns:
+//				the number of entities updated or deleted
+//			Throws:
+//				IllegalStateException - if called for a Java Persistence query language SELECT statement or for a criteria query
+//				TransactionRequiredException - if there is no transaction
+//				QueryTimeoutException - if the statement execution exceeds the query timeout value set and only the statement is rolled back
+//				PersistenceException - if the query execution exceeds the query timeout value set and the transaction is rolled back
 	        {
-				String sql = "INSERT INTO gz_user (user_id, username, password_sha2, name, email ) " +
-							"VALUES (:user_id, :username, HASHBYTES('SHA2_512',:password ), :name, :email) "; 
+				String sql = "INSERT INTO gz_user (username, password_sha2, name, email ) " +
+							"VALUES (:username, HASHBYTES('SHA2_512',:password ), :name, :email) "; 
 				NativeQuery query = session.createNativeQuery(sql);
-				query.setParameter("user_id", newIdentity);
-				query.setParameter("username", username);
-				query.setParameter("password", password);
-				query.setParameter("name", name);
-				query.setParameter("email", email);
-				query.executeUpdate();
+				query.setParameter("username", user.getUsername());
+				query.setParameter("password", user.getPasswordSha2());
+				query.setParameter("name", user.getName());
+				query.setParameter("email", user.getEmail());
+				update = query.executeUpdate();
 			}
 			tx.commit();
-			
-			user = (User)session.get(User.class, newIdentity);
-			
-			map.addAttribute("user", user);
 		} 
-		catch (NoResultException e)
-		{
-			map.addAttribute("reason", e.getMessage());
-			map.addAttribute("error", 1);
-			map.addAttribute("success", false);
-		}
 		catch (Exception e)
 		{
+			update = 0;
 			e.printStackTrace();
-			map.addAttribute("reason", e.getMessage());
-			map.addAttribute("error", 2);
-			map.addAttribute("success", false);
 		}
-		return map;
+		return update;
+		
+//		user = (User)session.get(User.class, newIdentity);
+//		map.addAttribute("user", user);
 	}
 	
 	/**
@@ -105,12 +103,12 @@ public class UserService
 		} 
 		catch (NoResultException e)
 		{
-			return new User();
+			return null;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return new User();
+			return null;
 		}
 	}
 	
@@ -120,7 +118,7 @@ public class UserService
 		{
         	if( userId == null )
         	{
-        		return new User();
+        		return null;
         	} 
         	else 
         	{
@@ -129,14 +127,48 @@ public class UserService
 		} 
 		catch (NoResultException e)
 		{
-			return new User();
+			return null;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return new User();
+			return null;
 		}
 	}
+	
+	// 아이디 확인
+	public User getUserForUsername(String username) 
+	{
+        try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			String sql = "SELECT TOP 1 u.* FROM gz_user u WHERE u.username=:username "; 
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql, User.class);
+			query.setParameter("username", username);
+			User user = (User)query.getSingleResult();
+			user.setPasswordSha2("");
+			return user;
+		} 
+		catch (NoResultException e)
+		{
+			return null;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 //	private final UserJpaRepository userJpaRepository;

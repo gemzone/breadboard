@@ -43,40 +43,6 @@ public class BoardController
 	BoardService boardService;
 	
 	
-	@ResponseBody
-	@RequestMapping(path = "/", produces = MediaType.TEXT_HTML)
-	public String board(Model model) 
-	{
-		JadeTemplate template = JadeConfig.getTemplate("board");
-		return JadeConfig.renderTemplate(template, model.asMap());
-	}
-	
-	@ResponseBody
-	@RequestMapping(path = "/e/list", produces = MediaType.TEXT_HTML)
-	public String list(Model model) 
-	{
-		JadeTemplate template = JadeConfig.getTemplate("list");
-		return JadeConfig.renderTemplate(template, model.asMap());
-	}
-	
-	@ResponseBody
-	@RequestMapping(path = "/e/view", produces = MediaType.TEXT_HTML)
-	public String view(Model model)
-	{
-		JadeTemplate template = JadeConfig.getTemplate("view");
-		return JadeConfig.renderTemplate(template, model.asMap());
-	}
-	
-	@ResponseBody
-	@RequestMapping(path = "/e/write", produces = MediaType.TEXT_HTML)
-	public String write(Model model)
-	{
-		JadeTemplate template = JadeConfig.getTemplate("write");
-		return JadeConfig.renderTemplate(template, model.asMap());
-	}
-	
-	
-	
 	
 //	@ResponseBody
 //	@RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
@@ -131,20 +97,16 @@ public class BoardController
 	
 	
 //	// add / modify
-	// http://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for
 	@ResponseBody
 	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST)
 	public String setPostAdd(Model model, 
-			@RequestParam( value= "id", required = true ) String id,
-			@RequestParam( value= "title", required = true ) String title,
-			@RequestParam( value= "text", required = true ) String text)
+			@RequestBody String payload)
 	{
-		boardService.postAdd(id, title, text );
+		JSONObject params = new JSONObject(payload);
+		
+		boardService.postAdd(params.getString("id"), params.getString("title"), params.getString("text") );
 		return new JSONObject().toString();
 	}
-	
-	
-	
 	
 	
 	
