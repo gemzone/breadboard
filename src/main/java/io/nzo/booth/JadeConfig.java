@@ -21,7 +21,7 @@ public class JadeConfig extends DefaultServlet
     
     public JadeConfig()  // tomcat이 실행될때 생성자를 load-on-startup가 1일경우 호출하게된다.
     {
-        TemplateLoader loader = new FileTemplateLoader(ContextManager.servletContext.getRealPath("WEB-INF/classes/views/"), "UTF-8");
+        TemplateLoader loader = new FileTemplateLoader(ContextManager.servletContext.getRealPath("WEB-INF/views/"), "UTF-8");
         config.setTemplateLoader(loader);
         config.setMode(Jade4J.Mode.XHTML);  // <input checked="true" />
         config.setPrettyPrint(false);

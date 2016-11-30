@@ -24,16 +24,13 @@ var boardApp = angular.module("board", [
     });
 });
 
+// $location.search({id: id, page : page });
+// $location.path("/write").search({ id : id, page : $scope.page});
 boardApp.controller("boardPostsController", function ($scope, $routeParams, $http, $timeout, $location, $sce, cfpLoadingBar) {
-
-
     $scope.$on("$routeChangeSuccess", function(e, current, pre) {
         $scope.pageMove($routeParams.id, $routeParams.page);
         $scope.page = $routeParams.page;
     });
-
-    // $location.search({id: id, page : page });
-    // $location.path("/write").search({ id : id, page : $scope.page});
 
     $scope.pageMove = function(id, page) {
         $http({
@@ -46,40 +43,15 @@ boardApp.controller("boardPostsController", function ($scope, $routeParams, $htt
             $scope.board = response.data.board;
         });
     };
-
 });
 
 boardApp.controller("boardPostViewController", function ($scope, $routeParams, $http, $timeout, $location, $sce) {
-
-
-
-
     $scope.$on("$routeChangeSuccess", function(e, current, pre) {
         $scope.postView($routeParams.id, $routeParams.postId);
         $scope.page = $routeParams.page;
     });
 
-
     $scope.postView = function(id, postId) {
-/*
-        $.getJSON("gz/view?callback=viewProc&id=" + id + "&postId=" + postId, function(response) {
-            $scope.board = response.board;
-            $scope.post = response.post;
-            $scope.postTextHtml = $sce.trustAsHtml(response.post.text);
-            $scope.postComments = response.postComments;
-            $scope.nextPost = response.nextPost;
-            $scope.prevPost = response.prevPost;
-            $scope.postUser = response.postUser;   // 작성한 유저
-        });
-*/
-
-/*
-        $.ajax({
-            url: "gz/view?callback=viewProc&id=" + id + "&postId=" + postId ,
-            dataType: "jsonp"
-        });
-*/
-
         $http({
             method: "post",
             url: "gz/post",
@@ -94,14 +66,10 @@ boardApp.controller("boardPostViewController", function ($scope, $routeParams, $
             $scope.postUser = response.data.postUser;   // 작성한 유저
         });
     };
-
-    $scope.pagePosts = function(id) {
-        $location.path("/list").search({ id : id, page : $scope.page});
-    };
 });
 
-
 boardApp.controller("boardPostWriteController", function ($scope, $routeParams, $http, $timeout, $location, $sce) {
+    var ctrl = this;
 
     $scope.page = $routeParams.page;
     $scope.$on("$routeChangeSuccess", function(e, current, pre) {
@@ -126,7 +94,7 @@ boardApp.controller("boardPostWriteController", function ($scope, $routeParams, 
     //$scope.pagePosts = function(id) {
     //    $location.path("/list").search({ id : id, page : $scope.page});
     //};
-    $scope.tinymceModel = "";
+    //$scope.tinymceModel = "";
     $scope.tinymceOptions = {
         plugins: 'link image code',
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
@@ -139,17 +107,18 @@ boardApp.controller("boardPostWriteController", function ($scope, $routeParams, 
             params: {
                 id: id,
                 title: $("#postTitle").val(),
-                text: $scope.tinymceModel
+                text: $(tinymce.settings.selector).val()
             },
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             }
         }).success(function(response) {
-            
-        }).finally(function() {
             $scope.page = 1;
             $location.path("/list").search({id: id, page : 1 });
+        }).finally(function() {
+
         });
+
     };
 
 });

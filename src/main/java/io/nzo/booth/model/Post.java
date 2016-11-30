@@ -9,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Post implements Serializable 
@@ -29,9 +26,6 @@ public class Post implements Serializable
 	private Integer categoryId = 1;
 	private Boolean notice = false;
 	private Boolean secret = false;
-	
-	@NotNull
-    @Size(min = 0, max = 250)
 	private String title = "";
 	private String text = "";
 	private String attachment = "";
@@ -136,6 +130,9 @@ public class Post implements Serializable
 
 	public void setTitle(String title)
 	{
+		if( title.length() > 250 ) {
+			title = title.substring(0, 250);
+		}
 		this.title = title;
 	}
 

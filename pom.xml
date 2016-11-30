@@ -78,12 +78,12 @@
 
 
 	<build>
-
-		<sourceDirectory>src</sourceDirectory>
+		
+		<sourceDirectory>src/main/java</sourceDirectory>
 		
 		<resources>
 		    <resource>
-		        <directory>resources</directory>
+		        <directory>src/main/resources</directory>
 		        <filtering>true</filtering>
 		    </resource>
 		</resources>
@@ -101,7 +101,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<warSourceDirectory>webapp</warSourceDirectory>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
 

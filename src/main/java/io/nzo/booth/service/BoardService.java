@@ -210,9 +210,11 @@ public class BoardService
 	
 	
 	// 글 작성
-	public boolean postAdd(String id, Post post)
+	public boolean postAdd(String id, String title, String text)
 	{
-		// Long userId, int categoryId, boolean notice, boolean secret, String title, String text, String attachment, String link, String ip
+		Post post = new Post();
+		post.setTitle(title);
+		post.setText(text);
 		
 		Board board = getBoard(id);
 		

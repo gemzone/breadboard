@@ -55,6 +55,9 @@ public class Board implements Serializable
 	}
 	public void setTitle(String title)
 	{
+		if( title.length() > 250 ) {
+			title = title.substring(0, 250);
+		}
 		this.title = title;
 	}
 	public String getHeaderContent()

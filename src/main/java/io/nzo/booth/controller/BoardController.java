@@ -2,6 +2,7 @@ package io.nzo.booth.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Size;
 import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -128,27 +131,21 @@ public class BoardController
 	
 	
 //	// add / modify
+	// http://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for
 	@ResponseBody
-	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON )
-	public String setPostAdd(Model model,
-			HttpSession session,
-			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
-			@RequestParam(value = "title", required = false, defaultValue="" ) String title,
-			@RequestParam(value = "text", required = false, defaultValue="" ) String text)
+	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST)
+	public String setPostAdd(Model model, 
+			@RequestParam( value= "id", required = true ) String id,
+			@RequestParam( value= "title", required = true ) String title,
+			@RequestParam( value= "text", required = true ) String text)
 	{
-		// System.out.println(  );
-		
-//		if( title.length() > 250 ) {
-//			title = title.substring(0, 250);
-//		}
-		
-		Post post = new Post();
-		post.setTitle(title);
-		post.setText(text);
-		
-		boardService.postAdd(id, post);
+		boardService.postAdd(id, title, text );
 		return new JSONObject().toString();
 	}
+	
+	
+	
+	
 	
 	
 	// 게시물 보기

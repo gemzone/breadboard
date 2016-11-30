@@ -25,6 +25,32 @@ function getUrlParameter(sParam) {
     }
 };
 
+function encodeText(str) {
+    if (str == undefined || str == null) {
+        return "";
+    } else {
+        str = str.replace(/%/gi, "%25");
+        str = str.replace(/\+/g, "%2B");
+        str = encodeURIComponent(str);
+        return str;
+    }
+};
+
+function decodeText(str) {
+	str = str.replace(/%/gi, "%25");
+	var map = {"gt":">" /* , … */};
+    str = str.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
+        if ($1[0] === "#") {
+            return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
+        } else {
+            return map.hasOwnProperty($1) ? map[$1] : $0;
+        }
+    });
+    str = decodeURIComponent(str);
+    return str;
+};
+
+
 //$(document).ready(function () {
 //	var lang = getUrlParameter("lang");
 //
