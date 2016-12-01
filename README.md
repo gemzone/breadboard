@@ -9,6 +9,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
 
 - SQL Server 2016 (2008+)
 - JDK 8+
+- Spring Framework 2.0
 - Tomcat 9+
 
 ## 개발 위키
@@ -18,6 +19,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
  
 ## 참고라이브러리
 
+- spring framework 2.0
 - hibernate ORM 5.2.4
 - jade4j 1.2.5
 - hikariCP 2.5.1
@@ -31,7 +33,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
 
 The GPL License
 
-Copyright (C) 2016 NZO.IO, author 정성훈
+Copyright (C) 2016 NZO.IO, author Jung Seong Hun
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
