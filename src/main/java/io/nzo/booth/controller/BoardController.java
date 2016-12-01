@@ -94,8 +94,6 @@ public class BoardController
 //	}
 	
 	
-	
-	
 //	// add / modify
 	@ResponseBody
 	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST)
@@ -107,8 +105,6 @@ public class BoardController
 		boardService.postAdd(params.getString("id"), params.getString("title"), params.getString("text") );
 		return new JSONObject().toString();
 	}
-	
-	
 	
 	// 게시물 보기
 	@ResponseBody
@@ -137,10 +133,6 @@ public class BoardController
 	}
 	
 	
-	
-	
-	
-
 	@ResponseBody
 	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
 	public String listWithApi(Model model, 
@@ -157,9 +149,6 @@ public class BoardController
 				
 		return new JSONObject(model.asMap()).toString();
 	}
-
-	
-	
 	
 	
 	@ResponseBody

@@ -35,16 +35,24 @@ public class UserController
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(path="/gz/login", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON )
-	public String login(@RequestParam(value="username", required=false) String username,
-			@RequestParam(value="password", required=false) String password,
-			Model model, HttpSession session)
+	@RequestMapping(path="/gz/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
+	public String login(Model model, HttpSession session,
+			@RequestBody String payload)
 	{
+		JSONObject result = new JSONObject();
+		
+		JSONObject params = new JSONObject(payload);
+		String username = params.getString("username");
+		String password = params.getString("password");
+		
 		if( session.getAttribute("user") != null )		// 세션 확인
 		{
 			User user = (User)session.getAttribute("user");
 			model.addAttribute(user);
 			//session.setAttribute("user", session.getAttribute("user"));	// JSON
+			
+			result.put("success", true);
+			result.put("reason", "이미 인증됨");
 		}
 		else
 		{
@@ -60,14 +68,17 @@ public class UserController
 				// JSONObject.valueToString(model)
 				// map.get("user") // Jade연동하려
 				// session.setAttribute("user", map.get("user") );		// JSON
+				result.put("success", true);
 			}
 			else
 			{
 				session.invalidate();
 				logger.debug("");
+				
+				result.put("success", false);
 			}
 		}
-    	return JSONObject.valueToString(model);	
+    	return result.toString();	
 	}
 	
 	/**
@@ -76,13 +87,16 @@ public class UserController
 	 * @param session
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(path = "/gz/logout", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON)
-	public ModelAndView logout(Model model, HttpSession session)
+	public String logout(Model model, HttpSession session)
 	{
-		ModelAndView mv = new ModelAndView();
+		JSONObject result = new JSONObject();
+		
 		session.invalidate();
-		mv.setViewName("redirect:/list");
-		return mv;
+		
+		result.put("success", true);
+		return result.toString();
 	}
 	
 	// user add

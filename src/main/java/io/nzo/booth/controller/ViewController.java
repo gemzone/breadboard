@@ -28,12 +28,19 @@ public class ViewController
 	@Autowired 
 	BoardService boardService;
 	
-	
 	@ResponseBody
 	@RequestMapping(path = "/", produces = MediaType.TEXT_HTML)
 	public String board(Model model) 
 	{
 		JadeTemplate template = JadeConfig.getTemplate("board");
+		return JadeConfig.renderTemplate(template, model.asMap());
+	}
+	
+	@ResponseBody
+	@RequestMapping(path = "/login", produces = MediaType.TEXT_HTML)
+	public String login(Model model) 
+	{
+		JadeTemplate template = JadeConfig.getTemplate("login");
 		return JadeConfig.renderTemplate(template, model.asMap());
 	}
 	
@@ -62,13 +69,5 @@ public class ViewController
 	}
 	
 	
-
-	@ResponseBody
-	@RequestMapping(path = "/login", produces = MediaType.TEXT_HTML)
-	public String login(Model model) 
-	{
-		JadeTemplate template = JadeConfig.getTemplate("login");
-		return JadeConfig.renderTemplate(template, model.asMap());
-	}
 	
 }

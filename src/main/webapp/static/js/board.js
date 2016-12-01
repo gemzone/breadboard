@@ -9,15 +9,19 @@ var boardApp = angular.module("board", [
     cfpLoadingBarProvider.latencyThreshold = 0;
     cfpLoadingBarProvider.includeSpinner = true;
     $locationProvider.hashPrefix("!");
+
     $routeProvider.when("/list", {
         templateUrl : "e/list",
-        controller: 'boardPostsController'
+        controller: "boardPostsController"
     }).when("/view", {
         templateUrl : "e/view",
-        controller: 'boardPostViewController'
+        controller: "boardPostViewController",
+        resolve: {
+            test: function ($route) { $route.current.params.test = true; }
+        }
     }).when("/write", {
         templateUrl : "e/write",
-        controller: 'boardPostWriteController'
+        controller: "boardPostWriteController"
     }).otherwise({
         redirectTo: "/list"
     });

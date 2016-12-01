@@ -23,18 +23,20 @@ html(lang='ko')
         script(src="./static/js/common.js")
         script(src="./static/js/facebook.js")
         script(src="./static/js/login.js")
-    body
+    body(ng-app="auth", ng-controller="authController")
+        // like
         // div.fb-like(data-share="true",data-width="450",data-show-faces="true")
 
-        fb:login-button(scope='public_profile,email', onlogin='checkLoginState();')
-        div#status
+        // login
+        // fb:login-button(scope='public_profile,email', onlogin='checkLoginState();')
+        // div#status
 
-        div(ng-app="auth", ng-view="ng-view", style="padding:40px;") 
+        div(ng-view="ng-view", style="padding:40px;") 
             .modal-content
                 .modal-header
                     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
                     | &#x9;&#x9;&#x9;&#x9;
-                    h4#signInModalLabel.modal-title 로그인
+                    h4#signInModalLabel.modal-title 인증
 
                 .modal-body
                     .form-group
@@ -52,8 +54,9 @@ html(lang='ko')
                 .modal-footer
                     button.form-control.btn.btn-lg.btn-success.btn-block(ng-click="signIn();") 로그인
                     | &#x9;&#x9;&#x9;&#x9;
-                
-                    .or-box
+                    button.form-control.btn.btn-lg.btn-warning.btn-block(ng-click="signOut();") 로그아웃
+                    | &#x9;&#x9;&#x9;&#x9;
+                    //.or-box
                         .login-or
                             hr.hr-or
                             span.span-or 또는
