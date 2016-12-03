@@ -1,17 +1,23 @@
 table.table.table-hover(style='border-bottom: 1px solid #eceeef;')
     thead
         tr
-            th(style='width: 100px; min-width: 80px;') post_id
-            th title
-            th(style='width: 80px;') view_count
-            th(style='width: 200px;') creation_time
+            th(style="width: 100px; min-width: 80px;text-align:center;")
+                i.fa.fa-user
+            th 
+            th(style="width: 80px;text-align:center;") 
+                i.fa.fa-eye
+            th(style="width: 200px;text-align:center;")
+                i.fa.fa-calendar
     tbody
-        tr(ng-repeat='item in posts')
-            td(ng-bind='item.postId')
+        tr(ng-repeat="item in posts")
+            td(style="text-align:center;")
+                span(ng-show="!item.name") anonymous
+                span(ng-show="item.name", ng-bind="item.name")
+
             td
-                a(ng-href="#!/view?id={{board.id}}&page={{paging.currentPage}}&postId={{item.postId}}", ng-bind='item.title')
-            td(ng-bind='item.hitCount')
-            td(ng-bind='item.creationTime')
+                a(ng-href="#!/view?id={{board.id}}&page={{paging.currentPage}}&postId={{item.postId}}", ng-bind="item.title")
+            td(ng-bind="item.hitCount", style="text-align:center;")
+            td(ng-bind="item.creationTime", style="text-align:center;")
 .row
     .col-md-3
         a(ng-href="#!/list?id={{board.id}}&page={{paging.currentPage}}")

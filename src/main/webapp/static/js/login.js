@@ -1,5 +1,5 @@
 var authApp = angular.module("auth", [
-    "ngSanitize", 
+    "ngSanitize",
     "angular-bind-html-compile"
 ]);
 

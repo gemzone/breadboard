@@ -129,6 +129,8 @@ public class BoardController
 		model.addAttribute("nextPost", boardService.getNextPost(board.getTableNumber(), postId));
 		model.addAttribute("prevPost", boardService.getPrevPost(board.getTableNumber(), postId));
 		
+		boardService.setPostIncreaseViewCount(board.getTableNumber(), postId, 1);
+		
 		return new JSONObject(model.asMap()).toString();
 	}
 	
@@ -163,6 +165,38 @@ public class BoardController
 	}
 	
 	
+	
+	// /board
+	// 게시판 정보
+	
+	// /board/{id}
+	// /board/{id}/{page}			= 1페이지 목록
+	
+	// 글보기 페이지
+	// /board/{id}/view/{postId}	=	1번글
+	
+	// 글쓰기 페이지
+	// /board/{id}/write			=	글쓰기 레이아웃
+	
+	
+	// 글쓰기
+	// /board/{id}/post/add			=	post 로	
+	
+	// 글수정
+	// /board/{id}/post/{postId}		post 로	
+	
+	
+	
+	
+	
+	// 가입
+	// /sign/up
+
+	// 로그인
+	// /sign/in
+	
+	// 로그아웃
+	// /sign/out
 	
 	
 	

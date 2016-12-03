@@ -12,6 +12,7 @@ html(lang="ko")
         script(src="./static/js/angular-sanitize.js")
         script(src="./static/js/angular-bind-html-compile.js")
         script(src="./static/js/angular-ui-tinymce.js")
+        script(src="./static/js/angular-ui-router.min.js")
         script(src="./static/js/loading-bar.js")
         link(href="./static/css/loading-bar.css", rel="stylesheet" )
         script(src="./static/js/jquery-3.1.1.min.js", charset="utf-8")
@@ -24,9 +25,25 @@ html(lang="ko")
         link(href="./static/css/common.css", rel="stylesheet")
         script(src="./static/js/common.js")
         script(src="./static/js/facebook.js")
+
+        script(src="./static/js/booth.js")
         script(src="./static/js/board.js")
-    body(ng-app="board")
-        div(id="boardApp", ng-view="ng-view", style="padding:40px;") 
-            div(ng-controller="boardPostWriteController")
-            div(ng-controller="boardPostsController")
-            div(ng-controller="boardPostViewController")
+        script(src="./static/js/login.js")
+    body(ng-app="booth")
+
+
+        a(ui-sref="board") board click
+
+        // div(ng-view="ng-view", style="padding:40px;")  
+
+        ui-view
+
+        br
+        br
+        br
+        br
+        br
+        | bottom copyright 
+        // div(ng-view="ng-view", ng-controller="boardPostsController", style="padding:40px;")  
+        // div(ng-controller="authController", style="padding:40px;")  
+        // ng-controller="boardPostWriteController", ng-controller="boardPostsController", ng-controller="boardPostViewController")  

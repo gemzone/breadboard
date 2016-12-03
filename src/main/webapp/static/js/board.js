@@ -1,31 +1,32 @@
-var boardApp = angular.module("board", [ 
+var boardApp = angular.module("board", [
     "angular-loading-bar",
-    "ngAnimate", 
-    "ngSanitize", 
+    "ngAnimate",
+    "ngSanitize",
     "angular-bind-html-compile",
     "ui.tinymce",
     "ngRoute"
-]).config(function($routeProvider, $locationProvider, cfpLoadingBarProvider) {
+]);
+
+/*.config(function ($routeProvider, $locationProvider, cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 0;
     cfpLoadingBarProvider.includeSpinner = true;
     $locationProvider.hashPrefix("!");
 
     $routeProvider.when("/list", {
-        templateUrl : "e/list",
+        templateUrl: "e/list",
         controller: "boardPostsController"
     }).when("/view", {
-        templateUrl : "e/view",
+        templateUrl: "e/view",
         controller: "boardPostViewController",
-        resolve: {
-            test: function ($route) { $route.current.params.test = true; }
-        }
     }).when("/write", {
-        templateUrl : "e/write",
+        templateUrl: "e/write",
         controller: "boardPostWriteController"
     }).otherwise({
         redirectTo: "/list"
     });
 });
+*/
+
 
 // $location.search({id: id, page : page });
 // $location.path("/write").search({ id : id, page : $scope.page});

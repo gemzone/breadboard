@@ -209,6 +209,164 @@ public class BoardService
 	}
 	
 	
+	public void setPostIncreaseViewCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET hit_count += :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+
+	public void setPostIncreaseUpCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET up_count += :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPostIncreaseDownCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET down_count += :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPostIncreaseCommentCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET comment_count += :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+	public void setPostDecreaseViewCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET hit_count -= :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+
+	public void setPostDecreaseUpCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET up_count -= :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPostDecreaseDownCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET down_count -= :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPostDecreaseCommentCount(Integer boardTableNumber, Long postId, int count) 
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + boardTableNumber.toString() + " SET comment_count -= :count WHERE post_id = :post_id";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("count", count);
+			query.setParameter("post_id", postId);
+			query.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	// 글 작성
 	public boolean postAdd(String id, String title, String text)
 	{
