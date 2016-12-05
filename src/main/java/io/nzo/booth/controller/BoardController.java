@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import de.neuland.jade4j.lexer.token.Comment;
 import io.nzo.booth.common.Paging;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Post;
+import io.nzo.booth.model.PostForm;
 import io.nzo.booth.service.BoardService;
 import io.nzo.booth.service.UserService;
 
@@ -34,39 +37,100 @@ public class BoardController
 	@Autowired UserService userService;
 	@Autowired BoardService boardService;
 	
-	@RequestMapping(path = "/board/{id}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
-	public String boardMain(Model model, @PathVariable( name = "id", required = true) String id )
-	{
-		return boardMain(model, id, 1);
-	}
-	
-	@RequestMapping(path =  "/board/{id}/{page}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
-	public String boardMain(Model model,
+	/**
+	 * 목록보기
+	 */
+//	@RequestMapping(path = "/board/{id}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
+//	public String boardMain(Model model, 
+//			@PathVariable( name = "id", required = true) String id,
+//			@RequestParam( name="page", required = false , defaultValue = 1) int page )
+//	{
+//		return boardMain(model, id, page);
+//	}
+	@RequestMapping(path =  "/board/{id}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
+	public String main(Model model,
 			@PathVariable( name = "id", required = true) String id,
-			@PathVariable( name = "page", required = true) int page )
+			@RequestParam( name="page", required = false , defaultValue = "1") int page )
 	{
-		if( page == 0 ) { page = 1; }
+		if( page <= 0 ) { page = 1; }
 		
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
 		
-		List<Post> posts = boardService.getPosts(board.getTableNumber(), page, 15);
+		List<Post> posts = boardService.getPosts(board.getTableNumber(), page, 12);
 		model.addAttribute("posts", posts);
 		
 		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
-		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 15));
-
+		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 12));
 		
-		// JadeTemplate template = JadeConfig.getTemplate("board");
-		//return JadeConfig.renderTemplate(template, model.asMap());
 		return "board";
+	}
+	
+	/**
+	 * 게시물 보기
+	 */
+	@RequestMapping(path = "/board/{id}/view/{postId}", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.TEXT_HTML)
+	public String postView(Model model, 
+			@PathVariable(value = "id", required = true ) String id,
+			@PathVariable(value = "postId", required = true) long postId,
+			@RequestParam( name="page", required = false , defaultValue = "1") int page)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		// 게시물
+		Post post = boardService.getPost(board.getTableNumber(), postId);
+		model.addAttribute("post", post);
+		
+		// 댓글
+		List<Comment> comments = boardService.getComments(board.getTableNumber(), postId);
+		model.addAttribute("postComments", comments);
+		
+		// 이전글 다음글
+		model.addAttribute("postUser", userService.getUser(post.getUserId()));
+		
+		Post nextPost = boardService.getNextPost(board.getTableNumber(), postId);
+		Post prevPost = boardService.getPrevPost(board.getTableNumber(), postId);
+		model.addAttribute("nextPost", nextPost);
+		model.addAttribute("prevPost", prevPost);
+
+		model.addAttribute("page" , page);		// 현재페이지
+		
+		// 뷰 카운트 갱신
+		boardService.setPostIncreaseViewCount(board.getTableNumber(), postId, 1);
+		
+		return "view";
 	}
 	
 	
 	
+	/**
+	 * 글쓰기
+	 */
+	@RequestMapping(path = "/board/{id}/write", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
+	public String postWrite(Model model, 
+			@PathVariable(value = "id", required = true ) String id,
+			@RequestParam( name="page", required = false , defaultValue = "1") int page)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		model.addAttribute("page", page);
+		
+		model.addAttribute("postForm", new Post());
+		return "write";
+	}
 	
-	
-	
+	@RequestMapping(path = "/board/{id}/write", method = RequestMethod.POST)
+	public ModelAndView postAdd(Model model,
+			@PathVariable(value = "id", required = true ) String id,
+			@ModelAttribute("postForm") Post post)
+	{
+		boardService.postAdd(id, post.getTitle(), post.getText() );
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/board/" + id + "?page=1");
+		return mv;
+	}
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +138,6 @@ public class BoardController
 	
 	
 //	// add / modify
-	@ResponseBody
-	@RequestMapping(path = "/gz/post/add", method = RequestMethod.POST)
-	public String setPostAdd(Model model, 
-			@RequestBody String payload)
-	{
-		JSONObject params = new JSONObject(payload);
-		
-		boardService.postAdd(params.getString("id"), params.getString("title"), params.getString("text") );
-		return new JSONObject().toString();
-	}
 	
 	// 게시물 보기
 	@ResponseBody
@@ -224,8 +278,39 @@ public class BoardController
 	
 	
 	
+	/**
+	 * api code 
+	@ResponseBody
+	@RequestMapping(path = "/gz/list", produces = MediaType.APPLICATION_JSON)
+	public String listWithApi(Model model, 
+			@RequestParam(value = "id", required = false, defaultValue="" ) String id,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page)
+	{
+		Board board = boardService.getBoard(id);
+		model.addAttribute("board", board);
+		
+		model.addAttribute("posts", boardService.getPosts(board.getTableNumber(), page, 15));
+		
+		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
+		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 15));
+				
+		return new JSONObject(model.asMap()).toString();
+	}
 	
+	 */
 	
+
+/**
+ *  jade code 
+ *  
+	@RequestMapping(path = "/board/{id}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
+	public String boardMain(Model model, @PathVariable( name = "id", required = true) String id )
+	{
+	
+		// JadeTemplate template = JadeConfig.getTemplate("board");
+		//return JadeConfig.renderTemplate(template, model.asMap());
+	}
+*/
 	
 	
 }
