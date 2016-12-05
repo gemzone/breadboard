@@ -93,6 +93,12 @@ public class BoardController
 
 		model.addAttribute("page" , page);		// 현재페이지
 		
+		Comment comment =  new Comment();
+		comment.setPostId(postId);
+		comment.setUserId(607L);
+		model.addAttribute("commentForm" , comment);
+		
+		
 		// 뷰 카운트 갱신
 		boardService.setPostIncreaseViewCount(board.getTableNumber(), postId, 1);
 		
@@ -120,7 +126,7 @@ public class BoardController
 	 * 글수정
 	 */
 	@RequestMapping(path = "/board/{id}/write/{postId}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML)
-	public String postWrite(Model model, 
+	public String postModify(Model model, 
 			@PathVariable(value = "id", required = true ) String id,
 			@PathVariable(value = "postId", required = true) long postId,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page)
@@ -146,7 +152,7 @@ public class BoardController
 	 * @return
 	 */
 	@RequestMapping(path = "/board/{id}/write", method = RequestMethod.POST)
-	public ModelAndView postAdd(Model model,
+	public ModelAndView postUpdate(Model model,
 			@PathVariable(value = "id", required = true ) String id,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page,
 			@ModelAttribute("postForm") Post post)
@@ -165,6 +171,33 @@ public class BoardController
 			mv.setViewName("redirect:/board/" + id + "/view/" + post.getPostId() +"?page=" + page);
 			return mv;
 		}
+	}
+	
+	
+	/** 
+	 * 댓글 쓰기
+	 */
+	@RequestMapping(path = "/board/{id}/comment/{postId}", method = RequestMethod.POST)
+	public ModelAndView commentAdd(Model model,
+			@PathVariable(value = "id", required = true ) String id,
+			@PathVariable(value = "postId", required = true) long postId,
+			@RequestParam( name="page", required = false , defaultValue = "1") int page,
+			@ModelAttribute("commentForm") Comment comment)
+	{
+		Board board = boardService.getBoard(id);
+		
+		// path 에 붙어있는거 클래스로 넘김
+		comment.setPostId(postId);
+		
+		// 댓글 등록
+		boardService.commentAdd(board.getTableNumber(), comment);
+		
+		// 댓글수 증가
+		boardService.setPostIncreaseCommentCount(board.getTableNumber(), comment.getPostId(), 1);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
+		return mv;
 	}
 	
 	// /board

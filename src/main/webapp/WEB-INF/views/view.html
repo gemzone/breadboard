@@ -21,20 +21,26 @@
 
         <div class="col s12">
             <h5>댓글</h5>
-            <form>
-                <div class="input-field col s9">
-                    <i class="material-icons prefix">textsms</i>
-                    <textarea id="icon_prefix2" class="materialize-textarea" style="padding:0;"></textarea>
-                    <label for="icon_prefix2">message</label>
+            <form action="#"
+                  th:object="${commentForm}"
+                  th:action="@{'/board/' + ${board.id} + '/comment/' + ${post.postId} + '?page=' + ${page} }"
+                  method="post">
 
+                <input type="hidden" th:field="*{userId}" />
+
+                <input type="hidden" th:field="*{ip}" />
+                
+                <div class="input-field col s10 m10 l11">
+                    <i class="material-icons prefix">textsms</i>
+                    <input type="text" th:field="*{text}" id="icon_prefix" class="validate" />
+                    <label for="icon_prefix" class="">내용</label>
                 </div>
-                <div class="input-field col s3">
+                <div class="input-field col s2 m2 l1">
                     <button type="submit" class="btn waves-effect waves-light">
                         <i class="material-icons">send</i>
                     </button>
                 </div>
             </form>
-            
         </div>
 
 
@@ -52,8 +58,15 @@
                                 <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
                             </td>
                             <td data-field="title" th:text="${comment.text}"></td>
-                            <td data-field="count" style="text-align:center;">up</td>
-                            <td data-field="count" style="text-align:center;">down</td>
+                            <td data-field="count" style="text-align:center;">
+                                <i class="tiny material-icons">thumb_up</i>
+                                <span th:text="${comment.upCount}"></span>
+                            </td>
+                            <td data-field="count" style="text-align:center;">
+                                <i class="tiny material-icons">thumb_down</i>
+                                <span th:text="${comment.downCount}"></span>
+                            
+                            </td>
                             <td data-field="date" style="text-align:center;">
                                 <small th:text="${comment.creationTime}"></small>
                             </td>
@@ -76,8 +89,15 @@
                     <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} }" th:text="${nextPost.title}"></a>
                     </td>
-                    <td data-field="count" th:text="${nextPost.commentCount}" style="text-align:center;"></td>
-                    <td data-field="count" th:text="${nextPost.hitCount}" style="text-align:center;"></td>
+                    <td data-field="count" style="text-align:center;">
+                        <i class="fa fa-comment-o"></i>
+                        <span th:text="${nextPost.commentCount}"></span>
+                    </td>
+                    <td data-field="count" style="text-align:center;">
+                        <i class="fa fa-eye"></i>
+                        <span th:text="${nextPost.hitCount}"></span>
+
+                    </td>
                     <td data-field="date" style="text-align:center;">
                         <small th:text="${nextPost.creationTime}">글자수몇글자글자</small>
                     </td>
@@ -87,8 +107,14 @@
                     <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${prevPost.postId} }" th:text="${prevPost.title}"></a>
                     </td>
-                    <td data-field="count" th:text="${prevPost.commentCount}" style="text-align:center;"></td>
-                    <td data-field="count" th:text="${prevPost.hitCount}" style="text-align:center;"></td>
+                    <td data-field="count" style="text-align:center;">
+                        <i class="fa fa-comment-o"></i>
+                        <span th:text="${prevPost.commentCount}"></span>
+                    </td>
+                    <td data-field="count" style="text-align:center;">
+                        <i class="fa fa-eye"></i>
+                        <span th:text="${prevPost.hitCount}"></span>
+                    </td>
                     <td data-field="date" style="text-align:center;">
                         <small th:text="${prevPost.creationTime}">글자수몇글자글자</small>
                     </td>

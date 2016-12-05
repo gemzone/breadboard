@@ -445,21 +445,36 @@ public class BoardService
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 댓글 작성
+	public boolean commentAdd(Integer tableNumber, Comment comment)
+	{
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			
+			
+			String sql = "INSERT INTO gz_post" + tableNumber.toString() + "_comment "
+					+ " (post_id, uid, user_id, text, ip) " 
+					+ " VALUES (:post_id, NEWID(), :user_id, :text, :ip)";
+			
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("post_id", comment.getPostId());
+			query.setParameter("user_id", comment.getUserId());
+			query.setParameter("text", comment.getText());
+			query.setParameter("ip", comment.getIp());
+			
+			query.executeUpdate();
+			
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	
 	
 	
