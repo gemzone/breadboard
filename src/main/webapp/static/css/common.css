@@ -1,26 +1,35 @@
+
+table td {
+
+    padding:10px 5px;
+}
+
 .bordered th {
     text-align:center;
 }
 
-.bordered th[data-field='name'] {
-    width:170px;
-    min-width:170px;
+.bordered th[data-field='name'],
+.bordered td[data-field='name'],
+div[data-field='name'] {
+    width:170px;min-width:170px;
 }
 
 
-.bordered th[data-field='date'] {
+.bordered th[data-field='date'],
+.bordered td[data-field='date'] {
     width:74px;
     min-width:74px;
 }
 
 
-.bordered th[data-field='count'] {
+.bordered th[data-field='count'],
+.bordered td[data-field='count'] {
     width:80px;
     min-width:80px;
 }
 
-
+.bordered th[data-field='title'],
 .bordered td[data-field='title'] {
-    font-size:14pt;
+    font-size:16px;
 }
 

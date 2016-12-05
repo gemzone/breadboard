@@ -8,14 +8,27 @@
             tinymce.init({ selector: 'textarea' });
         });
     </script>
-    <form action="#" th:action="@{'/board/' + ${board.id} + '/write'}" th:object="${postForm}" 
-          method="post">
+
+    <form action="#" 
+            th:object="${postForm}" 
+            th:action="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }"
+            method="post">
         <div class="row">
+
+
+            <input type="hidden" th:field="*{postId}" />
+            <input type="hidden" th:field="*{boardId}" />
+            <input type="hidden" th:field="*{userId}" />
+            <input type="hidden" th:field="*{categoryId}" />
+            <input type="hidden" th:field="*{notice}" />
+            <input type="hidden" th:field="*{secret}" />
+            <input type="hidden" th:field="*{attachment}" />
+            <input type="hidden" th:field="*{link}" />
+            <input type="hidden" th:field="*{ip}" />
 
             <div class="input-field col s12">
                 <input type="text" th:field="*{title}" />
                 <label for="postTitle" class="">제목</label>
-
             </div>
 
             <!--
@@ -27,9 +40,9 @@
                 -->
 
             <div class="col s12">
-                <textarea th:field="*{text}" 
-                          maxlength="65535" 
-                          style="resize:none;height:300px;width:100%;"></textarea>
+                <textarea th:field="*{text}"
+                            maxlength="65535"
+                            style="resize:none;height:300px;width:100%;"></textarea>
             </div>
             <!--
             <div class="input-field col s6">
@@ -42,9 +55,8 @@
 
         <div class="row">
             <div class="col s12 m4 l2" style="text-align:left;">
-                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn-floating blue waves-effect">
-                    <!--<a th:onclick="'history.back();'" class="btn blue waves-effect">-->
-                    <i class="large material-icons">list</i>
+                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn waves-effect waves-light">
+                    <i class="material-icons">list</i>
                 </a>
             </div>
             <div class="col s12 m4 l8">
@@ -53,12 +65,32 @@
 
             <div class="col s12 m4 l2" style="text-align:right;">
 
-                <button type="submit" class="btn-floating blue waves-effect">
-                    <i class="large material-icons">mode_edit</i>
+                <button type="submit" class="btn waves-effect waves-light">
+                    <i class="material-icons">mode_edit</i>
                 </button>
+
             </div>
 
         </div>
     </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

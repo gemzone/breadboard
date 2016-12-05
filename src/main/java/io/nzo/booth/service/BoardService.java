@@ -12,16 +12,12 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
-
-import de.neuland.jade4j.lexer.token.Comment;
 import io.nzo.booth.common.Paging;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.Board;
+import io.nzo.booth.model.Comment;
 import io.nzo.booth.model.Post;
-import io.nzo.booth.model.User;
 import io.nzo.orm.HibernateUtil;
 
 // Board, Post, Comment
@@ -368,12 +364,8 @@ public class BoardService
 	
 	
 	// 글 작성
-	public boolean postAdd(String id, String title, String text)
+	public boolean postAdd(String id, Post post)
 	{
-		Post post = new Post();
-		post.setTitle(title);
-		post.setText(text);
-		
 		Board board = getBoard(id);
 		
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
@@ -404,6 +396,72 @@ public class BoardService
 		}
 		return true;
 	}
+	
+	// 글 작성
+	public boolean postModify(String id, Post post)
+	{
+		Board board = getBoard(id);
+		
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			String sql = "UPDATE gz_post" + board.getTableNumber().toString() 
+					+" SET "
+					+ "board_id=:board_id, "
+					+ "user_id = :user_id, "
+					+ "category_id = :category_id, "
+					+ "notice = :notice, "
+					+ "secret = :secret, "
+					+ "title = :title, "
+					+ "text = :text, "
+					+ "attachment = :attachment, "
+					+ "link = :link, "
+					+ "ip = :ip "
+					+ " WHERE post_id = :postId ";
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql);
+			query.setParameter("board_id", board.getBoardId());
+			query.setParameter("user_id", post.getUserId());
+			query.setParameter("category_id", post.getCategoryId());
+			query.setParameter("notice", post.getNotice());
+			query.setParameter("secret", post.getSecret());
+			query.setParameter("title", post.getTitle());
+			query.setParameter("text", post.getText());
+			query.setParameter("attachment", post.getAttachment());
+			query.setParameter("link", post.getLink());
+			query.setParameter("ip", post.getIp());
+			
+			query.setParameter("postId", post.getPostId());
+			
+			System.out.println("hibernate executeUpdate: " + query.executeUpdate() );
+			
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 글 삭제
 	// 코멘트 삭제

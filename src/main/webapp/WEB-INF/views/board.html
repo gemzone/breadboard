@@ -4,7 +4,7 @@
 </head>
 <body>
     <div class="row">
-        <table class="bordered">
+        <table class="bordered highlight">
             <thead>
                 <tr>
                     <th data-field="name"><i class="fa fa-user"></i></th>
@@ -23,7 +23,7 @@
                         <span text="${post.userId}">글자수몇글자글자</span><br />
                         <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
                     </td>
-                    <td>
+                    <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }" th:text="${post.title}"></a>
                     </td>
                     <td th:text="${post.commentCount}" style="text-align:center;"></td>
@@ -37,14 +37,15 @@
     </div>
 
     <div class="row" style="margin-top:5px;">
-        <div class="col s12 m4 l2" style="text-align:left;">
-            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn-floating blue waves-effect">
-                <i class="large material-icons">list</i>
+        <div class="col s12 m2 l2  left-align">
+            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
+                <!--<i class="material-icons left">list</i>목록-->
+                <i class="material-icons">list</i>
             </a>
         </div>
-        <div class="col s12 m4 l8" style="text-align:center;">
+        <div class="col s12 m8 l8 center-align">
 
-            <ul class="pagination" style="min-width:300px;margin:5px 0 5px 0;">
+            <ul class="pagination" style="margin:5px 0 5px 0;">
                 <li class="waves-effect">  <!-- class="disabled" -->
                     <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }">
                         <i class="material-icons">chevron_left</i>
@@ -63,10 +64,11 @@
                 </li>
             </ul>
         </div>
-        <div class="col s12 m4 l2" style="text-align:right;">
-            <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn-floating blue waves-effect">
-                <i class="large material-icons">mode_edit</i>
+        <div class="col s12 m2 l2 right-align">
+            <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
+                <i class="material-icons">mode_edit</i>
             </a>
+
         </div>
     </div>
 

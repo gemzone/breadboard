@@ -4,9 +4,9 @@
 </head>
 <body>
 
-    <div class="row">
+    <div class="row" style="margin-bottom:0px;">
+        <!-- 본문 -->
         <div class="col s12">
-
             <div class="section">
                 <h5 th:text="${post.title}">Section 1</h5>
                 <p>작성자</p>
@@ -15,100 +15,81 @@
             <!-- content -->
             <div class="section" th:utext="${post.text}"></div>
             <div class="divider"></div>
+
+
         </div>
 
-        
-        <div class="row">
-            <form class="col s12">
-                <div class="input-field col s8">
+        <div class="col s12">
+            <h5>댓글</h5>
+            <form>
+                <div class="input-field col s9">
                     <i class="material-icons prefix">textsms</i>
                     <textarea id="icon_prefix2" class="materialize-textarea" style="padding:0;"></textarea>
-                    <label for="icon_prefix2">코멘트</label>
-                </div>
+                    <label for="icon_prefix2">message</label>
 
-                <div class="input-field col s1">
-                    <button type="submit" class="btn-floating blue waves-effect">
-                        <i class="large material-icons">send</i>
+                </div>
+                <div class="input-field col s3">
+                    <button type="submit" class="btn waves-effect waves-light">
+                        <i class="material-icons">send</i>
                     </button>
                 </div>
             </form>
+            
         </div>
-        
 
 
-        <!--
-        <div class="col s12">
-            <i class="material-icons prefix">account_circle</i>
-            <input id="postTitle" type="text" class="validate input-field" >
-            <label for="icon_prefix">제목</label>
+        <div class="col s12" th:if="${not #lists.isEmpty(postComments)}">
+            <div class="divider"></div>
+            <div class="row">
+                <table class="bordered">
+                    <tbody>
+                        <tr th:each="comment : ${postComments}">
+                            <td data-field="name" style="text-align:center;">
+                                <!--
+                                    <span th:text="${post.userId}">id</span>
+                            -->
+                                <span text="${comment.userId}">글자수몇글자글자</span><br />
+                                <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
+                            </td>
+                            <td data-field="title" th:text="${comment.text}"></td>
+                            <td data-field="count" style="text-align:center;">up</td>
+                            <td data-field="count" style="text-align:center;">down</td>
+                            <td data-field="date" style="text-align:center;">
+                                <small th:text="${comment.creationTime}"></small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-            -->
 
-        <!--
-        <div class="input-field col s6">
-            <i class="material-icons prefix">phone</i>
-            <input id="icon_telephone" type="tel" class="validate">
-            <label for="icon_telephone">Telephone</label>
-        </div>
-        -->
     </div>
-
-    <div class="row">
-        <div class="col s12 m4 l2" style="text-align:left;">
-            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn-floating blue waves-effect">
-                <!--<a th:onclick="'history.back();'" class="btn blue waves-effect">-->
-                <i class="large material-icons">list</i>
-            </a>
-        </div>
-        <div class="col s12 m4 l8">
-        </div>
-        <div class="col s12 m4 l2" style="text-align:right;">
-            <button type="submit" class="btn-floating blue waves-effect">
-                <i class="large material-icons">mode_edit</i>
-            </button>
-        </div>
-    </div>
-
-
-
-
 
 
     <div class="row">
         <div class="divider"></div>
 
         <table class="bordered">
-            <thead>
-                <tr>
-                    <th data-field="name"><i class="fa fa-user"></i></th>
-                    <th data-field="title"></th>
-                    <th data-field="count"><i class="fa fa-comment-o"></i></th>
-                    <th data-field="count"><i class="fa fa-eye"></i></th>
-                    <th data-field="date"><i class="fa fa-calendar"></i></th>
-                </tr>
-            </thead>
-
-
             <tbody>
-                <tr>        <!-- ng-show="nextPost.postId &gt; 0  -->
-                    <td></td>
-                    <td>
+                <tr th:if="${nextPost.postId} > 0">        <!-- ng-show="nextPost.postId &gt; 0  -->
+                    <td data-field="name"></td>
+                    <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} }" th:text="${nextPost.title}"></a>
                     </td>
-                    <td th:text="${nextPost.commentCount}" style="text-align:center;"></td>
-                    <td th:text="${nextPost.hitCount}" style="text-align:center;"></td>
-                    <td style="text-align:center;">
+                    <td data-field="count" th:text="${nextPost.commentCount}" style="text-align:center;"></td>
+                    <td data-field="count" th:text="${nextPost.hitCount}" style="text-align:center;"></td>
+                    <td data-field="date" style="text-align:center;">
                         <small th:text="${nextPost.creationTime}">글자수몇글자글자</small>
                     </td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>
+                <tr th:if="${prevPost.postId} > 0">
+                    <td data-field="name"></td>
+                    <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${prevPost.postId} }" th:text="${prevPost.title}"></a>
                     </td>
-                    <td th:text="${prevPost.commentCount}" style="text-align:center;"></td>
-                    <td th:text="${prevPost.hitCount}" style="text-align:center;"></td>
-                    <td style="text-align:center;">
+                    <td data-field="count" th:text="${prevPost.commentCount}" style="text-align:center;"></td>
+                    <td data-field="count" th:text="${prevPost.hitCount}" style="text-align:center;"></td>
+                    <td data-field="date" style="text-align:center;">
                         <small th:text="${prevPost.creationTime}">글자수몇글자글자</small>
                     </td>
                 </tr>
@@ -118,22 +99,65 @@
 
 
     <div class="row">
-        <div class="col s12 m4 l2" style="text-align:left;">
-            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn-floating blue waves-effect">
+        <div class="col s12 m4 l4" style="text-align:left;">
+            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn waves-effect waves-light">
                 <!--<a th:onclick="'history.back();'" class="btn blue waves-effect">-->
-                <i class="large material-icons">list</i>
+                <i class="material-icons">list</i>
+            </a>
+
+            <a th:href="@{'/board/' + ${board.id} + '/write?page=' + ${page} }" class="btn waves-effect waves-light">
+                <i class="material-icons">mode_edit</i>
             </a>
         </div>
-        <div class="col s12 m4 l8">
+        <div class="col s12 m4 l4">
         </div>
-        <div class="col s12 m4 l2" style="text-align:right;">
-            <button type="submit" class="btn-floating blue waves-effect">
-                <i class="large material-icons">mode_edit</i>
-            </button>
+        <div class="col s12 m4 l4" style="text-align:right;">
+            
+            <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn waves-effect waves-light">
+                <i class="material-icons">gavel</i>
+            </a>
+
+            <a class="btn waves-effect waves-light">
+                <i class="material-icons">delete_forever</i>
+            </a>
         </div>
     </div>
 
 
+    <!--
+    <div class="row" style="margin-bottom:0px;" th:if="${not #lists.isEmpty(postComments)}">
+        <ul class="collection with-header">
+            <li class="collection-item" th:each="comment : ${postComments}">
+                <div class="row" style="margin-bottom:0px;">
 
+                    <div class="col s2" style="text-align:left;width:170px;min-width:170px;max-width:170px;">
+                        <span th:text="${comment.userId}" style="font-weight:bold;"></span>
+                    </div>
+                    <div class="col s8" th:text="${comment.text}"></div>
+                    <div class="col s2" style="text-align:right;">
+                        <small th:text="${comment.creationTime}"></small>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+        -->
+    <!-- 댓글 -->
+    <!--
+        <div class="col s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="postTitle" type="text" class="validate input-field" >
+            <label for="icon_prefix">제목</label>
+        </div>
+            -->
+    <!--
+        <div class="input-field col s6">
+            <i class="material-icons prefix">phone</i>
+            <input id="icon_telephone" type="tel" class="validate">
+            <label for="icon_telephone">Telephone</label>
+        </div>
+    -->
+
+    <div th:replace="template/board :: copyright"></div>
 </body>
 </html>
