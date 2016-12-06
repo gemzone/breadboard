@@ -32,8 +32,9 @@
                 </span>
 
             </div>
+            <!-- 
             <div class="divider"></div>
-            <!-- attach 
+            attach 
             <p>
                 <a class="waves-effect waves-light">
                     <i class="fa fa-file" aria-hidden="true"></i>&#32;
@@ -63,16 +64,16 @@
                 <div class="chip">Google<i class="material-icons close">close</i></div>
                 <input id="0635acf5-55d7-a95f-d1f6-468731f591cd" class="input" placeholder="" />
             </div>-->
-            <div class="chips chips-initial" data-index="0" data-initialized="true">
+            <div class="chips" data-index="0" data-initialized="true">
                 <div class="chip">tag_test1</div>
                 <div class="chip">tag_test2</div>
                 <div class="chip">tag_test3</div>
             </div>
 
-    </div>
+        </div>
 
         <div class="col s12">
-            <h5>댓글</h5>
+
             <form action="#"
                   th:object="${commentForm}"
                   th:action="@{'/board/' + ${board.id} + '/comment/' + ${post.postId} + '?page=' + ${page} }"
@@ -81,54 +82,68 @@
                 <input type="hidden" th:field="*{userId}" />
 
                 <input type="hidden" th:field="*{ip}" />
-                
-                <div class="input-field col s10 m10 l11">
+
+                <h5 class="header">
                     <i class="material-icons prefix">textsms</i>
-                    <input type="text" th:field="*{text}" id="icon_prefix" class="validate" />
+                    댓글
+                </h5>
+
+
+                <div class="input-field">
+                    <textarea type="text" th:field="*{text}" id="icon_prefix"
+                              class="materialize-textarea left-align"
+                              style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;"></textarea>
                     <label for="icon_prefix" class="">내용</label>
+                    <div>
+                        <!--
+                        <div style="float:left;">
+                            text 글자수
+                        </div>
+                        -->
+
+                        <button type="submit" class="btn waves-effect waves-light" style="float:right;">
+                            <i class="material-icons">send</i>
+                        </button>
+                    </div>
                 </div>
-                <div class="input-field col s2 m2 l1">
-                    <button type="submit" class="btn waves-effect waves-light">
-                        <i class="material-icons">send</i>
-                    </button>
-                </div>
+
             </form>
+
+
         </div>
-
-
-        <div class="col s12" th:if="${not #lists.isEmpty(postComments)}">
-            <div class="divider"></div>
-            <div class="row">
-                <table class="bordered">
-                    <tbody>
-                        <tr th:each="comment : ${postComments}">
-                            <td data-field="name" style="text-align:center;">
-                                <!--
-                                    <span th:text="${post.userId}">id</span>
-                            -->
-                                <span text="${comment.userId}">글자수몇글자글자</span><br />
-                                <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
-                            </td>
-                            <td data-field="title" th:text="${comment.text}"></td>
-                            <td data-field="count" style="text-align:center;">
-                                <i class="tiny material-icons">thumb_up</i>
-                                <span th:text="${comment.upCount}"></span>
-                            </td>
-                            <td data-field="count" style="text-align:center;">
-                                <i class="tiny material-icons">thumb_down</i>
-                                <span th:text="${comment.downCount}"></span>
-                            
-                            </td>
-                            <td data-field="date" style="text-align:center;">
-                                <small th:text="${comment.creationTime}"></small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+        
     </div>
+
+    <div class="row" th:if="${not #lists.isEmpty(postComments)}">
+
+        <!--
+        <div class="col s12">
+            <h5>댓글</h5>
+            <div class="divider"></div>
+        </div>-->
+        <div class="col s12" th:each="comment : ${postComments}">
+            <p style="font-weight:bold;" th:text="${comment.userId}"></p>
+            <div th:text="${comment.text}"></div>
+            <p style="margin-top:0px;">
+                <small>
+                    <i class="fa fa-clock-o"></i>&#32;
+                    <span th:text="${comment.creationTime}"></span>
+                </small>
+
+                <small style="float:right;">
+
+                    <i class="tiny material-icons">thumb_up</i>
+                    <span th:text="${comment.upCount}"></span>
+
+                    <i class="tiny material-icons">thumb_down</i>
+                    <span th:text="${comment.downCount}"></span>
+
+                </small>
+            </p>
+            <div class="divider"></div>
+        </div>
+    </div>
+
 
 
     <div class="row">
@@ -136,7 +151,8 @@
 
         <table class="bordered">
             <tbody>
-                <tr th:if="${nextPost.postId} > 0">        <!-- ng-show="nextPost.postId &gt; 0  -->
+                <tr th:if="${nextPost.postId} > 0">
+                    <!-- ng-show="nextPost.postId &gt; 0  -->
                     <td data-field="name"></td>
                     <td data-field="title">
                         <a th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} }" th:text="${nextPost.title}"></a>
@@ -175,9 +191,8 @@
         </table>
     </div>
 
-
     <div class="row">
-        <div class="col s12 m4 l4" style="text-align:left;">
+        <div class="col s6 m6 l6" style="text-align:left;">
             <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn waves-effect waves-light">
                 <!--<a th:onclick="'history.back();'" class="btn blue waves-effect">-->
                 <i class="material-icons">list</i>
@@ -187,10 +202,8 @@
                 <i class="material-icons">mode_edit</i>
             </a>
         </div>
-        <div class="col s12 m4 l4">
-        </div>
-        <div class="col s12 m4 l4" style="text-align:right;">
-            
+        <div class="col s6 m6 l6" style="text-align:right;">
+
             <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn waves-effect waves-light">
                 <i class="material-icons">gavel</i>
             </a>

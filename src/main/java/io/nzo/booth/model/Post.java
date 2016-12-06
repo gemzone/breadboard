@@ -9,18 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
- 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
- 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Post implements Serializable 
@@ -34,6 +22,8 @@ public class Post implements Serializable
 	private Integer boardId;
 	private String uid;
 	private Long userId = null;
+	private String passwordSha2 = null;
+	private String email = null;
 	private Integer categoryId = 1;
 	private Boolean notice = false;
 	private Boolean secret = false;
@@ -43,6 +33,10 @@ public class Post implements Serializable
 	private String link = "";
 	private String ip = "0:0:0:0:0:ffff:0:0";
 	private Integer hitCount = 0;
+	
+	private Integer viewCount = 0;
+	private Integer goodCount = 0;
+	
 	private Integer upCount = 0;
 	private Integer downCount = 0;
 	
@@ -236,5 +230,69 @@ public class Post implements Serializable
 	public void setCommentCount(Integer commentCount)
 	{
 		this.commentCount = commentCount;
+	}
+
+	/**
+	 * @return the passwordSha2
+	 */
+	public String getPasswordSha2()
+	{
+		return passwordSha2;
+	}
+
+	/**
+	 * @param passwordSha2 the passwordSha2 to set
+	 */
+	public void setPasswordSha2(String passwordSha2)
+	{
+		this.passwordSha2 = passwordSha2;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail()
+	{
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+
+	/**
+	 * @return the viewCount
+	 */
+	public Integer getViewCount()
+	{
+		return viewCount;
+	}
+
+	/**
+	 * @param viewCount the viewCount to set
+	 */
+	public void setViewCount(Integer viewCount)
+	{
+		this.viewCount = viewCount;
+	}
+
+	/**
+	 * @return the goodCount
+	 */
+	public Integer getGoodCount()
+	{
+		return goodCount;
+	}
+
+	/**
+	 * @param goodCount the goodCount to set
+	 */
+	public void setGoodCount(Integer goodCount)
+	{
+		this.goodCount = goodCount;
 	}
 }

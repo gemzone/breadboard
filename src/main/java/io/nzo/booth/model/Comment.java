@@ -18,14 +18,18 @@ public class Comment implements Serializable
 	@Id         
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long commentId;
-	
+	private Long refCommentId = null;
 	private Long postId;
 	private String uid;
 	private Long userId;
+	private String passwordSha2 = null;
+	private String email = null;
 	private String text;
 	private String ip;
-	private Integer upCount;
-	private Integer downCount;
+	
+	private Integer goodCount = 0;
+	private Integer upCount = 0;
+	private Integer downCount = 0;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modificationTime;
@@ -131,6 +135,70 @@ public class Comment implements Serializable
 	public void setCreationTime(Date creationTime)
 	{
 		this.creationTime = creationTime;
+	}
+
+	/**
+	 * @return the refCommentId
+	 */
+	public Long getRefCommentId()
+	{
+		return refCommentId;
+	}
+
+	/**
+	 * @param refCommentId the refCommentId to set
+	 */
+	public void setRefCommentId(Long refCommentId)
+	{
+		this.refCommentId = refCommentId;
+	}
+
+	/**
+	 * @return the passwordSha2
+	 */
+	public String getPasswordSha2()
+	{
+		return passwordSha2;
+	}
+
+	/**
+	 * @param passwordSha2 the passwordSha2 to set
+	 */
+	public void setPasswordSha2(String passwordSha2)
+	{
+		this.passwordSha2 = passwordSha2;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail()
+	{
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+
+	/**
+	 * @return the goodCount
+	 */
+	public Integer getGoodCount()
+	{
+		return goodCount;
+	}
+
+	/**
+	 * @param goodCount the goodCount to set
+	 */
+	public void setGoodCount(Integer goodCount)
+	{
+		this.goodCount = goodCount;
 	}
 	
 	

@@ -33,3 +33,9 @@ div[data-field='name'] {
     font-size:16px;
 }
 
+
+.bordered th[data-field='comment'],
+.bordered td[data-field='comment'] {
+    font-size:14px;
+}
+

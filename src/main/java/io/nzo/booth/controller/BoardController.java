@@ -2,6 +2,7 @@ package io.nzo.booth.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
@@ -47,7 +48,8 @@ public class BoardController
 	@RequestMapping(path =  "/board/{id}", method = { RequestMethod.GET, RequestMethod.POST }, produces = MediaType.TEXT_HTML )
 	public String main(Model model,
 			@PathVariable( name = "id", required = true) String id,
-			@RequestParam( name="page", required = false , defaultValue = "1") int page )
+			@RequestParam( name="page", required = false , defaultValue = "1") int page,
+			HttpServletRequest request)
 	{
 		if( page <= 0 ) { page = 1; }
 		
@@ -59,6 +61,12 @@ public class BoardController
 		
 		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
 		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 12));
+		
+		
+		
+		model.addAttribute("remoteAddr", request.getRemoteAddr());
+		model.addAttribute("remoteHost", request.getRemoteHost());
+		
 		
 		return "board";
 	}
@@ -205,14 +213,21 @@ public class BoardController
 	{
 		Board board = boardService.getBoard(id);
 		
+		Post post = boardService.getPost(board.getTableNumber(), postId);
+		
+		
 		// path 에 붙어있는거 클래스로 넘김
 		comment.setPostId(postId);
 		
-		// 댓글 등록
-		boardService.commentAdd(board.getTableNumber(), comment);
-		
-		// 댓글수 증가
-		boardService.setPostIncreaseCommentCount(board.getTableNumber(), comment.getPostId(), 1);
+		// 댓글수 최대치
+		if( post.getCommentCount() < Integer.MAX_VALUE ) 
+		{
+			// 댓글 등록
+			boardService.commentAdd(board.getTableNumber(), comment);
+			
+			// 카운트 증가
+			boardService.setPostIncreaseCommentCount(board.getTableNumber(), comment.getPostId(), 1);
+		}
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
