@@ -9,15 +9,67 @@
         <div class="col s12">
             <div class="section">
                 <h5 th:text="${post.title}">Section 1</h5>
-                <p>작성자</p>
+                <span style="margin:0px 20px 0px 20px;">
+                    <i class="fa fa-user"></i>&#32;
+                    <span th:text="${post.userId}"></span>
+                </span>
+
+
+
+                <span style="float:right;margin:0px 20px 0px 20px;">
+                    <i class="fa fa-clock-o"></i>&#32;
+                    <span th:text="${post.creationTime}"></span>
+                </span>
+
+                <span style="float:right;margin:0px 20px 0px 20px;">
+                    <i class="fa fa-comment-o"></i>&#32;
+                    <span th:text="${post.commentCount}"></span>
+                </span>
+
+                <span style="float:right;margin:0px 20px 0px 20px;">
+                    <i class="fa fa-eye"></i>&#32;
+                    <span th:text="${post.hitCount}"></span>
+                </span>
+
             </div>
             <div class="divider"></div>
-            <!-- content -->
-            <div class="section" th:utext="${post.text}"></div>
+            <!-- attach 
+            <p>
+                <a class="waves-effect waves-light">
+                    <i class="fa fa-file" aria-hidden="true"></i>&#32;
+                    <span>booth-0.0.1-SNAPSHOT.war</span>
+                </a>
+
+            </p>-->
+            <!-- link 
+            <p>
+                <a class="waves-effect waves-light">
+                    <i class="fa fa-link" aria-hidden="true"></i>&#32;
+                    <span>http://naver.com</span>
+                </a>
+
+            </p>-->
+
             <div class="divider"></div>
 
+            <!-- content -->
+            <div class="section" th:utext="${post.text}"></div>
+            
 
-        </div>
+            <!-- tag 
+            <div class="chips chips-initial" data-index="0" data-initialized="true">
+                <div class="chip">Apple<i class="material-icons close">close</i></div>
+                <div class="chip">Microsoft<i class="material-icons close">close</i></div>
+                <div class="chip">Google<i class="material-icons close">close</i></div>
+                <input id="0635acf5-55d7-a95f-d1f6-468731f591cd" class="input" placeholder="" />
+            </div>-->
+            <div class="chips chips-initial" data-index="0" data-initialized="true">
+                <div class="chip">tag_test1</div>
+                <div class="chip">tag_test2</div>
+                <div class="chip">tag_test3</div>
+            </div>
+
+    </div>
 
         <div class="col s12">
             <h5>댓글</h5>
@@ -143,7 +195,7 @@
                 <i class="material-icons">gavel</i>
             </a>
 
-            <a class="btn waves-effect waves-light">
+            <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn waves-effect waves-light">
                 <i class="material-icons">delete_forever</i>
             </a>
         </div>

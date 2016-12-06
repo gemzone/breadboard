@@ -33,7 +33,6 @@ public class Post implements Serializable
 	
 	private Integer boardId;
 	private String uid;
-	private Long virtualId = 0L;
 	private Long userId = null;
 	private Integer categoryId = 1;
 	private Boolean notice = false;
@@ -83,16 +82,6 @@ public class Post implements Serializable
 	public void setUid(String uid)
 	{
 		this.uid = uid;
-	}
-
-	public Long getVirtualId()
-	{
-		return virtualId;
-	}
-
-	public void setVirtualId(Long virtualId)
-	{
-		this.virtualId = virtualId;
 	}
 
 	public Long getUserId()

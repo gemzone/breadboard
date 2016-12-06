@@ -364,8 +364,10 @@ public class BoardService
 	
 	
 	// 글 작성
-	public boolean postAdd(String id, Post post)
+	public int postAdd(String id, Post post)
 	{
+		int execute = 0;
+		
 		Board board = getBoard(id);
 		
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
@@ -385,21 +387,21 @@ public class BoardService
 			query.setParameter("attachment", post.getAttachment());
 			query.setParameter("link", post.getLink());
 			query.setParameter("ip", post.getIp());
-			
-			System.out.println("hibernate executeUpdate: " + query.executeUpdate() );
-			
+			execute = query.executeUpdate();
 			tx.commit();
 		}
 		catch(Exception e)
 		{
+			execute = -1;
 			e.printStackTrace();
 		}
-		return true;
+		return execute;
 	}
 	
 	// 글 작성
-	public boolean postModify(String id, Post post)
+	public int postModify(String id, Post post)
 	{
+		int execute = 0;
 		Board board = getBoard(id);
 		
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
@@ -433,21 +435,22 @@ public class BoardService
 			
 			query.setParameter("postId", post.getPostId());
 			
-			System.out.println("hibernate executeUpdate: " + query.executeUpdate() );
-			
+			execute = query.executeUpdate();
 			tx.commit();
 		}
 		catch(Exception e)
 		{
+			execute = -1;
 			e.printStackTrace();
 		}
-		return true;
+		return execute;
 	}
 	
 	
 	// 댓글 작성
-	public boolean commentAdd(Integer tableNumber, Comment comment)
+	public int commentAdd(Integer tableNumber, Comment comment)
 	{
+		int execute = 0;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			Transaction tx = session.beginTransaction();
@@ -464,27 +467,42 @@ public class BoardService
 			query.setParameter("text", comment.getText());
 			query.setParameter("ip", comment.getIp());
 			
-			query.executeUpdate();
+			execute = query.executeUpdate();
 			
 			tx.commit();
 		}
 		catch(Exception e)
 		{
+			execute = -1;
 			e.printStackTrace();
 		}
-		
-		return true;
+		return execute;
 	}
-	
-	
 	
 	// 글 삭제
 	// 코멘트 삭제
 	// 첨부 파일 삭제
-	public boolean removePost()
+	public int removePost(Integer tableNumber, Post post)
 	{
+		int execute = 0;
 		
-		return false;
+		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			Transaction tx = session.beginTransaction();
+			
+			session.delete("Post" + String.valueOf(tableNumber), post);
+			
+			execute = 1;
+			
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			execute = -1;
+			e.printStackTrace();
+		}
+		
+		return execute;
 	}
 	
 	

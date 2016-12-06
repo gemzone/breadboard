@@ -105,6 +105,25 @@ public class BoardController
 		return "view";
 	}
 	
+	/**
+	 * 게시물 삭제
+	 */
+	@RequestMapping(path = "/board/{id}/delete/{postId}", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView postRemove(Model model,
+			@PathVariable(value = "id", required = true ) String id,
+			@PathVariable(value = "postId", required = true) long postId,
+			@RequestParam( name="page", required = false , defaultValue = "1") int page)
+	{
+		Board board = boardService.getBoard(id);
+		// 게시물
+		Post post = boardService.getPost(board.getTableNumber(), postId);
+		
+		boardService.removePost(board.getTableNumber(), post);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/board/" + id + "?page=" + page);
+		return mv;
+	}
 	
 	
 	/**
@@ -199,6 +218,12 @@ public class BoardController
 		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
 		return mv;
 	}
+	
+	
+	
+	
+	
+	
 	
 	// /board
 	// 게시판 정보
