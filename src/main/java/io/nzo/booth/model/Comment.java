@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +22,11 @@ public class Comment implements Serializable
 	private Long refCommentId = null;
 	private Long postId;
 	private String uid;
+	
+
+	@JoinColumn( name = "user_id" )
+	private User user = null;
+	
 	private Long userId;
 	private String passwordSha2 = null;
 	private String email = null;
@@ -201,6 +207,20 @@ public class Comment implements Serializable
 		this.goodCount = goodCount;
 	}
 	
-	
+	/**
+	 * @return the user
+	 */
+	public User getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
 	
 }

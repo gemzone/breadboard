@@ -16,6 +16,9 @@
 		<property name="permission" column="permission" />
 		<property name="admin" column="admin" />
 		<property name="creationTime" column="creation_time" />
+		
+		
+		
 	</class>
 </hibernate-mapping>
 
@@ -34,20 +37,20 @@
                   column="mother_id"
                   update="false"/>
                   
-             <set name="kittens"
-             inverse="true"
-             order-by="litter_id">
-                 <key column="mother_id"/>
-                 <one-to-many class="Cat"/>
-         </set>
+    <set name="kittens"
+        inverse="true"
+        order-by="litter_id">
+            <key column="mother_id"/>
+            <one-to-many class="Cat"/>
+    </set>
 
-         <subclass name="DomesticCat"
-             discriminator-value="D">
+    <subclass name="DomesticCat"
+        discriminator-value="D">
 
-                 <property name="name"
-                     type="string"/>
+            <property name="name"
+                type="string"/>
 
-         </subclass>
+    </subclass>
  -->
 
 <!-- 

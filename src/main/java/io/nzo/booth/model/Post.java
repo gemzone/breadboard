@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +22,10 @@ public class Post implements Serializable
 	
 	private Integer boardId;
 	private String uid;
+	
+	@JoinColumn( name = "user_id" )
+	private User user = null;
+	
 	private Long userId = null;
 	private String passwordSha2 = null;
 	private String email = null;
@@ -294,5 +299,21 @@ public class Post implements Serializable
 	public void setGoodCount(Integer goodCount)
 	{
 		this.goodCount = goodCount;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser()
+	{
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 }

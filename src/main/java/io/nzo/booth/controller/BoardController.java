@@ -3,6 +3,7 @@ package io.nzo.booth.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ import io.nzo.booth.common.Paging;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Comment;
 import io.nzo.booth.model.Post;
+import io.nzo.booth.model.User;
 import io.nzo.booth.service.BoardService;
 import io.nzo.booth.service.UserService;
 
@@ -72,7 +74,7 @@ public class BoardController
 	 * 게시물 보기
 	 */
 	@RequestMapping(path = "/board/{id}/view/{postId}", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.TEXT_HTML)
-	public String postView(Model model, 
+	public String postView(Model model, HttpSession session,
 			@PathVariable(value = "id", required = true ) String id,
 			@PathVariable(value = "postId", required = true) long postId,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page)
@@ -100,13 +102,15 @@ public class BoardController
 		
 		Comment comment =  new Comment();
 		comment.setPostId(postId);
-		comment.setUserId(607L);
+		if( model.containsAttribute("user") ) 
+		{
+			User user = (User) model.asMap().get("user");
+			comment.setUserId(user.getUserId());
+		}
 		model.addAttribute("commentForm" , comment);
-		
 		
 		// 뷰 카운트 갱신
 		boardService.setPostIncreaseViewCount(board.getTableNumber(), postId, 1);
-		
 		return "view";
 	}
 	
@@ -142,7 +146,15 @@ public class BoardController
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);
-		model.addAttribute("postForm", new Post());
+		
+		
+		Post post = new Post();
+		if( model.containsAttribute("user") ) 
+		{
+			User user = (User) model.asMap().get("user");
+			post.setUserId(user.getUserId());
+		}
+		model.addAttribute("postForm", post);
 		return "write";
 	}
 	

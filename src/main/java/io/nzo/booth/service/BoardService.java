@@ -80,7 +80,7 @@ public class BoardService
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber));
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " as p left join fetch p.user  ");
 			query.setFirstResult( ((page - 1) * size) );
 			query.setFetchSize(size);
 			query.setMaxResults(size);
@@ -193,7 +193,10 @@ public class BoardService
 		List<Comment> comments = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
-			comments = session.createQuery("from Comment"+ String.valueOf(boardTableNumber)+" where postId = :postId")
+			// hql 방식으로 left outer join 시
+			comments = session.createQuery("from Comment"+ String.valueOf(boardTableNumber) + " as c "  
+					+ " left join fetch c.user " 
+					+ " where c.postId = :postId")
 					.setParameter("postId", postId)
 					.getResultList();
 		}
@@ -361,8 +364,6 @@ public class BoardService
 		}
 	}
 	
-	
-	
 	// 글 작성
 	public int postAdd(String id, Post post)
 	{
@@ -378,7 +379,7 @@ public class BoardService
 			@SuppressWarnings("rawtypes")
 			NativeQuery query = session.createNativeQuery(sql);
 			query.setParameter("board_id", board.getBoardId());
-			query.setParameter("user_id", null);
+			query.setParameter("user_id", post.getUserId());
 			query.setParameter("category_id", post.getCategoryId());
 			query.setParameter("notice", post.getNotice());
 			query.setParameter("secret", post.getSecret());
@@ -489,6 +490,11 @@ public class BoardService
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			Transaction tx = session.beginTransaction();
+			
+			@SuppressWarnings("rawtypes")
+			Query query = session.createQuery("delete from Comment" + String.valueOf(tableNumber) + " where postId=:post_id");
+			query.setParameter("post_id", post.getPostId());
+			query.executeUpdate();
 			
 			session.delete("Post" + String.valueOf(tableNumber), post);
 			

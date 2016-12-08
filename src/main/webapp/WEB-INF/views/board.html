@@ -20,7 +20,7 @@
                         <!--
                         <span th:text="${post.userId}">id</span>
                             -->
-                        <span text="${post.userId}">글자수몇글자글자</span><br />
+                        <span th:if="${post.user}" th:text="${post.user.name}">글자수몇글자글자</span><br />
                         <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
                     </td>
                     <td data-field="title">

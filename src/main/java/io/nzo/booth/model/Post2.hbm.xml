@@ -32,5 +32,12 @@
 		<property name="commentCount" column="comment_count" />
 		<property name="modificationTime" column="modification_time" />
 		<property name="creationTime" column="creation_time" />
+		
+		
+		<!-- left outer join -->
+		<many-to-one name="user" class="io.nzo.booth.model.User" fetch="join" insert="false" update="false">
+            <column name="user_id" not-null="false" />
+        </many-to-one>
+		
 	</class>
 </hibernate-mapping>
