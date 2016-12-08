@@ -1,4 +1,4 @@
-
+console.log("board.js");
 
 /*
 var boardApp = angular.module("board", [

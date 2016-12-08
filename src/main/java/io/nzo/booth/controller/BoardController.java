@@ -62,11 +62,8 @@ public class BoardController
 		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
 		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 12));
 		
-		
-		
 		model.addAttribute("remoteAddr", request.getRemoteAddr());
 		model.addAttribute("remoteHost", request.getRemoteHost());
-		
 		
 		return "board";
 	}
@@ -215,7 +212,6 @@ public class BoardController
 		
 		Post post = boardService.getPost(board.getTableNumber(), postId);
 		
-		
 		// path 에 붙어있는거 클래스로 넘김
 		comment.setPostId(postId);
 		
@@ -233,11 +229,6 @@ public class BoardController
 		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
 		return mv;
 	}
-	
-	
-	
-	
-	
 	
 	
 	// /board
@@ -261,16 +252,6 @@ public class BoardController
 	
 	
 	
-	
-	
-	// 가입
-	// /sign/up
-
-	// 로그인
-	// /sign/in
-	
-	// 로그아웃
-	// /sign/out
 	
 	
 	

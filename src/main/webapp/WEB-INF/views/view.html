@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<head th:replace="board :: head">
+<head th:replace="template/board :: head">
 </head>
 <body>
 
@@ -56,20 +56,20 @@
             <!-- content -->
             <div class="section" th:utext="${post.text}"></div>
             
-
+            <div class="divider"></div>
             <!-- tag 
             <div class="chips chips-initial" data-index="0" data-initialized="true">
                 <div class="chip">Apple<i class="material-icons close">close</i></div>
                 <div class="chip">Microsoft<i class="material-icons close">close</i></div>
                 <div class="chip">Google<i class="material-icons close">close</i></div>
                 <input id="0635acf5-55d7-a95f-d1f6-468731f591cd" class="input" placeholder="" />
-            </div>-->
+            </div>
             <div class="chips" data-index="0" data-initialized="true">
                 <div class="chip">tag_test1</div>
                 <div class="chip">tag_test2</div>
                 <div class="chip">tag_test3</div>
             </div>
-
+               -->
         </div>
 
         <div class="col s12">

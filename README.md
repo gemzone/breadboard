@@ -17,10 +17,11 @@ BBS모듈을 Restful API와 View Template 제공합니다.
  - http://wiki.nzo.io
 
  
-## 참고라이브러리
+## 참고
 
 - spring framework 2.0
 - hibernate ORM 5.2.4
+- thymeleaf 3.0.0
 - jade4j 1.2.5
 - hikariCP 2.5.1
 - tinymce 4.4.3
@@ -33,7 +34,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
 
 The GPL License
 
-Copyright (C) 2016 NZO.IO, author Jung Seong Hun
+Copyright (C) 2016 NZO.IO All rights reserved by gemzone, author Jung Seong Hun
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
