@@ -70,7 +70,7 @@ public class BoardService
 	
 	// get posts
 	@SuppressWarnings("unchecked")
-	public List<Post> getPosts(int tableNumber, int page, int size)
+	public List<Post> getPosts(int boardId, int tableNumber, int page, int size)
 	{
 		if (page <= 0) { page = 1; }
 		if (size <= 0) { size = 15; }
@@ -80,7 +80,7 @@ public class BoardService
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " as p left join fetch p.user  ");
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " as p left join fetch p.user where p.boardId = " + boardId);
 			query.setFirstResult( ((page - 1) * size) );
 			query.setFetchSize(size);
 			query.setMaxResults(size);
@@ -93,18 +93,30 @@ public class BoardService
 		return posts;
 	}
 	
-	public Post getPost(int tableNumber, long postId)
+	public Post getPost(int boardId, int tableNumber, long postId)
 	{
 		Post post = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
+//			@SuppressWarnings({ "rawtypes" })
+//			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId = " + postId + " and boardId = " + boardId );
+//			post = (Post) query.getSingleResult();
 			post = (Post) session.get("Post" + String.valueOf(tableNumber), postId);
+			
+			if( post.getBoardId() == boardId ) 
+			{
+				return post;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			logger.error(e.getMessage());
+			return null;
 		}
-		return post;
 	}
 
 	/**
@@ -113,14 +125,14 @@ public class BoardService
 	 * @param postId
 	 * @return
 	 */
-	public Post getNextPost(int tableNumber, long postId)
+	public Post getNextPost(int boardId, int tableNumber, long postId)
 	{
 		Post post = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			// TODO 여기에 orderby asc 붙이는걸 나중에 다른방법으로 해결해야함
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId > " + postId + " order by postId asc");
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId > " + postId + " and boardId = " + boardId + " order by postId asc");
 			query.setFetchSize(1);
 			query.setMaxResults(1);
 
@@ -145,13 +157,13 @@ public class BoardService
 	 * @param postId
 	 * @return
 	 */
-	public Post getPrevPost(int tableNumber, long postId)
+	public Post getPrevPost(int boardId, int tableNumber, long postId)
 	{
 		Post post = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId < " + postId );
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId < " + postId + " and boardId = " + boardId );
 			query.setFetchSize(1);
 			query.setMaxResults(1);
 
@@ -170,13 +182,13 @@ public class BoardService
 		return post;
 	}
 	
-	public Long getPostsTotalCount(int tableNumber) 
+	public Long getPostsTotalCount(int boardId, int tableNumber) 
 	{
 		Long count = 0L;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			count = (Long) session
-					.createQuery("select count(p.postId) from Post" + String.valueOf(tableNumber) + " p")
+					.createQuery("select count(p.postId) from Post" + String.valueOf(tableNumber) + " p where boardId = " + boardId)
 					.getSingleResult();
 		}
 		catch(Exception e)
@@ -518,8 +530,8 @@ public class BoardService
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Board board = (Board) session.get(Board.class, boardId);
-		map.addAttribute("posts", getPosts(board.getTableNumber(), page, size) );
-		Long postsTotalCount = getPostsTotalCount(board.getTableNumber());
+		map.addAttribute("posts", getPosts(board.getBoardId(), board.getTableNumber(), page, size) );
+		Long postsTotalCount = getPostsTotalCount(board.getBoardId(), board.getTableNumber());
 		map.addAttribute("paging", Paging.pagination(postsTotalCount.longValue(), page, size));
 		return map;
 	}

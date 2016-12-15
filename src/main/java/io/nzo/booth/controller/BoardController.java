@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import io.nzo.booth.common.Paging;
@@ -58,10 +55,10 @@ public class BoardController
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
 		
-		List<Post> posts = boardService.getPosts(board.getTableNumber(), page, 12);
+		List<Post> posts = boardService.getPosts(board.getBoardId(), board.getTableNumber(), page, 12);
 		model.addAttribute("posts", posts);
 		
-		Long totalCount = boardService.getPostsTotalCount(board.getTableNumber());
+		Long totalCount = boardService.getPostsTotalCount(board.getBoardId(), board.getTableNumber());
 		model.addAttribute("paging", Paging.pagination(totalCount.longValue(), page, 12));
 		
 		model.addAttribute("remoteAddr", request.getRemoteAddr());
@@ -83,7 +80,7 @@ public class BoardController
 		model.addAttribute("board", board);
 		
 		// 게시물
-		Post post = boardService.getPost(board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
 		model.addAttribute("post", post);
 		
 		// 댓글
@@ -93,8 +90,8 @@ public class BoardController
 		// 이전글 다음글
 		model.addAttribute("postUser", userService.getUser(post.getUserId()));
 		
-		Post nextPost = boardService.getNextPost(board.getTableNumber(), postId);
-		Post prevPost = boardService.getPrevPost(board.getTableNumber(), postId);
+		Post nextPost = boardService.getNextPost(board.getBoardId(), board.getTableNumber(), postId);
+		Post prevPost = boardService.getPrevPost(board.getBoardId(), board.getTableNumber(), postId);
 		model.addAttribute("nextPost", nextPost);
 		model.addAttribute("prevPost", prevPost);
 
@@ -125,7 +122,7 @@ public class BoardController
 	{
 		Board board = boardService.getBoard(id);
 		// 게시물
-		Post post = boardService.getPost(board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
 		
 		boardService.removePost(board.getTableNumber(), post);
 		
@@ -174,7 +171,7 @@ public class BoardController
 		
 		
 		// 게시물
-		Post post = boardService.getPost(board.getTableNumber(), postId);		
+		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);		
 		model.addAttribute("postForm", post);
 		return "write";
 	}
@@ -222,7 +219,7 @@ public class BoardController
 	{
 		Board board = boardService.getBoard(id);
 		
-		Post post = boardService.getPost(board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
 		
 		// path 에 붙어있는거 클래스로 넘김
 		comment.setPostId(postId);

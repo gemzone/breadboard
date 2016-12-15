@@ -12,7 +12,9 @@
 		<property name="email" column="email" />
 		<property name="homepage" column="homepage" />
 		<property name="comment" column="comment" />
-		<property name="point" column="point" />
+		<property name="point1" column="point1" />
+		<property name="point2" column="point2" />
+		
 		<property name="permission" column="permission" />
 		<property name="admin" column="admin" />
 		<property name="creationTime" column="creation_time" />

@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="io.nzo.booth.model">
-	<class name="Post" table="gz_post2" entity-name="Post2">
+	<class name="Post" table="gz_post9" entity-name="Post9">
 		<id name="postId" column="post_id" />
 		<property name="boardId" column="board_id" />
 		<property name="uid" column="uid" />

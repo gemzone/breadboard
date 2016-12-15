@@ -25,7 +25,8 @@ public class User implements Serializable
 	private String email;
 	private String homepage;
 	private String comment;
-	private Integer point = 0;
+	private Integer point1 = 0;
+	private Integer point2 = 0;
 	private Short permission = 9;
 	private Boolean admin = false;
 	
@@ -102,16 +103,6 @@ public class User implements Serializable
 		this.comment = comment;
 	}
 
-	public Integer getPoint()
-	{
-		return point;
-	}
-
-	public void setPoint(Integer point)
-	{
-		this.point = point;
-	}
-
 	public Short getPermission()
 	{
 		return permission;
@@ -140,6 +131,38 @@ public class User implements Serializable
 	public void setCreationTime(Date creationTime)
 	{
 		this.creationTime = creationTime;
+	}
+
+	/**
+	 * @return the point1
+	 */
+	public Integer getPoint1()
+	{
+		return point1;
+	}
+
+	/**
+	 * @param point1 the point1 to set
+	 */
+	public void setPoint1(Integer point1)
+	{
+		this.point1 = point1;
+	}
+
+	/**
+	 * @return the point2
+	 */
+	public Integer getPoint2()
+	{
+		return point2;
+	}
+
+	/**
+	 * @param point2 the point2 to set
+	 */
+	public void setPoint2(Integer point2)
+	{
+		this.point2 = point2;
 	}
 
 }

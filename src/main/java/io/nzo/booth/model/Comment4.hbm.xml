@@ -4,32 +4,23 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="io.nzo.booth.model">
-	<class name="Post" table="gz_post2" entity-name="Post2">
-		<id name="postId" column="post_id" />
-		<property name="boardId" column="board_id" />
+	<class name="Comment" table="gz_post4_comment" entity-name="Comment4">
+		<id name="commentId" column="comment_id" />
+		<property name="refCommentId" column="ref_comment_id" />
+		<property name="postId" column="post_id" />
 		<property name="uid" column="uid" />
 		<property name="userId" column="user_id" />
 		
 		<property name="passwordSha2" column="password_sha2" />
 		<property name="email" column="email" />
 		
-		
-		<property name="categoryId" column="category_id" />
-		<property name="notice" column="notice" />
-		<property name="secret" column="secret" />
-		<property name="title" column="title" />
 		<property name="text" column="text" />
-		<property name="attachment" column="attachment" />
-		<property name="link" column="link" />
 		<property name="ip" column="ip" />
-		<property name="hitCount" column="hit_count" />
 		
-		<property name="viewCount" column="view_count" />
 		<property name="goodCount" column="good_count" />
 		
 		<property name="upCount" column="up_count" />
 		<property name="downCount" column="down_count" />
-		<property name="commentCount" column="comment_count" />
 		<property name="modificationTime" column="modification_time" />
 		<property name="creationTime" column="creation_time" />
 		
