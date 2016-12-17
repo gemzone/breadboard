@@ -5,7 +5,7 @@
 	id="booth" version="3.1">
 	<display-name>booth</display-name>
 	
-	<!-- 리스너 -->
+	<!-- 리스너 --> 
 	<listener>
 		<listener-class>io.nzo.booth.ContextManager</listener-class>
 	</listener>

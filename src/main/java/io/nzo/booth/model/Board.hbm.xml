@@ -6,15 +6,25 @@
 <hibernate-mapping package="io.nzo.booth.model">
 	<class name="Board" table="gz_board">
 		<id name="boardId" column="board_id" />
-		<!--  --><property name="id" column="id" />
+		<property name="id" column="id" />
 		<property name="tableNumber" column="table_number" />
 		<property name="title" column="title" />
 		<property name="headerContent" column="header_content" />
 		<property name="footerContent" column="footer_content" />
+		
 		<property name="memo" column="memo" />
+		
 		<property name="postCount" column="post_count" />
 		<property name="commentCount" column="comment_count" />
-		<property name="permission" column="permission" />
+		
+		<property name="grantList" column="grant_list" />
+		<property name="grantView" column="grant_view" />
+		<property name="grantWrite" column="grant_write" />
+		<property name="grantComment" column="grant_comment" />
+		<property name="grantDelete" column="grant_delete" />
+		<property name="grantNotice" column="grant_notice" />
+		<property name="grantSecret" column="grant_secret" />		
+		
 		<property name="creationTime" column="creation_time" />
 	</class>
 </hibernate-mapping>

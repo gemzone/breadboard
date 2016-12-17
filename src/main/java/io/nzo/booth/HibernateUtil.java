@@ -1,4 +1,4 @@
-package io.nzo.orm;
+package io.nzo.booth;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -14,16 +14,17 @@ public class HibernateUtil
 	{
 	    try 
 	    {
-	    	StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder().configure( "hibernate.cfg.xml" );
-	    	// BootstrapServiceRegistry bootstrapServiceRegistry = standardServiceRegistryBuilder.getBootstrapServiceRegistry();
 	    	
+	    	StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
+	    	standardServiceRegistryBuilder.loadProperties("hibernate.properties");
+	    	standardServiceRegistryBuilder.configure( "hibernate.cfg.xml" );
 	    	StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
 	    	
 	        Metadata metadata = new MetadataSources(standardRegistry)
+//	        		.addResource("io/nzo/booth/model/User.hbm.xml")
 	        		.getMetadataBuilder()
 	        		.build();
-	        
-	        
+
 	        sessionFactory = metadata.getSessionFactoryBuilder().build();
 	    }
 	    catch (Throwable th)
@@ -35,7 +36,12 @@ public class HibernateUtil
 	
 	public static SessionFactory getSessionFactory()
 	{
-		
 		return sessionFactory;
 	}
+
+	public static void shutdown() 
+	{
+		getSessionFactory().close();
+	}
+	
 }

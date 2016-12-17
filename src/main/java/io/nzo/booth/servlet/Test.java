@@ -12,14 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import de.neuland.jade4j.template.JadeTemplate;
 import io.nzo.booth.JadeConfig;
-import io.nzo.booth.model.User;
-import io.nzo.orm.HibernateUtil;
 
 /**
  * Servlet implementation class Test

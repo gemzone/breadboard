@@ -1,7 +1,5 @@
 package io.nzo.booth.service;
 
-import java.math.BigInteger;
-
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
@@ -10,15 +8,15 @@ import org.hibernate.query.NativeQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
 
+import io.nzo.booth.HibernateUtil;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.User;
-import io.nzo.orm.HibernateUtil;
 
 @Component
 public class UserService
 {
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 //	Page<City> findCities(CitySearchCriteria criteria, Pageable pageable);

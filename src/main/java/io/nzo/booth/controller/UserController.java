@@ -2,6 +2,7 @@ package io.nzo.booth.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +22,16 @@ import io.nzo.booth.service.UserService;
 @SessionAttributes("user")
 public class UserController
 {
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	UserService userService;
 	
 	// 가입
-	// /sign/up
-	@RequestMapping(path =  "/sign/up", method = RequestMethod.GET, produces = MediaType.TEXT_HTML )
-	public String signUp(Model model, HttpServletRequest request,
+	// /register
+	@RequestMapping(path =  "/register", method = RequestMethod.GET, produces = MediaType.TEXT_HTML )
+	public String register(Model model, HttpServletRequest request,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer)
 	{
 		User user = new User();
@@ -38,38 +40,36 @@ public class UserController
 		// referer
 		model.addAttribute("ref", "http://google.com/");
 		
-		return "signUp";
+		return "register";
 	}
 	
-	@RequestMapping(path = "/sign/up", method = RequestMethod.POST)
+	@RequestMapping(path = "/register", method = RequestMethod.POST)
 	public ModelAndView register(Model model,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer,
-			@ModelAttribute("userForm") User user)
+			@Valid @ModelAttribute("userForm") User user)
 	{
 		// 중복체크
 		User userDuplicate = userService.getUserForUsername(user.getUsername());
 		if( userDuplicate == null )
 		{
 			userService.create(user);
-			
 			user.setPasswordSha2("");
-			
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/sign/up");
+			mv.setViewName("redirect:/register");
 			return mv;
 		}
 		else
 		{
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/sign/up");
+			mv.setViewName("redirect:/register");
 			return mv;
 		}
 	}
 	
 	// 로그인
 	// /sign/in
-	@RequestMapping(path =  "/sign/in", method = RequestMethod.GET, produces = MediaType.TEXT_HTML )
-	public String signIn(Model model, HttpServletRequest request,
+	@RequestMapping(path =  "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML )
+	public String login(Model model, HttpServletRequest request,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer)
 	{
 		User user = new User();
@@ -81,7 +81,7 @@ public class UserController
 		return "signIn";
 	}
 	
-	@RequestMapping(path = "/sign/in", method = RequestMethod.POST)
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public ModelAndView login(Model model, HttpSession session,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer,
 			@ModelAttribute("userForm") User user)
@@ -128,7 +128,7 @@ public class UserController
 	}
 	
 	// 로그아웃
-	@RequestMapping(path = "/sign/out", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView logout(Model model, HttpSession session,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer)
 	{

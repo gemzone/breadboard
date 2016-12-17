@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 @Entity
 public class User implements Serializable 
 {
@@ -21,7 +26,11 @@ public class User implements Serializable
 	
 	private String username;
 	private String passwordSha2;
+	
+	@NotNull
+    @Size(min=2, max=30)
 	private String name;
+	
 	private String email;
 	private String homepage;
 	private String comment;

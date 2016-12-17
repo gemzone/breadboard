@@ -13,12 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
+
+import io.nzo.booth.HibernateUtil;
 import io.nzo.booth.common.Paging;
 import io.nzo.booth.controller.UserController;
 import io.nzo.booth.model.Board;
 import io.nzo.booth.model.Comment;
 import io.nzo.booth.model.Post;
-import io.nzo.orm.HibernateUtil;
 
 // Board, Post, Comment
 
@@ -93,30 +94,18 @@ public class BoardService
 		return posts;
 	}
 	
-	public Post getPost(int boardId, int tableNumber, long postId)
+	public Post getPost(int tableNumber, long postId)
 	{
 		Post post = null;
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
-//			@SuppressWarnings({ "rawtypes" })
-//			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId = " + postId + " and boardId = " + boardId );
-//			post = (Post) query.getSingleResult();
 			post = (Post) session.get("Post" + String.valueOf(tableNumber), postId);
-			
-			if( post.getBoardId() == boardId ) 
-			{
-				return post;
-			}
-			else
-			{
-				return null;
-			}
 		}
 		catch(Exception e)
 		{
 			logger.error(e.getMessage());
-			return null;
 		}
+		return post;
 	}
 
 	/**

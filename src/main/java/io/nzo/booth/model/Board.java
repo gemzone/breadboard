@@ -28,7 +28,13 @@ public class Board implements Serializable
 	private String memo;
 	private Long postCount;
 	private Long commentCount;
-	private Integer permission;
+	private Integer grantList;
+	private Integer grantView;
+	private Integer grantWrite;
+	private Integer grantComment;
+	private Integer grantDelete;
+	private Integer grantNotice;
+	private Integer grantSecret;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creationTime;
@@ -100,14 +106,6 @@ public class Board implements Serializable
 	{
 		this.commentCount = commentCount;
 	}
-	public Integer getPermission()
-	{
-		return permission;
-	}
-	public void setPermission(Integer permission)
-	{
-		this.permission = permission;
-	}
 	public Date getCreationTime()
 	{
 		return creationTime;
@@ -123,6 +121,104 @@ public class Board implements Serializable
 	public void setId(String id)
 	{
 		this.id = id;
+	}
+	/**
+	 * @return the grantList
+	 */
+	public Integer getGrantList()
+	{
+		return grantList;
+	}
+	/**
+	 * @param grantList the grantList to set
+	 */
+	public void setGrantList(Integer grantList)
+	{
+		this.grantList = grantList;
+	}
+	/**
+	 * @return the grantView
+	 */
+	public Integer getGrantView()
+	{
+		return grantView;
+	}
+	/**
+	 * @param grantView the grantView to set
+	 */
+	public void setGrantView(Integer grantView)
+	{
+		this.grantView = grantView;
+	}
+	/**
+	 * @return the grantWrite
+	 */
+	public Integer getGrantWrite()
+	{
+		return grantWrite;
+	}
+	/**
+	 * @param grantWrite the grantWrite to set
+	 */
+	public void setGrantWrite(Integer grantWrite)
+	{
+		this.grantWrite = grantWrite;
+	}
+	/**
+	 * @return the grantComment
+	 */
+	public Integer getGrantComment()
+	{
+		return grantComment;
+	}
+	/**
+	 * @param grantComment the grantComment to set
+	 */
+	public void setGrantComment(Integer grantComment)
+	{
+		this.grantComment = grantComment;
+	}
+	/**
+	 * @return the grantDelete
+	 */
+	public Integer getGrantDelete()
+	{
+		return grantDelete;
+	}
+	/**
+	 * @param grantDelete the grantDelete to set
+	 */
+	public void setGrantDelete(Integer grantDelete)
+	{
+		this.grantDelete = grantDelete;
+	}
+	/**
+	 * @return the grantNotice
+	 */
+	public Integer getGrantNotice()
+	{
+		return grantNotice;
+	}
+	/**
+	 * @param grantNotice the grantNotice to set
+	 */
+	public void setGrantNotice(Integer grantNotice)
+	{
+		this.grantNotice = grantNotice;
+	}
+	/**
+	 * @return the grantSecret
+	 */
+	public Integer getGrantSecret()
+	{
+		return grantSecret;
+	}
+	/**
+	 * @param grantSecret the grantSecret to set
+	 */
+	public void setGrantSecret(Integer grantSecret)
+	{
+		this.grantSecret = grantSecret;
 	}
 	
 	

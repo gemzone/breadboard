@@ -3,76 +3,82 @@
 <head th:replace="template/board :: head">
 </head>
 <body>
-    <div class="row">
-        <table class="bordered highlight">
-            <thead>
-                <tr>
-                    <th data-field="name"><i class="fa fa-user"></i></th>
-                    <th data-field="title"></th>
-                    <th data-field="count"><i class="fa fa-comment-o"></i></th>
-                    <th data-field="count"><i class="fa fa-eye"></i></th>
-                    <th data-field="date"><i class="fa fa-clock-o"></i></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="post : ${posts}">
-                    <td style="text-align:center;">
-                        <!--
-                        <span th:text="${post.userId}">id</span>
-                            -->
-                        <span th:if="${post.user}" th:text="${post.user.name}">글자수몇글자글자</span><br />
-                        <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
-                    </td>
-                    <td data-field="title">
-                        <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }" th:text="${post.title}"></a>
-                    </td>
-                    <td th:text="${post.commentCount}" style="text-align:center;"></td>
-                    <td th:text="${post.hitCount}" style="text-align:center;"></td>
-                    <td style="text-align:center;">
-                        <small th:text="${post.creationTime}">글자수몇글자글자</small>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="container">
+
+        <div class="row">
+            <table class="bordered highlight">
+                <thead>
+                    <tr>
+                        <th data-field="name"><i class="fa fa-user"></i></th>
+                        <th data-field="title"></th>
+                        <th data-field="count"><i class="fa fa-comment-o"></i></th>
+                        <th data-field="count"><i class="fa fa-eye"></i></th>
+                        <th data-field="date"><i class="fa fa-clock-o"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td style="text-align:center;">
+                            <!--
+                            <span th:text="${post.userId}">id</span>
+                                -->
+                            <span th:if="${post.user}" th:text="${post.user.name}">글자수몇글자글자</span><br />
+                            <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
+                        </td>
+                        <td data-field="title">
+                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }" th:text="${post.title}"></a>
+                        </td>
+                        <td th:text="${post.commentCount}" style="text-align:center;"></td>
+                        <td th:text="${post.hitCount}" style="text-align:center;"></td>
+                        <td style="text-align:center;">
+                            <small th:text="${post.creationTime}">글자수몇글자글자</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row" style="margin-top:5px;">
+            <div class="col m2 l2  left-align">
+                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
+                    <!--<i class="material-icons left">list</i>목록-->
+                    <i class="material-icons">list</i>
+                </a>
+            </div>
+            <div class="col m8 l8 center-align">
+
+                <ul class="pagination" style="margin:5px 0 5px 0;">
+                    <li class="waves-effect">
+                        <!-- class="disabled" -->
+                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </li>
+
+                    <li th:each="page : ${paging.pages}"
+                        th:attr="class=${paging.currentPage == page ? 'active blue' : 'waves-effect'}">
+                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" th:text="${page}">0</a>
+                    </li>
+
+                    <li class="waves-effect">
+                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.nextStepPage} }">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col m2 l2 right-align">
+                <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+
+            </div>
+        </div>
+
+
+        <div th:replace="template/board :: copyright"></div>
+
     </div>
-
-    <div class="row" style="margin-top:5px;">
-        <div class="col m2 l2  left-align">
-            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
-                <!--<i class="material-icons left">list</i>목록-->
-                <i class="material-icons">list</i>
-            </a>
-        </div>
-        <div class="col m8 l8 center-align">
-
-            <ul class="pagination" style="margin:5px 0 5px 0;">
-                <li class="waves-effect">  <!-- class="disabled" -->
-                    <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }">
-                        <i class="material-icons">chevron_left</i>
-                    </a>
-                </li>
-
-                <li th:each="page : ${paging.pages}"
-                    th:attr="class=${paging.currentPage == page ? 'active blue' : 'waves-effect'}">
-                    <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" th:text="${page}">0</a>
-                </li>
-
-                <li class="waves-effect">
-                    <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.nextStepPage} }">
-                        <i class="material-icons">chevron_right</i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="col m2 l2 right-align">
-            <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
-                <i class="material-icons">mode_edit</i>
-            </a>
-
-        </div>
-    </div>
-
-
-    <div th:replace="template/board :: copyright"></div>
 </body>
 </html>

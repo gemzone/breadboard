@@ -79,11 +79,8 @@
                   th:object="${commentForm}"
                   th:action="@{'/board/' + ${board.id} + '/comment/' + ${post.postId} + '?page=' + ${page} }"
                   method="post">
-
                 <input type="hidden" th:field="*{userId}" />
-
                 <input type="hidden" th:field="*{ip}" />
-
                 <h5 class="header">
                     <i class="material-icons prefix">textsms</i>
                     댓글

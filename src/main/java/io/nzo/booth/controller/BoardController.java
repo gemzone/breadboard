@@ -1,7 +1,6 @@
 package io.nzo.booth.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
@@ -29,6 +28,7 @@ import io.nzo.booth.service.UserService;
 @SessionAttributes("user")
 public class BoardController
 {
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired UserService userService;
@@ -80,7 +80,8 @@ public class BoardController
 		model.addAttribute("board", board);
 		
 		// 게시물
-		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getTableNumber(), postId);
+		
 		model.addAttribute("post", post);
 		
 		// 댓글
@@ -108,6 +109,7 @@ public class BoardController
 		
 		// 뷰 카운트 갱신
 		boardService.setPostIncreaseViewCount(board.getTableNumber(), postId, 1);
+	
 		return "view";
 	}
 	
@@ -122,13 +124,14 @@ public class BoardController
 	{
 		Board board = boardService.getBoard(id);
 		// 게시물
-		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getTableNumber(), postId);
 		
 		boardService.removePost(board.getTableNumber(), post);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/board/" + id + "?page=" + page);
 		return mv;
+	
 	}
 	
 	
@@ -171,7 +174,7 @@ public class BoardController
 		
 		
 		// 게시물
-		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);		
+		Post post = boardService.getPost(board.getTableNumber(), postId);
 		model.addAttribute("postForm", post);
 		return "write";
 	}
@@ -219,7 +222,7 @@ public class BoardController
 	{
 		Board board = boardService.getBoard(id);
 		
-		Post post = boardService.getPost(board.getBoardId(), board.getTableNumber(), postId);
+		Post post = boardService.getPost(board.getTableNumber(), postId);
 		
 		// path 에 붙어있는거 클래스로 넘김
 		comment.setPostId(postId);
@@ -238,75 +241,6 @@ public class BoardController
 		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
 		return mv;
 	}
-	
-	
-	// /board
-	// 게시판 정보
-	
-	// /board/{id}
-	// /board/{id}/{page}			= 1페이지 목록
-	
-	// 글보기 페이지
-	// /board/{id}/view/{postId}	=	1번글
-	
-	// 글쓰기 페이지
-	// /board/{id}/write			=	글쓰기 레이아웃
-	
-	
-	// 글쓰기
-	// /board/{id}/post/add			=	post 로	
-	
-	// 글수정
-	// /board/{id}/post/{postId}		post 로	
-	
-	
-	
-	
-	
-	
-//	
-//	
-//	// remove
-//	@ResponseBody
-//	@RequestMapping(path = "/gz/post", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON )
-//	public String setPostRemove(Model model,
-//			HttpSession session,
-//			@RequestParam(value = "id", required = true ) String id,
-//			@RequestParam(value = "title", required = false) String title,
-//			@RequestBody(required = false) String text)
-//	{
-//		if( title.length() > 250 ) {
-//			title = title.substring(0, 250);
-//		}
-//		// TODO 이부분 해결안됨
-//		
-//		//User user = (User) session.getAttribute("user");
-//		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
-//		return new JSONObject().toString();
-//	}
-//	
-//	
-//
-//	// get
-//	@ResponseBody
-//	@RequestMapping(path = "/gz/post", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON )
-//	public String getPost(Model model,
-//			HttpSession session,
-//			@RequestParam(value = "id", required = true ) String id,
-//			@RequestParam(value = "title", required = false) String title,
-//			@RequestBody(required = false) String text)
-//	{
-//		if( title.length() > 250 ) {
-//			title = title.substring(0, 250);
-//		}
-//		// TODO 이부분 해결안됨
-//		
-//		//User user = (User) session.getAttribute("user");
-//		boardService.postAdd(id, 0L, 1, false, false, title, text, "", "", "");
-//		return new JSONObject().toString();
-//	}
-	
-	
 	
 	
 	/**

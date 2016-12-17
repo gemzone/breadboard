@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head th:replace="template/sign :: head">
+</head>
+<body>
+    <div class="row">
+        <div class="col s12">
+            <form action="#" 
+                th:object="${userForm}" 
+                th:action="@{'/register'}"
+                method="post">
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">perm_identity</i>
+                        <input id="id" type="text" class="validate"  th:field="*{username}" />
+                        <label for="id">아이디</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">vpn_key</i>
+                        <input id="password" type="password" class="validate" th:field="*{passwordSha2}" />
+                        <label for="password" data-error="wrong" data-success="right">비밀번호</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input id="retype_password" type="password" class="validate" />
+                        <label for="retype_password" data-error="wrong" data-success="right">비밀번호 확인</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="name" type="text" class="validate" th:field="*{name}" />
+                        <label for="name">별명</label>
+
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input id="email" type="email" class="validate" th:field="*{email}" />
+                        <label for="email" data-error="wrong" data-success="right">이메일</label>
+                    </div>
+
+                    <div class="col s12 right-align">
+                        <button type="submit" class="btn waves-effect waves-light">
+                            <!--<i class="material-icons">done_all</i>-->
+                            제출
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

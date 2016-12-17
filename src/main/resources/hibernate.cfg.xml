@@ -5,6 +5,38 @@
 <hibernate-configuration>
 	<session-factory>
 		
+		
+		<!-- <mapping class="io.nzo.booth.model.User" />  -->
+		
+		<mapping resource="io/nzo/booth/model/User.hbm.xml" />
+		
+		<mapping resource="io/nzo/booth/model/Board.hbm.xml" />
+		
+		<mapping resource="io/nzo/booth/model/Post0.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post1.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post2.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post3.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post4.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post5.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post6.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post7.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post8.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Post9.hbm.xml" />
+		
+		<mapping resource="io/nzo/booth/model/Comment0.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment1.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment2.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment3.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment4.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment5.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment6.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment7.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment8.hbm.xml" />
+		<mapping resource="io/nzo/booth/model/Comment9.hbm.xml" />
+		
+		
+		
+		
 		<!-- hibernate generalCP -->
 		<!-- 
 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
@@ -13,38 +45,35 @@
 		<property name="hibernate.connection.password">poiu0987</property>
 		<property name="hibernate.connection.pool_size">3</property>
 		 -->
-		<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
-		
-		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.default_schema">dbo</property>
+		 
+		 
+		 
+		 
 		<!-- 
 		<property name="hibernate.implicit_naming_strategy">io.nzo.orm.CustomNamingStrategy</property>
 		
 		
 		<property name="hibernate.physical_naming_strategy">io.nzo.orm.PhysicalNamingStrategy</property>
 		-->
-		<!-- hikariCP -->
+		<!-- hikariCP 
+		
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
+		
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.default_schema">dbo</property>
+		
 		<property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
-		<property name="hibernate.hikari.minimumIdle">30</property>
-		<property name="hibernate.hikari.maximumPoolSize">30</property>
+		<property name="hibernate.hikari.minimumIdle">10</property>
+		<property name="hibernate.hikari.maximumPoolSize">10</property>
 		<property name="hibernate.hikari.idleTimeout">30000</property>
 		<property name="hibernate.hikari.dataSourceClassName">com.microsoft.sqlserver.jdbc.SQLServerDataSource</property>
 		<property name="hibernate.hikari.dataSource.url">jdbc:sqlserver://192.168.0.19:21433;database=bbs;</property>
 		<property name="hibernate.hikari.dataSource.user">test</property>
 		<property name="hibernate.hikari.dataSource.password">poiu0987</property>
-		
-		<!-- <mapping class="io.nzo.booth.model.User" />  -->
-		<mapping resource="io/nzo/booth/model/User.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post0.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post1.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post2.hbm.xml" />
-		
-		<mapping resource="io/nzo/booth/model/Comment0.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment1.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment2.hbm.xml" />
+		-->
 		
 		
-		<mapping resource="io/nzo/booth/model/Board.hbm.xml" />
+		
 		
 	</session-factory>
 </hibernate-configuration>
