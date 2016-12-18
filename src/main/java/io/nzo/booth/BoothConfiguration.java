@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class BoothConfiguration
 {
 	@Value("${booth.rooturl}")
-	private String ROOT_URL;
-    
+	public String ROOT_URL;
+	
 	@Bean(name = "urlService")
     public UrlService urlService() {
         return () -> ROOT_URL;
@@ -17,4 +17,5 @@ public class BoothConfiguration
 	public interface UrlService {
 	    String getApplicationUrl();
 	}
+	
 }

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head th:replace="template/board :: head">
+</head>
+<body>
+    
+
+    aaaa
+    <div th:if="${message}">
+        <h2 th:text="${message}" />
+    </div>
+
+    <div>
+        <form method="post" enctype="multipart/form-data" action="uploadFile">
+            <table>
+                <tr>
+                    <td>File to upload:</td>
+                    <td>
+
+                        <input type="text" name="name" value="asdasdasd" />
+                        <input type="file" name="file" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Upload" />
+                    </td>
+                </tr>
+            </table>
+
+
+        </form>
+
+
+    </div>
+
+    <div>
+        <ul>
+            <li th:each="file : ${files}">
+                <a th:href="${file}" th:text="${file}" />
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>
