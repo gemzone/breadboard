@@ -1,6 +1,6 @@
-## Booth
+## breadboard
 
-Booth는 공용 Bulletin Board System으로서 개발자와 사용자를 대상으로 개발하고있습니다.
+breadboard는 공용 Bulletin Board System으로서 개발자와 사용자를 대상으로 개발하고있습니다.
 
 BBS모듈을 Restful API와 View Template 제공합니다. 
 

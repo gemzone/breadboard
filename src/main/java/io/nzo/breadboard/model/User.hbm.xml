@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="io.nzo.breadboard.model">
+	<class name="User" table="gz_user">
+		<id name="userId" column="user_id" />
+		<property name="username" column="username" />
+		<property name="passwordSha2" column="password_sha2" />
+		<property name="name" column="name" />
+		<property name="email" column="email" />
+		<property name="homepage" column="homepage" />
+		<property name="comment" column="comment" />
+		<property name="point1" column="point1" />
+		<property name="point2" column="point2" />
+		
+		<property name="permission" column="permission" />
+		<property name="admin" column="admin" />
+		<property name="creationTime" column="creation_time" />
+		
+		
+		
+	</class>
+</hibernate-mapping>
+
+
+<!-- BooleanType
+	BIT
+	boolean, java.lang.Boolean
+	boolean, java.lang.Boolean -->
+
+
+<!-- 
+
+
+ -->
+<!-- <many-to-one name="mother"
+                  column="mother_id"
+                  update="false"/>
+                  
+    <set name="kittens"
+        inverse="true"
+        order-by="litter_id">
+            <key column="mother_id"/>
+            <one-to-many class="Cat"/>
+    </set>
+
+    <subclass name="DomesticCat"
+        discriminator-value="D">
+
+            <property name="name"
+                type="string"/>
+
+    </subclass>
+ -->
+
+<!-- 
+http://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html/types.html
+
+6.1.1.3. java.lang.Boolean (or boolean primitive)
+
+org.hibernate.type.BooleanType
+Maps a boolean to a JDBC BIT type
+
+Registered under boolean and java.lang.Boolean in the type registry (see Section 6.5, “Type registry”).
+
+org.hibernate.type.NumericBooleanType
+Maps a boolean to a JDBC INTEGER type as 0 = false, 1 = true
+
+Registered under numeric_boolean in the type registry (see Section 6.5, “Type registry”).
+
+org.hibernate.type.YesNoType
+Maps a boolean to a JDBC CHAR type as ('N' | 'n') = false, ( 'Y' | 'y' ) = true
+
+Registered under yes_no in the type registry (see Section 6.5, “Type registry”).
+
+org.hibernate.type.TrueFalseType
+Maps a boolean to a JDBC CHAR type as ('F' | 'f') = false, ( 'T' | 't' ) = true
+
+Registered under true_false in the type registry (see Section 6.5, “Type registry”).
+
+
+ -->

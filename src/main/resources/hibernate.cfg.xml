@@ -6,33 +6,33 @@
 	<session-factory>
 		
 		
-		<!-- <mapping class="io.nzo.booth.model.User" />  -->
+		<!-- <mapping class="io.nzo.breadboard.model.User" />  -->
 		
-		<mapping resource="io/nzo/booth/model/User.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/User.hbm.xml" />
 		
-		<mapping resource="io/nzo/booth/model/Board.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Board.hbm.xml" />
 		
-		<mapping resource="io/nzo/booth/model/Post0.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post1.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post2.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post3.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post4.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post5.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post6.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post7.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post8.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Post9.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post0.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post1.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post2.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post3.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post4.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post5.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post6.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post7.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post8.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Post9.hbm.xml" />
 		
-		<mapping resource="io/nzo/booth/model/Comment0.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment1.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment2.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment3.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment4.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment5.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment6.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment7.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment8.hbm.xml" />
-		<mapping resource="io/nzo/booth/model/Comment9.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment0.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment1.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment2.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment3.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment4.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment5.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment6.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment7.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment8.hbm.xml" />
+		<mapping resource="io/nzo/breadboard/model/Comment9.hbm.xml" />
 		
 		
 		

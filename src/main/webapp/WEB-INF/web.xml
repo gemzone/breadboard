@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="booth" version="3.1">
-	<display-name>booth</display-name>
-	
-	<!-- 리스너 --> 
-	<listener>
-		<listener-class>io.nzo.booth.ContextManager</listener-class>
-	</listener>
-	
-	<!-- 요청 리스너 -->
-	<listener>
-		<listener-class>io.nzo.booth.RequestManager</listener-class>
-	</listener>
-	
-	<servlet>
-		<servlet-name>JadeConfig</servlet-name>
-		<servlet-class>io.nzo.booth.JadeConfig</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="breadboard" version="3.1">
+  <display-name>breadboard</display-name>
+  <listener>
+    <listener-class>io.nzo.breadboard.ContextManager</listener-class>
+  </listener>
+  <listener>
+    <listener-class>io.nzo.breadboard.RequestManager</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>JadeConfig</servlet-name>
+    <servlet-class>io.nzo.breadboard.JadeConfig</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
 </web-app>

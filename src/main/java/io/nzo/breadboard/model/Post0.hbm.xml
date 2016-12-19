@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="io.nzo.breadboard.model">
+	<class name="Post" table="gz_post0" entity-name="Post0">
+		<id name="postId" column="post_id" />
+		<property name="boardId" column="board_id" />
+		<property name="uid" column="uid" />
+		
+		<property name="userId" column="user_id" />
+		
+		<property name="passwordSha2" column="password_sha2" />
+		<property name="email" column="email" />
+		
+		<property name="categoryId" column="category_id" />
+		<property name="notice" column="notice" />
+		<property name="secret" column="secret" />
+		<property name="title" column="title" />
+		<property name="text" column="text" />
+		<property name="attachment" column="attachment" />
+		<property name="link" column="link" />
+		<property name="ip" column="ip" />
+		<property name="hitCount" column="hit_count" />
+		
+		<property name="viewCount" column="view_count" />
+		<property name="goodCount" column="good_count" />
+		
+		<property name="upCount" column="up_count" />
+		<property name="downCount" column="down_count" />
+		<property name="commentCount" column="comment_count" />
+		<property name="modificationTime" column="modification_time" />
+		<property name="creationTime" column="creation_time" />
+		
+		<!-- left outer join -->
+		<many-to-one name="user" class="io.nzo.breadboard.model.User" fetch="join" insert="false" update="false">
+            <column name="user_id" not-null="false" />
+        </many-to-one>
+		
+		
+	</class>
+</hibernate-mapping>

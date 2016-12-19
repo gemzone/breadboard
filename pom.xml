@@ -3,10 +3,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.nzo</groupId>
-	<artifactId>booth</artifactId>
+	<artifactId>breadboard</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>booth</name>
+	<name>breadboard</name>
 
 
 	<!-- spring framework -->
