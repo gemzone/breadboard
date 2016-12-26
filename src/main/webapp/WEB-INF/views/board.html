@@ -5,8 +5,17 @@
 <body>
     <div class="container">
 
+        <div style="background-color:red;width:50px;height:50px;display:inline-block;">
+            logo
+        </div>
+
+        <span style="font-size:33px;display:inline-block;font-weight:bold;font-style:italic;margin:0px;padding:0px;">
+            자유게시판
+        </span>
+
         <div class="row">
-            <table class="bordered highlight">
+            <table class="bordered">
+                <!--
                 <thead>
                     <tr>
                         <th data-field="name"><i class="fa fa-user"></i></th>
@@ -16,22 +25,31 @@
                         <th data-field="date"><i class="fa fa-clock-o"></i></th>
                     </tr>
                 </thead>
+                    -->
                 <tbody>
                     <tr th:each="post : ${posts}">
+                        
+                        <td data-field="title">
+                            <i class="material-icons" style="vertical-align:middle;">insert_drive_file</i>
+                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }" 
+                               th:text="${post.title}"></a>
+                        </td>
+
+                        <td style="text-align:center;">
+                            <i class="material-icons tiny" style="vertical-align:middle;color:red;">chat_bubble_outline</i>
+                            <span th:text="${post.commentCount}" class="blue-text"></span>
+                        </td>
+                        <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
+
                         <td style="text-align:center;">
                             <!--
-                            <span th:text="${post.userId}">id</span>
-                                -->
-                            <span th:if="${post.user}" th:text="${post.user.name}">글자수몇글자글자</span><br />
+                                <span th:text="${post.userId}">id</span>
+                            -->
+                            <span th:if="${post.user}" th:text="${post.user.name}">이름</span><br />
                             <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
                         </td>
-                        <td data-field="title">
-                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }" th:text="${post.title}"></a>
-                        </td>
-                        <td th:text="${post.commentCount}" style="text-align:center;"></td>
-                        <td th:text="${post.hitCount}" style="text-align:center;"></td>
                         <td style="text-align:center;">
-                            <small th:text="${post.creationTime}">글자수몇글자글자</small>
+                            <small th:text="${post.creationTime}">1분전</small>
                         </td>
                     </tr>
                 </tbody>

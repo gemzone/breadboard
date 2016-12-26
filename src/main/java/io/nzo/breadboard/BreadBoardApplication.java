@@ -9,9 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class BreadBoardApplication 
 {
-	//@Value("${spring.mvc.view.prefix}")
-    //private static String prefix;
-	
 	public static void main(String[] args) 
 	{
 		System.out.println("SpringApplication.run(BreadBoardApplication.class, args);");

@@ -29,7 +29,16 @@ import io.nzo.breadboard.service.UserService;
 public class TestController
 {
 	@Value("${breadboard.data.root}")
-	private String DATA_ROOT;
+	private String ROOTPATH;
+	
+	@Value("${breadboard.data.system}")
+	private String SYSTEMDATA;
+	
+	@Value("${breadboard.data.profile}")
+	private String PROFILEDATA;
+	
+	@Value("${breadboard.data.user}")
+	private String USERDATA;
     
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
@@ -60,7 +69,7 @@ public class TestController
 				byte[] bytes = file.getBytes();
 				// Creating the directory to store file
 				// String rootPath = System.getProperty("catalina.home");
-				File dir = new File(DATA_ROOT + "/temp" + File.separator );
+				File dir = new File(ROOTPATH + "/temp" + File.separator );
 				if (!dir.exists()) { dir.mkdirs(); }
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
@@ -83,9 +92,10 @@ public class TestController
 		}
 	}
 
+	// 파일 여러개
 	/**
 	 * Upload multiple file using Spring Controller
-	 */
+	 
 	@RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)
 	@ResponseBody
 	public String uploadMultipleFileHandler(@RequestParam("name") String[] names, @RequestParam("file") MultipartFile[] files) 
@@ -108,7 +118,7 @@ public class TestController
 				// Creating the directory to store file
 				// String rootPath = System.getProperty("catalina.home");
 				// System.out.println(rootPath);
-				File dir = new File(DATA_ROOT + File.separator + "tmpFiles");
+				File dir = new File(ROOTPATH + File.separator + "tmpFiles");
 				if (!dir.exists()) { dir.mkdirs(); }
 
 				// Create the file on server
@@ -128,4 +138,5 @@ public class TestController
 		}
 		return message;
 	}
+	*/
 }
