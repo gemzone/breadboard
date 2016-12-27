@@ -5,8 +5,7 @@
 <body>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var title = [[${board.title}]];
-        document.title = title;
+        document.title = [[${board.title}]];
         /*]]>*/
     </script>
     <div style="min-width:100%;width:100%;">
@@ -23,7 +22,7 @@
                     </button>
                     <strong>
                         <a class="navbar-brand"
-                           th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }"
+                           th:href="@{'/board/' + ${board.id}  }"
                            th:text="${board.title}">title</a>
                     </strong>
                 </div>
@@ -41,10 +40,8 @@
                             </span>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </nav>
 
 
@@ -90,7 +87,7 @@
 
         <div style="overflow:hidden;">
             <div class="col-sm-2 col-xs-2">
-                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn btn-default btn-sm">
+                <a th:href="@{'/board/' + ${board.id} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                     목록
                 </a>
@@ -129,9 +126,6 @@
                 </a>
             </div>
         </div>
-
-        <div th:replace="template/board :: copyright"></div>
     </div>
-
 </body>
 </html>

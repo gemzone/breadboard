@@ -5,107 +5,96 @@
 <body>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var title = [[${board.title}]];
-        document.title = title;
+        document.title = [[${board.title}]];
         /*]]>*/
     </script>
 
 
 
     <div style="min-width:100%;width:100%;">
-        
-        <h3 th:text="${board.title}">h3. Bootstrap heading 
-            <small>
-                <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
-                <span th:if="!${post.user}" th:text="${post.name}">이름</span>
-            </small>
-        </h3>
 
+        <nav class="navbar" style="margin-bottom:0px;">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <strong>
+                        <a class="navbar-brand"
+                           th:href="@{'/board/' + ${board.id} }"
+                           th:text="${board.title}">title</a>
+                    </strong>
+                </div>
+                <p class="navbar-text">Description</p>
 
+                <div class="">
+                    <!--collapse navbar-collapse-->
 
+                    <form class="navbar-form navbar-right" role="search" style="padding:0px;margin-bottom:0px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="검색">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
 
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-    <div class="row" style="margin-bottom:0px;">
-        <!-- 본문 -->
-        <div class="col s12">
-            <div class="section">
-                <h5 th:text="${post.title}">Section 1</h5>
-                <span style="margin:0px 20px 0px 20px;">
-                    <i class="fa fa-user"></i>&#32;
-                    <!--<span th:text="${post.userId}"></span>-->
-                    <span th:if="${post.user}" th:text="${post.user.name}"></span>
-                </span>
-
-
-
-                <span style="float:right;margin:0px 20px 0px 20px;">
-                    <i class="fa fa-clock-o"></i>&#32;
-                    <span th:text="${post.creationTime}"></span>
-                </span>
-
-                <span style="float:right;margin:0px 20px 0px 20px;">
-                    <i class="fa fa-comment-o"></i>&#32;
-                    <span th:text="${post.commentCount}"></span>
-                </span>
-
-                <span style="float:right;margin:0px 20px 0px 20px;">
-                    <i class="fa fa-eye"></i>&#32;
-                    <span th:text="${post.hitCount}"></span>
-                </span>
-
+                </div>
             </div>
-            <!-- 
-            <div class="divider"></div>
-            attach 
-            <p>
-                <a class="waves-effect waves-light">
-                    <i class="fa fa-file" aria-hidden="true"></i>&#32;
-                    <span>booth-0.0.1-SNAPSHOT.war</span>
-                </a>
+        </nav>
 
-            </p>-->
-            <!-- link 
-            <p>
-                <a class="waves-effect waves-light">
-                    <i class="fa fa-link" aria-hidden="true"></i>&#32;
-                    <span>http://naver.com</span>
-                </a>
+        <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
 
-            </p>-->
 
-            <div class="divider"></div>
+            <img th:src="@{/static/img/user.png}" style="float:left;" />
 
-            <!-- content -->
-            <div class="section" th:utext="${post.text}"></div>
+
+            <div style="padding:10px 10px 10px 10px;margin-left:82px;">
+                <span th:text="${post.title}" style="font-size:20px;">title</span>
+            </div>
             
-            <div class="divider"></div>
-            <!-- tag 
-            <div class="chips chips-initial" data-index="0" data-initialized="true">
-                <div class="chip">Apple<i class="material-icons close">close</i></div>
-                <div class="chip">Microsoft<i class="material-icons close">close</i></div>
-                <div class="chip">Google<i class="material-icons close">close</i></div>
-                <input id="0635acf5-55d7-a95f-d1f6-468731f591cd" class="input" placeholder="" />
+            <div style="padding:0px 10px 10px 10px;margin-left:82px;">
+                <small>
+                    <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
+                    <span th:if="!${post.user}" th:text="${post.name}">이름</span>
+                </small>
+
+                <small style="float:right;margin:0px 0px 0px 10px;">
+                    <i class="fa fa-clock-o"></i>&#32;
+                    <span th:text="${#dates.format(post.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                </small>
+
+                <small style="float:right;margin:0px 0px 0px 10px;">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <span th:text="${post.commentCount}"></span>
+                </small>
+
+                <small style="float:right;margin:0px 0px 0px 10px;">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    <span th:text="${post.hitCount}"></span>
+                </small>
             </div>
-            <div class="chips" data-index="0" data-initialized="true">
-                <div class="chip">tag_test1</div>
-                <div class="chip">tag_test2</div>
-                <div class="chip">tag_test3</div>
-            </div>
-               -->
+
         </div>
 
-        <div class="col s12">
+        <!-- text -->
+        <div style="border-top:1px solid #efefef;min-height:250px;">
+            <div style="padding:10px 10px 20px 10px;" th:utext="${post.text}">
+            </div>
+        </div>
+
+
+        <!-- comment write -->
+        <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
+            <div style="padding:0px 0px 10px 0px;">
+                <span style="font-size:20px;">댓글 남기기</span>
+            </div>
 
             <form action="#"
                   th:object="${commentForm}"
@@ -113,77 +102,104 @@
                   method="post">
                 <input type="hidden" th:field="*{userId}" />
                 <input type="hidden" th:field="*{ip}" />
-                <h5 class="header">
-                    <i class="material-icons prefix">textsms</i>
-                    댓글
-                </h5>
+
+                <img th:src="@{/static/img/user.png}" style="float:left;" />
+
+                <div style="margin-left:92px;">
+                    <textarea type="text" th:field="*{text}"
+                              class="form-control" rows="3"
+                              style="resize:none;"></textarea>
 
 
-                <div class="input-field">
-
-                    <textarea type="text" th:field="*{text}" id="icon_prefix"
-                              class="materialize-textarea left-align"
-                              style="padding:0px 0px 0px 0px;margin:0px 0px 0px 0px;"></textarea>
-
-
-                    <label for="icon_prefix" class="">내용</label>
-
-
-                    <button type="submit" class="btn waves-effect waves-light" style="float:right;">
-                        <i class="material-icons">send</i>
+                    <button type="submit" class="btn btn-default btn-sm" style="margin-top:5px;">
+                        <i class="glyphicon glyphicon-send"></i>
+                        보내기
                     </button>
-
-                    <div>
-                        <!--
-                        <div style="float:left;">
-                            text 글자수
-                        </div>
-                        -->
-
-                        
-                    </div>
                 </div>
-
             </form>
 
 
         </div>
-        
-    </div>
-
-    <div class="row" th:if="${not #lists.isEmpty(postComments)}">
-        <!--
-        <div class="col s12">
-            <h5>댓글</h5>
-            <div class="divider"></div>
-        </div>-->
-        <div class="col s12" th:each="comment : ${postComments}">
-            <p style="font-weight:bold;" th:if="${comment.user}" th:text="${comment.user.name}"></p>
-            <p style="font-weight:bold;" th:unless="${comment.user}">익명</p>
 
 
 
 
-            <div th:text="${comment.text}"></div>
-            <p style="margin-top:0px;">
-                <small>
-                    <i class="fa fa-clock-o"></i>&#32;
-                    <span th:text="${comment.creationTime}"></span>
-                </small>
+        <!-- commnet list -->
+        <div style="border-top:1px solid #ddd;" th:if="${not #lists.isEmpty(postComments)}">
+            <div style="padding:10px 10px 10px 10px;">
+                <span style="font-size:20px;">댓글</span>
+            </div>
+            <div th:each="comment : ${postComments}" style="padding:10px;overflow:hidden;border-top:1px solid #efefef;">
 
-                <small style="float:right;">
+                <img th:src="@{/static/img/user.png}" style="float:left;" />
 
-                    <i class="tiny material-icons">thumb_up</i>
-                    <span th:text="${comment.upCount}"></span>
+                <div style="margin-left:92px;">
+                    <small>
+                        <span th:if="${comment.user}" th:text="${comment.user.name}">이름</span>
+                        <!--<span th:if="!${comment.user}" th:text="${post.name}">이름</span>-->
+                        <span th:unless="${comment.user}">익명</span>
+                    </small>
 
-                    <i class="tiny material-icons">thumb_down</i>
-                    <span th:text="${comment.downCount}"></span>
+                    <div th:text="${comment.text}"></div>
+                    <p style="margin-top:0px;">
+                        <small>
+                            <i class="fa fa-clock-o"></i>&#32;
+                            <span th:text="${#dates.format(comment.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </small>
 
-                </small>
-            </p>
-            <div class="divider"></div>
+                        <small style="float:right;">
+
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span th:text="${comment.upCount}"></span>
+
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span th:text="${comment.downCount}"></span>
+
+                        </small>
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <!-- button -->
+        <div style="overflow:hidden;border-top:1px solid #ddd;padding-top:10px;">
+            <div class="col-sm-4 col-xs-4">
+                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    목록
+                </a>
+
+                <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    새글
+                </a>
+            </div>
+            <div class="col-sm-4 col-xs-4 align-text-bottom" style="text-align:center;">
+                
+            </div>
+            <div class="col-sm-4 col-xs-4" style="text-align:right;">
+
+                <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    수정
+                </a>
+
+                <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    삭제
+                </a>
+            </div>
+        </div>
+
+
     </div>
+
+
+
+
+
+
+
 
 
 
@@ -290,6 +306,5 @@
         </div>
     -->
 
-    <div th:replace="template/board :: copyright"></div>
 </body>
 </html>
