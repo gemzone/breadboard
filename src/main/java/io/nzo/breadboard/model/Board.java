@@ -23,6 +23,8 @@ public class Board implements Serializable
 	
 	private Integer tableNumber;
 	private String title;
+	private Integer width = 100;
+	private String description = "";
 	private String headerContent;
 	private String footerContent;
 	private String memo;
@@ -219,6 +221,34 @@ public class Board implements Serializable
 	public void setGrantSecret(Integer grantSecret)
 	{
 		this.grantSecret = grantSecret;
+	}
+	/**
+	 * @return the width
+	 */
+	public Integer getWidth()
+	{
+		return width;
+	}
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(Integer width)
+	{
+		this.width = width;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription()
+	{
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description)
+	{
+		this.description = description;
 	}
 	
 	

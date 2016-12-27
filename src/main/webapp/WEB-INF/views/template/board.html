@@ -4,11 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>BREAD BOARD</title>
+    <title>breadboard</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <meta name="keywords" content="KEYWORD" />
     <meta name="description" content="DESCRIPTION" />
-    
     <!-- Bootstrap -->
     <link th:href="@{/static/bootstrap-3.3.7-dist/css/bootstrap.min.css}" rel="stylesheet" />
     <!-- Font Awesome Icon -->
@@ -19,19 +18,27 @@
     <script src="@{/static/js/moment.min.js}"></script>
     <!-- tinyMCE -->
     <script th:src="@{/static/js/tinymce/tinymce.min.js}"></script>
-</head>
-<body>
-
-    <div th:fragment="copyright" style="text-align:right;padding:0px 10px 0px 10px;">
-        <span style="font-size:9px;">
-            Copyright 2016 All rights reserved by 
-            <a href="http://nzo.io" target="_blank">gemzone</a>
-        </span>
-    </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script th:fragment="jquery" th:src="@{/static/js/jquery-3.1.1.min.js}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script th:fragment="bootstrap" th:src="@{/static/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+
+    <style type="text/css">
+        body {
+            font-family: "roboto", "Helvetica Neue", Helvetica, Arial, "맑은 고딕", malgun gothic, "돋움", Dotum, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+    <!-- copyright -->
+    <div th:fragment="copyright" style="padding:5px 10px 0px 10px;font-size:10px;text-align:right;font-family:malgun gothic;">
+        Copyright 2017 All rights reserved <strong><a href="http://nzo.io" target="_blank" style="display:inline-block;">breadboard</a></strong>
+    </div>
+
 </body>
 </html>

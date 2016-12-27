@@ -32,6 +32,7 @@ public class Post implements Serializable
 	private Integer categoryId = 1;
 	private Boolean notice = false;
 	private Boolean secret = false;
+	private String name = "";
 	private String title = "";
 	private String text = "";
 	private String attachment = "";
@@ -315,5 +316,21 @@ public class Post implements Serializable
 	public void setUser(User user)
 	{
 		this.user = user;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 }

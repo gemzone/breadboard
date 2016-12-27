@@ -3,188 +3,135 @@
 <head th:replace="template/board :: head">
 </head>
 <body>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var title = [[${board.title}]];
+        document.title = title;
+        /*]]>*/
+    </script>
+    <div style="min-width:100%;width:100%;">
 
+        <nav class="navbar" style="margin-bottom:0px;">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <strong>
+                        <a class="navbar-brand"
+                           th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }"
+                           th:text="${board.title}">title</a>
+                    </strong>
+                </div>
+                <p class="navbar-text">Description</p>
 
+                <div class=""> <!--collapse navbar-collapse-->
 
+                    <form class="navbar-form navbar-right" role="search" style="padding:0px;margin-bottom:0px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="검색">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
 
-    <div>
-        <span style="font-size:33px;display:inline-block;font-weight:bold;margin:0px;padding:0px;">
-            자유게시판
-        </span>
-    </div>
-    <div>
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-
-                        Copyright 2016 All rights reserved by
-                    </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                </tr>
-
-                <tr>
-
-                    <td>Copyright 2016 All rights reserved by </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                    <td>Copyright 2016 All rights reserved by </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-    <div>
-
-        <div class="col-sm-2 col-xs-2">
-            <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                list
-            </button>
-        </div>
-        <div class="col-sm-8 col-xs-8 align-text-bottom" style="text-align:center;">
-            <!-- page navigation -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination pagination-sm" style="margin:0px;">
-                    <!-- prev page -->
-                    <li>
-                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <!-- page loop -->
-                    <li th:each="page : ${paging.pages}"
-                        th:attr="class=${paging.currentPage == page ? 'active' : ''}">
-                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" th:text="${page}">0</a>
-                    </li>
-
-                    <!-- next page -->
-                    <li>
-                        <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.nextStepPage} }"
-                            aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="col-sm-2 col-xs-2" style="text-align:right;">
-            <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                write
-            </button>
-        </div>
-
-    </div>
-
-
-
-
-
-
-
-        <div class="container">
-
-            <span style="font-size:33px;display:inline-block;font-weight:bold;font-style:italic;margin:0px;padding:0px;">
-                자유게시판
-            </span>
-
-            <div class="row">
-                <table class="bordered">
-                    <!--
-                    <thead>
-                        <tr>
-                            <th data-field="name"><i class="fa fa-user"></i></th>
-                            <th data-field="title"></th>
-                            <th data-field="count"><i class="fa fa-comment-o"></i></th>
-                            <th data-field="count"><i class="fa fa-eye"></i></th>
-                            <th data-field="date"><i class="fa fa-clock-o"></i></th>
-                        </tr>
-                    </thead>
-                        -->
-                    <tbody>
-                        <tr th:each="post : ${posts}">
-
-                            <td data-field="title">
-                                <i class="material-icons" style="vertical-align:middle;">insert_drive_file</i>
-                                <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }"
-                                   th:text="${post.title}"></a>
-                            </td>
-
-                            <td style="text-align:center;">
-                                <i class="material-icons tiny" style="vertical-align:middle;">chat_bubble_outline</i>
-                                <span th:text="${post.commentCount}" class="blue-text"></span>
-                            </td>
-                            <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
-
-                            <td style="text-align:center;">
-                                <!--
-                                    <span th:text="${post.userId}">id</span>
-                                -->
-                                <span th:if="${post.user}" th:text="${post.user.name}">이름</span><br />
-                                <!--<small th:text="${post.creationTime}">글자수몇글자글자</small>-->
-                            </td>
-                            <td style="text-align:center;">
-                                <small th:text="${post.creationTime}">1분전</small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
             </div>
 
-            <div class="row" style="margin-top:5px;">
-                <div class="col m2 l2  left-align">
-                    <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
-                        <!--<i class="material-icons left">list</i>목록-->
-                        <i class="material-icons">list</i>
-                    </a>
-                </div>
-                <div class="col m8 l8 center-align">
+        </nav>
 
-                    <ul class="pagination" style="margin:5px 0 5px 0;">
-                        <li class="waves-effect">
-                            <!-- class="disabled" -->
-                            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }">
-                                <i class="material-icons">chevron_left</i>
+
+        <!-- 보류
+        <div>
+            <span style="font-size:33px;display:inline-block;font-weight:bold;margin:0px;padding:0px;">
+                <span th:text="${board.title}"></span>
+            </span>
+        </div>
+        -->
+        <div>
+            <table class="table table-responsive table-hover">
+                <tbody>
+                    <tr th:each="post : ${posts}">
+                        <td style="width:60%;">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#555;"></span>
+
+                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }"
+                                th:text="${post.title}"></a>
+                        </td>
+
+                        <td style="min-width:90px;width:90px; text-align:center;">
+
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true" style="color:#555;"></span>
+                            <span th:text="${post.commentCount}" class="blue-text"></span>
+                        </td>
+                        <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
+
+                        <td style="min-width:125px;width:150px;">
+                            <!--
+                                <span th:text="${post.userId}">id</span>
+                            -->
+                            <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
+                            <span th:if="!${post.user}" th:text="${post.name}">이름</span>
+                        </td>
+                        <td style="min-width:150px;width:150px; text-align:center;">
+                            <small th:text="${#dates.format(post.creationTime, 'yyyy-MM-dd HH:mm')}">1분전</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="overflow:hidden;">
+            <div class="col-sm-2 col-xs-2">
+                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.currentPage} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    목록
+                </a>
+            </div>
+            <div class="col-sm-8 col-xs-8 align-text-bottom" style="text-align:center;">
+                <!-- page navigation -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm" style="margin:0px;">
+                        <!-- prev page -->
+                        <li>
+                            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.prevStepPage} }"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-
+                        <!-- page loop -->
                         <li th:each="page : ${paging.pages}"
-                            th:attr="class=${paging.currentPage == page ? 'active blue' : 'waves-effect'}">
+                            th:attr="class=${paging.currentPage == page ? 'active' : ''}">
                             <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" th:text="${page}">0</a>
                         </li>
 
-                        <li class="waves-effect">
-                            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.nextStepPage} }">
-                                <i class="material-icons">chevron_right</i>
+                        <!-- next page -->
+                        <li>
+                            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${paging.nextStepPage} }"
+                                aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                     </ul>
-                </div>
-                <div class="col m2 l2 right-align">
-                    <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn waves-effect waves-light">
-                        <i class="material-icons">mode_edit</i>
-                    </a>
-
-                </div>
+                </nav>
             </div>
-
-
-            <div th:replace="template/board :: copyright"></div>
-
+            <div class="col-sm-2 col-xs-2" style="text-align:right;">
+                <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${paging.currentPage} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    새글
+                </a>
+            </div>
         </div>
+
+        <div th:replace="template/board :: copyright"></div>
+    </div>
+
 </body>
 </html>
