@@ -9,10 +9,7 @@
         /*]]>*/
     </script>
 
-
-
     <div style="min-width:100%;width:100%;">
-
         <nav class="navbar" style="margin-bottom:0px;">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,8 +29,7 @@
                 <p class="navbar-text">Description</p>
 
                 <div class="">
-                    <!--collapse navbar-collapse-->
-
+                    <!--collapse navbar-collapse
                     <form class="navbar-form navbar-right" role="search" style="padding:0px;margin-bottom:0px;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="검색">
@@ -44,7 +40,7 @@
                             </span>
                         </div>
                     </form>
-
+                        -->
                 </div>
             </div>
         </nav>
@@ -55,10 +51,10 @@
             <img th:src="@{/static/img/user.png}" style="float:left;" />
 
 
-            <div style="padding:10px 10px 10px 10px;margin-left:82px;">
+            <div style="padding:0px 10px 10px 10px;margin-left:82px;">
                 <span th:text="${post.title}" style="font-size:20px;">title</span>
             </div>
-            
+
             <div style="padding:0px 10px 10px 10px;margin-left:82px;">
                 <small>
                     <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
@@ -66,7 +62,7 @@
                 </small>
 
                 <small style="float:right;margin:0px 0px 0px 10px;">
-                    <i class="fa fa-clock-o"></i>&#32;
+                    <span class="glyphicon glyphicon-time"></span>
                     <span th:text="${#dates.format(post.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                 </small>
 
@@ -89,6 +85,27 @@
             </div>
         </div>
 
+        <!-- button -->
+        <div style="overflow:hidden;padding-top:10px;padding-bottom:10px;">
+            <div class="col-sm-4 col-xs-4">
+                ip: 127.0.0.1
+            </div>
+            <div class="col-sm-4 col-xs-4 align-text-bottom" style="text-align:center;">
+
+            </div>
+            <div class="col-sm-4 col-xs-4" style="text-align:right;">
+
+                <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    수정
+                </a>
+
+                <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    삭제
+                </a>
+            </div>
+        </div>
 
         <!-- comment write -->
         <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
@@ -105,7 +122,7 @@
 
                 <img th:src="@{/static/img/user.png}" style="float:left;" />
 
-                <div style="margin-left:92px;">
+                <div style="margin-left:92px;text-align:right;padding-right:8px;">
                     <textarea type="text" th:field="*{text}"
                               class="form-control" rows="3"
                               style="resize:none;"></textarea>
@@ -117,11 +134,7 @@
                     </button>
                 </div>
             </form>
-
-
         </div>
-
-
 
 
         <!-- commnet list -->
@@ -143,7 +156,7 @@
                     <div th:text="${comment.text}"></div>
                     <p style="margin-top:0px;">
                         <small>
-                            <i class="fa fa-clock-o"></i>&#32;
+                            <span class="glyphicon glyphicon-time"></span>
                             <span th:text="${#dates.format(comment.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                         </small>
 
@@ -162,149 +175,109 @@
         </div>
 
         <!-- button -->
-        <div style="overflow:hidden;border-top:1px solid #ddd;padding-top:10px;">
-            <div class="col-sm-4 col-xs-4">
+        <div style="overflow:hidden;border-top:1px solid #ddd;padding-top:10px;padding-bottom:10px;">
+            <div class="col-sm-8 col-xs-8">
                 <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                     목록
                 </a>
 
+                
+                <a th:if="${nextPost.postId} > 0"
+                   th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} + '?page=' + ${page} }"
+                   class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                    다음글
+                </a>
+
+                <a th:if="${prevPost.postId} > 0"
+                   th:href="@{'/board/' + ${board.id} + '/view/' + ${prevPost.postId} + '?page=' + ${page} }"
+                   class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                    이전글
+                </a>
+            </div>
+
+
+
+
+
+            <div class="col-sm-4 col-xs-4" style="text-align:right;">
                 <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     새글
                 </a>
-            </div>
-            <div class="col-sm-4 col-xs-4 align-text-bottom" style="text-align:center;">
-                
-            </div>
-            <div class="col-sm-4 col-xs-4" style="text-align:right;">
 
-                <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    수정
-                </a>
-
-                <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    삭제
-                </a>
             </div>
         </div>
 
+        <div>
+            <table class="table table-responsive" style="border-bottom:1px solid #ddd;">
+                <tbody>
+                    <tr th:if="${nextPost.postId} > 0">
+                        <td style="min-width:64px;width:64px;">
+                            다음글
+                        </td>
+                        <td style="min-width:50%;">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#555;"></span>
 
-    </div>
+                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} + '?page=' + ${page} }"
+                               th:text="${nextPost.title}"></a>
+                        </td>
 
+                        <td style="min-width:90px;width:90px;max-width:90px;  text-align:center;">
 
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true" style="color:#555;"></span>
+                            <span th:text="${nextPost.commentCount}" class="blue-text"></span>
+                        </td>
+                        <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
 
+                        <td style="min-width:125px;width:150px;max-width:150px;">
+                            <!--
+                                <span th:text="${post.userId}">id</span>
+                            -->
+                            <span th:if="${nextPost.user}" th:text="${nextPost.user.name}">이름</span>
+                            <span th:if="!${nextPost.user}" th:text="${nextPost.name}">이름</span>
+                        </td>
+                        <td style="min-width:150px;width:150px;max-width:150px; text-align:right;">
+                            <small th:text="${#dates.format(nextPost.creationTime, 'yyyy-MM-dd HH:mm')}">1분전</small>
+                        </td>
+                    </tr>
 
+                    <tr th:if="${prevPost.postId} > 0">
+                        <td style="min-width:64px;width:64px;">
+                            이전글
+                        </td>
+                        <td style="min-width:50%;">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#555;"></span>
 
+                            <a th:href="@{'/board/' + ${board.id} + '/view/' + ${prevPost.postId} + '?page=' + ${page} }"
+                               th:text="${prevPost.title}"></a>
+                        </td>
 
+                        <td style="min-width:90px;width:90px; text-align:center;">
 
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true" style="color:#555;"></span>
+                            <span th:text="${prevPost.commentCount}" class="blue-text"></span>
+                        </td>
+                        <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
 
+                        <td style="min-width:125px;width:150px;max-width:150px;">
+                            <!--
+                                <span th:text="${post.userId}">id</span>
+                            -->
+                            <span th:if="${prevPost.user}" th:text="${prevPost.user.name}">이름</span>
+                            <span th:if="!${prevPost.user}" th:text="${prevPost.name}">이름</span>
+                        </td>
+                        <td style="min-width:150px;width:150px;max-width:150px; text-align:right;">
+                            <small th:text="${#dates.format(prevPost.creationTime, 'yyyy-MM-dd HH:mm')}">1분전</small>
+                        </td>
+                    </tr>
 
-
-    <div class="row">
-        <div class="divider"></div>
-
-        <table class="bordered">
-            <tbody>
-                <tr th:if="${nextPost.postId} > 0">
-                    <!-- ng-show="nextPost.postId &gt; 0  -->
-                    <td data-field="name"></td>
-                    <td data-field="title">
-                        <a th:href="@{'/board/' + ${board.id} + '/view/' + ${nextPost.postId} }" th:text="${nextPost.title}"></a>
-                    </td>
-                    <td data-field="count" style="text-align:center;">
-                        <i class="fa fa-comment-o"></i>
-                        <span th:text="${nextPost.commentCount}"></span>
-                    </td>
-                    <td data-field="count" style="text-align:center;">
-                        <i class="fa fa-eye"></i>
-                        <span th:text="${nextPost.hitCount}"></span>
-
-                    </td>
-                    <td data-field="date" style="text-align:center;">
-                        <small th:text="${nextPost.creationTime}">글자수몇글자글자</small>
-                    </td>
-                </tr>
-                <tr th:if="${prevPost.postId} > 0">
-                    <td data-field="name"></td>
-                    <td data-field="title">
-                        <a th:href="@{'/board/' + ${board.id} + '/view/' + ${prevPost.postId} }" th:text="${prevPost.title}"></a>
-                    </td>
-                    <td data-field="count" style="text-align:center;">
-                        <i class="fa fa-comment-o"></i>
-                        <span th:text="${prevPost.commentCount}"></span>
-                    </td>
-                    <td data-field="count" style="text-align:center;">
-                        <i class="fa fa-eye"></i>
-                        <span th:text="${prevPost.hitCount}"></span>
-                    </td>
-                    <td data-field="date" style="text-align:center;">
-                        <small th:text="${prevPost.creationTime}">글자수몇글자글자</small>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="row">
-        <div class="col s6 m6 l6" style="text-align:left;">
-            <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn waves-effect waves-light">
-                <!--<a th:onclick="'history.back();'" class="btn blue waves-effect">-->
-                <i class="material-icons">list</i>
-            </a>
-
-            <a th:href="@{'/board/' + ${board.id} + '/write?page=' + ${page} }" class="btn waves-effect waves-light">
-                <i class="material-icons">mode_edit</i>
-            </a>
-        </div>
-        <div class="col s6 m6 l6" style="text-align:right;">
-
-            <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn waves-effect waves-light">
-                <i class="material-icons">gavel</i>
-            </a>
-
-            <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn waves-effect waves-light">
-                <i class="material-icons">delete_forever</i>
-            </a>
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-    <!--
-    <div class="row" style="margin-bottom:0px;" th:if="${not #lists.isEmpty(postComments)}">
-        <ul class="collection with-header">
-            <li class="collection-item" th:each="comment : ${postComments}">
-                <div class="row" style="margin-bottom:0px;">
-
-                    <div class="col s2" style="text-align:left;width:170px;min-width:170px;max-width:170px;">
-                        <span th:text="${comment.userId}" style="font-weight:bold;"></span>
-                    </div>
-                    <div class="col s8" th:text="${comment.text}"></div>
-                    <div class="col s2" style="text-align:right;">
-                        <small th:text="${comment.creationTime}"></small>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-        -->
-    <!-- 댓글 -->
-    <!--
-        <div class="col s12">
-            <i class="material-icons prefix">account_circle</i>
-            <input id="postTitle" type="text" class="validate input-field" >
-            <label for="icon_prefix">제목</label>
-        </div>
-            -->
-    <!--
-        <div class="input-field col s6">
-            <i class="material-icons prefix">phone</i>
-            <input id="icon_telephone" type="tel" class="validate">
-            <label for="icon_telephone">Telephone</label>
-        </div>
-    -->
 
 </body>
 </html>

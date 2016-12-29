@@ -27,9 +27,8 @@
                     </strong>
                 </div>
                 <p class="navbar-text">Description</p>
-
                 <div class=""> <!--collapse navbar-collapse-->
-
+                    <!--
                     <form class="navbar-form navbar-right" role="search" style="padding:0px;margin-bottom:0px;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="검색">
@@ -40,6 +39,7 @@
                             </span>
                         </div>
                     </form>
+                    -->
                 </div>
             </div>
         </nav>
@@ -56,29 +56,29 @@
             <table class="table table-responsive table-hover">
                 <tbody>
                     <tr th:each="post : ${posts}">
-                        <td style="width:60%;">
+                        <td style="min-width:50%;">
                             <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#555;"></span>
 
                             <a th:href="@{'/board/' + ${board.id} + '/view/' + ${post.postId} + '?page=' + ${paging.currentPage} }"
                                 th:text="${post.title}"></a>
                         </td>
 
-                        <td style="min-width:90px;width:90px; text-align:center;">
+                        <td style="min-width:90px;width:90px;max-width:90px; text-align:center;">
 
                             <span class="glyphicon glyphicon-comment" aria-hidden="true" style="color:#555;"></span>
                             <span th:text="${post.commentCount}" class="blue-text"></span>
                         </td>
                         <!--<td th:text="${post.hitCount}" style="text-align:center;"></td>-->
 
-                        <td style="min-width:125px;width:150px;">
+                        <td style="min-width:125px;width:150px;max-width:150px;">
                             <!--
                                 <span th:text="${post.userId}">id</span>
                             -->
                             <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
                             <span th:if="!${post.user}" th:text="${post.name}">이름</span>
                         </td>
-                        <td style="min-width:150px;width:150px; text-align:center;">
-                            <small th:text="${#dates.format(post.creationTime, 'yyyy-MM-dd HH:mm')}">1분전</small>
+                        <td style="min-width:150px;width:150px;max-width:150px; text-align:right;">
+                            <small th:text="${#dates.format(post.creationTime, 'yyyy-MM-dd HH:mm:ss')}">1분전</small>
                         </td>
                     </tr>
                 </tbody>

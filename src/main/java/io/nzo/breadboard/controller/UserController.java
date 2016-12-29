@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,26 +47,46 @@ public class UserController
 	}
 	
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
-	public ModelAndView register(Model model,
+	public String register(Model model,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer,
-			@Valid @ModelAttribute("userForm") User user)
+			@Valid @ModelAttribute("userForm") User user,
+			BindingResult bindingResult)
 	{
+        if (bindingResult.hasErrors()) 
+        {
+        	System.out.println( bindingResult.toString() );
+            return "register";
+        }
+        
 		// 중복체크
 		User userDuplicate = userService.getUserForUsername(user.getUsername());
 		if( userDuplicate == null )
 		{
 			userService.create(user);
 			user.setPasswordSha2("");
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/register");
-			return mv;
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			return "redirect:/register";
 		}
 		else
 		{
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/register");
-			return mv;
+
+        	bindingResult.addError( new FieldError("username", "username", "이미 존재하는 아이디 입니다")  );
+        	return "register";
 		}
+		
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("redirect:/register");
+//		return mv;
+		
 	}
 	
 	// 로그인
@@ -79,7 +101,7 @@ public class UserController
 		// referer
 		model.addAttribute("ref", "http://google.com/");
 		
-		return "signIn";
+		return "login";
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -122,7 +144,7 @@ public class UserController
 				
 				// 로그인실패
 				ModelAndView mv = new ModelAndView();
-				mv.setViewName("redirect:/sign/in");
+				mv.setViewName("redirect:/login");
 				return mv;
 			}
 		}

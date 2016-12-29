@@ -3,18 +3,21 @@
 <head th:replace="template/board :: head">
 </head>
 <body>
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.title = [[${board.title}]];
+        /*]]>*/
+
         $(document).ready(function () {
             tinymce.init({ selector: 'textarea' });
         });
     </script>
 
-    <form action="#" 
-            th:object="${postForm}" 
-            th:action="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }"
-            method="post">
-        <div class="row">
-
+    <div style="min-width:100%;width:100%;">
+        <form action="#"
+              th:object="${postForm}"
+              th:action="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }"
+              method="post">
 
             <input type="hidden" th:field="*{postId}" />
             <input type="hidden" th:field="*{boardId}" />
@@ -26,71 +29,38 @@
             <input type="hidden" th:field="*{link}" />
             <input type="hidden" th:field="*{ip}" />
 
-            <div class="input-field col s12">
-                <input type="text" th:field="*{title}" id="postTitle" />
-                <label for="postTitle" class="">제목</label>
+            <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
+                <input type="text" class="form-control" th:field="*{title}" placeholder="제목" />
             </div>
 
-            <!--
-            <div class="col s12">
-                <i class="material-icons prefix">account_circle</i>
-                <input id="postTitle" type="text" class="validate input-field" >
-                <label for="icon_prefix">제목</label>
-            </div>
-                -->
-
-            <div class="col s12">
+            <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
                 <textarea th:field="*{text}"
-                            maxlength="65535"
-                            style="resize:none;height:300px;width:100%;"></textarea>
-            </div>
-            <!--
-            <div class="input-field col s6">
-                <i class="material-icons prefix">phone</i>
-                <input id="icon_telephone" type="tel" class="validate">
-                <label for="icon_telephone">Telephone</label>
-            </div>
-            -->
-        </div>
-
-        <div class="row">
-            <div class="col s12 m4 l2" style="text-align:left;">
-                <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" class="btn waves-effect waves-light">
-                    <i class="material-icons">list</i>
-                </a>
-            </div>
-            <div class="col s12 m4 l8">
-
+                          maxlength="65535"
+                          style="resize:none;height:300px;width:100%;"></textarea>
             </div>
 
-            <div class="col s12 m4 l2" style="text-align:right;">
+            <div style="overflow:hidden;">
 
-                <button type="submit" class="btn waves-effect waves-light">
-                    <i class="material-icons">mode_edit</i>
-                </button>
+                <div class="col-sm-6 col-xs-6">
+                    <a th:href="@{'/board/' + ${board.id} + '?page=' + ${page} }" 
+                       class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        목록
+                    </a>
+                </div>
+                <div class="col-sm-6 col-xs-6" style="text-align:right;">
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        완료
+                    </button>
+                </div>
 
             </div>
+       
+        </form>
 
-        </div>
-    </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
+        
 
 </body>
 </html>
