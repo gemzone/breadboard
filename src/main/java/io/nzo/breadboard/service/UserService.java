@@ -158,15 +158,29 @@ public class UserService
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 이메일 중복 확인
+	public User getUserForEmail(String email) 
+	{
+        try ( Session session = HibernateUtil.getSessionFactory().openSession() )
+		{
+			String sql = "SELECT TOP 1 u.* FROM gz_user u WHERE u.email=:email "; 
+			@SuppressWarnings("rawtypes")
+			NativeQuery query = session.createNativeQuery(sql, User.class);
+			query.setParameter("email", email);
+			User user = (User)query.getSingleResult();
+			user.setPasswordSha2("");
+			return user;
+		} 
+		catch (NoResultException e)
+		{
+			return null;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 //	private final UserJpaRepository userJpaRepository;

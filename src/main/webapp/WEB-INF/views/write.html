@@ -13,7 +13,7 @@
         });
     </script>
 
-    <div style="min-width:100%;width:100%;">
+    <div th:if="${user}" style="min-width:100%;width:100%;">
         <form action="#"
               th:object="${postForm}"
               th:action="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }"
@@ -58,9 +58,19 @@
             </div>
        
         </form>
-
     </div>
-        
 
+
+    <div th:if="!${user}" style="min-width:100%;width:100%;">
+        <div style="text-align:center;border-bottom:1px solid #ccc;padding:20px;">
+            <h4>권한이 없습니다.</h4>
+        </div>
+        <div style="text-align:center;padding:20px;">
+            <a class="btn btn-default btn-sm" href="javascript:history.back();">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                완료
+            </a>
+        </div>
+    </div>
 </body>
 </html>

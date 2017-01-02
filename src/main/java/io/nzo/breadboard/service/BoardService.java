@@ -121,7 +121,9 @@ public class BoardService
 		{
 			// TODO 여기에 orderby asc 붙이는걸 나중에 다른방법으로 해결해야함
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId > " + postId + " and boardId = " + boardId + " order by postId asc");
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " as p " +
+					" left join fetch p.user " +
+					" where p.postId > " + postId + " and p.boardId = " + boardId + " order by p.postId asc");
 			query.setFetchSize(1);
 			query.setMaxResults(1);
 
@@ -152,7 +154,9 @@ public class BoardService
 		try ( Session session = HibernateUtil.getSessionFactory().openSession() )
 		{
 			@SuppressWarnings({ "rawtypes" })
-			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " where postId < " + postId + " and boardId = " + boardId );
+			Query query = session.createQuery("from Post" + String.valueOf(tableNumber) + " as p " +
+					" left join fetch p.user " +
+					" where p.postId < " + postId + " and p.boardId = " + boardId );
 			query.setFetchSize(1);
 			query.setMaxResults(1);
 

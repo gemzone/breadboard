@@ -40,6 +40,5 @@
             <column name="user_id" not-null="false" />
         </many-to-one>
 		
-		
 	</class>
 </hibernate-mapping>

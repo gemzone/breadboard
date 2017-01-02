@@ -26,14 +26,14 @@ public class User implements Serializable
 	private Long userId;
 	
 	@Size(message="아이디는 4글자 이상이어야합니다", min=4, max=24 )
-	@Pattern(message="아이디는 영문과 숫자만 가능합니다" , regexp="^[0-9a-zA-Z]{0,24}" )
+	@Pattern(message="아이디는 영문과 숫자만 가능합니다" , regexp="^[a-zA-Z][a-zA-Z0-9]{0,24}" )
 	private String username;
 	
 	@Size(message="비밀번호는 6글자 이상이어야합니다", min=6, max=24 )
 	private String passwordSha2;
 	
 	@Size(message="이름은 2글자 이상이어야합니다", min=2, max=24 )
-	@Pattern(message="완성형글자만 가능합니다" , regexp="^[0-9가-힣a-zA-Z]{0,24}" )
+	@Pattern(message="완성형글자만 가능합니다" , regexp="^[가-힣a-zA-Z0-9]{0,24}" )
 	private String name;
 	
 	@Pattern(message="이메일 형식이 이어야합니다" , 

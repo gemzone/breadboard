@@ -168,11 +168,11 @@ public class BoardController
 			@PathVariable(value = "postId", required = true) long postId,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page)
 	{
+	
 		Board board = boardService.getBoard(id);
 		model.addAttribute("board", board);
 
 		model.addAttribute("page", page);
-		
 		
 		// 게시물
 		Post post = boardService.getPost(board.getTableNumber(), postId);
@@ -189,24 +189,28 @@ public class BoardController
 	 * @return
 	 */
 	@RequestMapping(path = "/board/{id}/write", method = RequestMethod.POST)
-	public ModelAndView postUpdate(Model model,
+	public String postUpdate(Model model, HttpSession session,
 			@PathVariable(value = "id", required = true ) String id,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page,
 			@ModelAttribute("postForm") Post post)
 	{
-		if( post.getPostId() == 0 )
+		if( session.getAttribute("user") != null )
 		{
-			boardService.postAdd(id, post);
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/board/" + id + "?page=1");
-			return mv;
+			if( post.getPostId() == 0 )
+			{
+				boardService.postAdd(id, post);
+				return "redirect:/board/" + id + "?page=1";
+			}
+			else
+			{
+				boardService.postModify(id, post);
+				return "redirect:/board/" + id + "/view/" + post.getPostId() +"?page=" + page;
+			}
 		}
 		else
 		{
-			boardService.postModify(id, post);
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/board/" + id + "/view/" + post.getPostId() +"?page=" + page);
-			return mv;
+			// 권한 없음
+			return "redirect:/board/" + id + "?page=1";
 		}
 	}
 	
@@ -215,32 +219,37 @@ public class BoardController
 	 * 댓글 쓰기
 	 */
 	@RequestMapping(path = "/board/{id}/comment/{postId}", method = RequestMethod.POST)
-	public ModelAndView commentAdd(Model model,
+	public String commentAdd(Model model, HttpSession session,
 			@PathVariable(value = "id", required = true ) String id,
 			@PathVariable(value = "postId", required = true) long postId,
 			@RequestParam( name="page", required = false , defaultValue = "1") int page,
 			@ModelAttribute("commentForm") Comment comment)
 	{
-		Board board = boardService.getBoard(id);
-		
-		Post post = boardService.getPost(board.getTableNumber(), postId);
-		
-		// path 에 붙어있는거 클래스로 넘김
-		comment.setPostId(postId);
-		
-		// 댓글수 최대치
-		if( post.getCommentCount() < Integer.MAX_VALUE ) 
+		if( session.getAttribute("user") != null )
 		{
-			// 댓글 등록
-			boardService.commentAdd(board.getTableNumber(), comment);
+			Board board = boardService.getBoard(id);
 			
-			// 카운트 증가
-			boardService.setPostIncreaseCommentCount(board.getTableNumber(), comment.getPostId(), 1);
+			Post post = boardService.getPost(board.getTableNumber(), postId);
+			
+			// path 에 붙어있는거 클래스로 넘김
+			comment.setPostId(postId);
+			
+			// 댓글수 최대치
+			if( post.getCommentCount() < Integer.MAX_VALUE ) //    Integer.MAX_VALUE ) 
+			{
+				// 댓글 등록
+				boardService.commentAdd(board.getTableNumber(), comment);
+				
+				// 카운트 증가
+				boardService.setPostIncreaseCommentCount(board.getTableNumber(), comment.getPostId(), 1);
+			}
+			return "redirect:/board/" + id + "/view/" + postId +"?page=" + page;
 		}
-		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/board/" + id + "/view/" + postId +"?page=" + page);
-		return mv;
+		else
+		{
+			// 권한없음
+			return "redirect:/board/" + id + "/view/" + postId +"?page=" + page;
+		}
 	}
 	
 	

@@ -47,15 +47,15 @@
 
         <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
 
+            <!-- <img th:src="@{/static/img/user.png}" style="float:left;" /> -->
 
-            <img th:src="@{/static/img/user.png}" style="float:left;" />
-
-
-            <div style="padding:0px 10px 10px 10px;margin-left:82px;">
+            <!-- <div style="padding:0px 10px 10px 10px;margin-left:82px;"> -->
+            <div style="padding:0px 10px 10px 10px;">
                 <span th:text="${post.title}" style="font-size:20px;">title</span>
             </div>
 
-            <div style="padding:0px 10px 10px 10px;margin-left:82px;">
+            <!--<div style="padding:0px 10px 10px 10px;margin-left:82px;"> -->
+            <div style="padding:0px 10px 10px 10px;">
                 <small>
                     <span th:if="${post.user}" th:text="${post.user.name}">이름</span>
                     <span th:if="!${post.user}" th:text="${post.name}">이름</span>
@@ -87,20 +87,19 @@
 
         <!-- button -->
         <div style="overflow:hidden;padding-top:10px;padding-bottom:10px;">
-            <div class="col-sm-4 col-xs-4">
-                ip: 127.0.0.1
+            <div class="col-sm-4 col-xs-4" th:text="${post.ip}">
             </div>
             <div class="col-sm-4 col-xs-4 align-text-bottom" style="text-align:center;">
 
             </div>
             <div class="col-sm-4 col-xs-4" style="text-align:right;">
 
-                <a th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                <a th:if="${user}" th:href="@{'/board/' + ${board.id} + '/write/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     수정
                 </a>
 
-                <a th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
+                <a th:if="${user}" th:href="@{'/board/' + ${board.id} + '/delete/' + ${post.postId} + '?page=' + ${page} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     삭제
                 </a>
@@ -108,7 +107,7 @@
         </div>
 
         <!-- comment write -->
-        <div style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
+        <div th:if="${user}" style="border-top:1px solid #ddd;overflow:hidden;padding:10px;">
             <div style="padding:0px 0px 10px 0px;">
                 <span style="font-size:20px;">댓글 남기기</span>
             </div>
@@ -120,13 +119,13 @@
                 <input type="hidden" th:field="*{userId}" />
                 <input type="hidden" th:field="*{ip}" />
 
-                <img th:src="@{/static/img/user.png}" style="float:left;" />
+                <!--<img th:src="@{/static/img/user.png}" style="float:left;" />-->
 
-                <div style="margin-left:92px;text-align:right;padding-right:8px;">
+                <!--<div style="text-align:right;padding-right:8px;margin-left:92px;">-->
+                <div style="text-align:right;padding-right:8px;">
                     <textarea type="text" th:field="*{text}"
                               class="form-control" rows="3"
                               style="resize:none;"></textarea>
-
 
                     <button type="submit" class="btn btn-default btn-sm" style="margin-top:5px;">
                         <i class="glyphicon glyphicon-send"></i>
@@ -136,7 +135,6 @@
             </form>
         </div>
 
-
         <!-- commnet list -->
         <div style="border-top:1px solid #ddd;" th:if="${not #lists.isEmpty(postComments)}">
             <div style="padding:10px 10px 10px 10px;">
@@ -144,9 +142,10 @@
             </div>
             <div th:each="comment : ${postComments}" style="padding:10px;overflow:hidden;border-top:1px solid #efefef;">
 
-                <img th:src="@{/static/img/user.png}" style="float:left;" />
+                <!--<img th:src="@{/static/img/user.png}" style="float:left;" />-->
 
-                <div style="margin-left:92px;">
+                <!--<div style="margin-left:92px;">-->
+                <div style="">
                     <small>
                         <span th:if="${comment.user}" th:text="${comment.user.name}">이름</span>
                         <!--<span th:if="!${comment.user}" th:text="${post.name}">이름</span>-->
@@ -159,16 +158,15 @@
                             <span class="glyphicon glyphicon-time"></span>
                             <span th:text="${#dates.format(comment.creationTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                         </small>
-
+                        <!--
                         <small style="float:right;">
-
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                             <span th:text="${comment.upCount}"></span>
 
                             <span class="glyphicon glyphicon-thumbs-down"></span>
                             <span th:text="${comment.downCount}"></span>
-
                         </small>
+                        -->
                     </p>
                 </div>
             </div>
@@ -202,7 +200,7 @@
 
 
 
-            <div class="col-sm-4 col-xs-4" style="text-align:right;">
+            <div th:if="${user}" class="col-sm-4 col-xs-4" style="text-align:right;">
                 <a th:href="@{'/board/' + ${board.id} + '/write' + '?page=' + ${page} }" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     새글
@@ -236,8 +234,13 @@
                             <!--
                                 <span th:text="${post.userId}">id</span>
                             -->
+
+
                             <span th:if="${nextPost.user}" th:text="${nextPost.user.name}">이름</span>
                             <span th:if="!${nextPost.user}" th:text="${nextPost.name}">이름</span>
+
+
+
                         </td>
                         <td style="min-width:150px;width:150px;max-width:150px; text-align:right;">
                             <small th:text="${#dates.format(nextPost.creationTime, 'yyyy-MM-dd HH:mm')}">1분전</small>
@@ -266,6 +269,7 @@
                             <!--
                                 <span th:text="${post.userId}">id</span>
                             -->
+
                             <span th:if="${prevPost.user}" th:text="${prevPost.user.name}">이름</span>
                             <span th:if="!${prevPost.user}" th:text="${prevPost.name}">이름</span>
                         </td>

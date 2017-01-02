@@ -57,40 +57,35 @@ public class UserController
         	System.out.println( bindingResult.toString() );
             return "register";
         }
-        
-		// 중복체크
-		User userDuplicate = userService.getUserForUsername(user.getUsername());
-		if( userDuplicate == null )
-		{
-			userService.create(user);
-			user.setPasswordSha2("");
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			return "redirect:/register";
-		}
-		else
-		{
-
-        	bindingResult.addError( new FieldError("username", "username", "이미 존재하는 아이디 입니다")  );
-        	return "register";
-		}
-		
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("redirect:/register");
-//		return mv;
-		
+        else
+        {
+        	// 중복체크
+    		User userIdDuplicate = userService.getUserForUsername(user.getUsername());
+    		
+    		User userEmailDuplicate = userService.getUserForEmail(user.getEmail());
+    		
+    		if( userIdDuplicate != null )
+    		{
+    			bindingResult.addError( new FieldError("username", "username", "이미 존재하는 아이디 입니다")  );
+            	return "register";
+    			
+    		}
+    		else if( userEmailDuplicate != null )
+    		{
+    			bindingResult.addError( new FieldError("email", "email", "이미 등록된 이메일 입니다")  );
+            	return "register";
+    		}
+    		else
+    		{
+    			userService.create(user);
+    			user.setPasswordSha2("");
+    			return "redirect:/register";
+    		}
+        }
 	}
 	
 	// 로그인
-	// /sign/in
+	// /login
 	@RequestMapping(path =  "/login", method = RequestMethod.GET, produces = MediaType.TEXT_HTML )
 	public String login(Model model, HttpServletRequest request,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer)
@@ -105,9 +100,10 @@ public class UserController
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public ModelAndView login(Model model, HttpSession session,
+	public String login(Model model, HttpSession session,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer,
-			@ModelAttribute("userForm") User user)
+			@Valid @ModelAttribute("userForm") User user,
+			BindingResult bindingResult)
 	{
 		if( session.getAttribute("user") != null )		// 세션 확인
 		{
@@ -117,10 +113,11 @@ public class UserController
 
 			System.out.println("이미 로그인됨" + sessionUser.getName());
 			
+//			ModelAndView mv = new ModelAndView();
+//			mv.setViewName("redirect:/board/test");
+//			return mv;
 			
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/board/test");
-			return mv;
+			return "login";
 		}
 		else
 		{
@@ -132,9 +129,10 @@ public class UserController
 				
 				System.out.println("로그인 성공" + loginUser.getName());
 				// 로그인성공
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("redirect:/board/test");
-				return mv;
+//				ModelAndView mv = new ModelAndView();
+//				mv.setViewName("redirect:/board/test");
+//				return mv;
+				return "login";
 			}
 			else
 			{
@@ -142,17 +140,20 @@ public class UserController
 				
 				System.out.println("로그인 실패");
 				
+				bindingResult.addError( new FieldError("email", "email", "이미 등록된 이메일 입니다")  );
+				return "login";
+				
 				// 로그인실패
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("redirect:/login");
-				return mv;
+//				ModelAndView mv = new ModelAndView();
+//				mv.setViewName("redirect:/login");
+//				return mv;
 			}
 		}
 	}
 	
 	// 로그아웃
 	@RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView logout(Model model, HttpSession session,
+	public String logout(Model model, HttpSession session,
 			@RequestParam( name="ref", required = false , defaultValue = "") String referer)
 	{
 		session.invalidate();
@@ -166,8 +167,9 @@ public class UserController
 		System.out.println("로그아웃");
 		
 		// 로그인성공
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/board/test");
-		return mv;
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("redirect:/board/test");
+//		return mv;
+		return "redirect:/login";
 	}
 }
