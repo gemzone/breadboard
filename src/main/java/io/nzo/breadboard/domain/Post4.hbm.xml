@@ -3,18 +3,16 @@
  "-//Hibernate/Hibernate Mapping DTD//EN"
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="io.nzo.breadboard.model">
-	<class name="Post" table="gz_post0" entity-name="Post0">
+<hibernate-mapping package="io.nzo.breadboard.domain">
+	<class name="Post" table="gz_post4" entity-name="Post4">
 		<id name="postId" column="post_id" />
 		<property name="boardId" column="board_id" />
 		<property name="uid" column="uid" />
-		
 		<property name="userId" column="user_id" />
-		
 		<property name="name" column="name" />
-		
 		<property name="passwordSha2" column="password_sha2" />
 		<property name="email" column="email" />
+		
 		
 		<property name="categoryId" column="category_id" />
 		<property name="notice" column="notice" />
@@ -35,8 +33,9 @@
 		<property name="modificationTime" column="modification_time" />
 		<property name="creationTime" column="creation_time" />
 		
+		
 		<!-- left outer join -->
-		<many-to-one name="user" class="io.nzo.breadboard.model.User" fetch="join" insert="false" update="false">
+		<many-to-one name="user" class="io.nzo.breadboard.domain.User" fetch="join" insert="false" update="false">
             <column name="user_id" not-null="false" />
         </many-to-one>
 		

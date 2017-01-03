@@ -3,8 +3,8 @@
  "-//Hibernate/Hibernate Mapping DTD//EN"
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="io.nzo.breadboard.model">
-	<class name="Comment" table="gz_post7_comment" entity-name="Comment7">
+<hibernate-mapping package="io.nzo.breadboard.domain">
+	<class name="Comment" table="gz_post6_comment" entity-name="Comment6">
 		<id name="commentId" column="comment_id" />
 		<property name="refCommentId" column="ref_comment_id" />
 		<property name="postId" column="post_id" />
@@ -26,7 +26,7 @@
 		
 		
 		<!-- left outer join -->
-		<many-to-one name="user" class="io.nzo.breadboard.model.User" fetch="join" insert="false" update="false">
+		<many-to-one name="user" class="io.nzo.breadboard.domain.User" fetch="join" insert="false" update="false">
             <column name="user_id" not-null="false" />
         </many-to-one>
 		

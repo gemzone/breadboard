@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.nzo.breadboard.common.Paging;
-import io.nzo.breadboard.model.Board;
-import io.nzo.breadboard.model.Comment;
-import io.nzo.breadboard.model.Post;
-import io.nzo.breadboard.model.User;
+import io.nzo.breadboard.domain.Board;
+import io.nzo.breadboard.domain.Comment;
+import io.nzo.breadboard.domain.Post;
+import io.nzo.breadboard.domain.User;
 import io.nzo.breadboard.service.BoardService;
 import io.nzo.breadboard.service.UserService;
 

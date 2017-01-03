@@ -1,4 +1,4 @@
-package io.nzo.breadboard.model;
+package io.nzo.breadboard.domain;
 
 import java.io.Serializable;
 import java.util.Date;

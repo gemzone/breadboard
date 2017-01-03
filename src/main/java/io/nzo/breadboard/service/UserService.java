@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import io.nzo.breadboard.HibernateUtil;
 import io.nzo.breadboard.controller.UserController;
-import io.nzo.breadboard.model.User;
+import io.nzo.breadboard.domain.User;
 
 @Component
 public class UserService

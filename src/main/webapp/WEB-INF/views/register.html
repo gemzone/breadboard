@@ -16,6 +16,13 @@
     </script>
 
     <div style="padding:20px;">
+        <div style="margin:0px 0px 10px 0px;">
+            <button scope="public_profile,email" onlogin="checkLoginState();" class="btn btn-social btn-facebook">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+                Sign in with Facebook
+            </button>
+        </div>
+
         <ul class="nav nav-tabs">
             <li role="presentation"><a href="./login">로그인</a></li>
             <li role="presentation" class="active"><a href="./register">가입</a></li>
@@ -57,11 +64,11 @@
                 <div class="alert alert-danger" role="alert" style="margin-top:5px;"
                      th:if="${#fields.hasErrors('email')}" th:errors="*{email}">...</div>
             </div>
-
+            <!--
             <div style="font-size:12px;padding:5px 10px 10px 0px;">
                 가입을 클릭하시면 서비스 약관과 개인정보 취급방침을 읽고 동의하신 것으로 간주됩니다.
             </div>
-            
+            -->
             <div style="text-align:center;border-top:1px solid #dddddd;padding:20px;">
                 <button type="submit" class="btn btn-primary">가입</button>
             </div>

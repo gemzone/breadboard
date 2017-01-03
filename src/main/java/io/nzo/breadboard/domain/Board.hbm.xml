@@ -3,7 +3,7 @@
  "-//Hibernate/Hibernate Mapping DTD//EN"
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="io.nzo.breadboard.model">
+<hibernate-mapping package="io.nzo.breadboard.domain">
 	<class name="Board" table="gz_board">
 		<id name="boardId" column="board_id" />
 		<property name="id" column="id" />

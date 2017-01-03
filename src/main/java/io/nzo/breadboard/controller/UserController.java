@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.nzo.breadboard.model.User;
+import io.nzo.breadboard.domain.User;
 import io.nzo.breadboard.service.UserService;
 
 @Controller
@@ -113,10 +113,6 @@ public class UserController
 
 			System.out.println("이미 로그인됨" + sessionUser.getName());
 			
-//			ModelAndView mv = new ModelAndView();
-//			mv.setViewName("redirect:/board/test");
-//			return mv;
-			
 			return "login";
 		}
 		else
@@ -128,25 +124,19 @@ public class UserController
 				session.setAttribute("user", loginUser);
 				
 				System.out.println("로그인 성공" + loginUser.getName());
-				// 로그인성공
-//				ModelAndView mv = new ModelAndView();
-//				mv.setViewName("redirect:/board/test");
-//				return mv;
 				return "login";
 			}
 			else
 			{
 				session.invalidate();
+
+				if(model.containsAttribute("user"))
+				{
+					model.asMap().remove("user");
+				}
 				
-				System.out.println("로그인 실패");
-				
-				bindingResult.addError( new FieldError("email", "email", "이미 등록된 이메일 입니다")  );
+				bindingResult.addError( new FieldError("username", "username", "아이디 또는 비밀번호가 올바르지 않습니다.")  );
 				return "login";
-				
-				// 로그인실패
-//				ModelAndView mv = new ModelAndView();
-//				mv.setViewName("redirect:/login");
-//				return mv;
 			}
 		}
 	}
@@ -161,15 +151,8 @@ public class UserController
 		if(model.containsAttribute("user"))
 		{
 			model.asMap().remove("user");
-			System.out.println("모델 User 삭제됨");
 		}
 		
-		System.out.println("로그아웃");
-		
-		// 로그인성공
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("redirect:/board/test");
-//		return mv;
 		return "redirect:/login";
 	}
 }

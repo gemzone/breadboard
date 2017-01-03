@@ -17,9 +17,9 @@ import org.springframework.ui.ModelMap;
 import io.nzo.breadboard.HibernateUtil;
 import io.nzo.breadboard.common.Paging;
 import io.nzo.breadboard.controller.UserController;
-import io.nzo.breadboard.model.Board;
-import io.nzo.breadboard.model.Comment;
-import io.nzo.breadboard.model.Post;
+import io.nzo.breadboard.domain.Board;
+import io.nzo.breadboard.domain.Comment;
+import io.nzo.breadboard.domain.Post;
 
 // Board, Post, Comment
 
