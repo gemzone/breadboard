@@ -37,10 +37,8 @@ import java.io.Serializable;
 import java.util.List;
 
 
-@EnableResourceServer
-@EnableAuthorizationServer
 @SpringBootApplication
-public class BreadBoardApplication extends ResourceServerConfigurerAdapter
+public class BreadBoardApplication
 {
 	public static void main(String[] args) 
 	{
@@ -55,38 +53,33 @@ public class BreadBoardApplication extends ResourceServerConfigurerAdapter
 	}
 	
 	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.headers().frameOptions().disable();
-		http.authorizeRequests()
-			.anyRequest().permitAll()
-			.antMatchers("/authorization-code-test").access("#oauth2.hasScope('read')");
-	}
 	
+//	 extends ResourceServerConfigurerAdapter
+//	@Override
+//	public void configure(HttpSecurity http) throws Exception {
+//		http.headers().frameOptions().disable();
+//		http.authorizeRequests()
+//			.anyRequest().permitAll()
+//			
+//			.and()
+//				.logout()
+//					.logoutUrl("/sign-out")
+//					.logoutSuccessUrl("/")
+//					.invalidateHttpSession(true)
+//			.and()
+//				.formLogin()
+//					.loginPage("/sign-in")
+//					.loginProcessingUrl("/sign-in/auth")
+//					.failureUrl("/sign-in?error=exception")
+//					.defaultSuccessUrl("/");
+//		
+//			
+//			// .antMatchers("/authorization-code-test").access("#oauth2.hasScope('read')");
+//	}
 
-	@Bean
-	public TokenStore JdbcTokenStore(DataSource dataSource) {
-		return new JdbcTokenStore(dataSource);
-	}
-}
 
-/**
- * 권한 코드 테스트를 위해 만든 컨트롤러
- */
-@Controller
-@RequestMapping("test")
-class TestController {
-	@RequestMapping("authorization-code")
-	@ResponseBody
-	public String authorizationCodeTest(@RequestParam("code") String code) {
-		String curl = String.format("curl " +
-				"-F \"grant_type=authorization_code\" " +
-				"-F \"code=%s\" " +
-				"-F \"scope=read\" " +
-				"-F \"client_id=foo\" " +
-				"-F \"client_secret=bar\" " +
-				"-F \"redirect_uri=http://localhost:8080/test/authorization-code\" " +
-				"\"http://foo:bar@localhost:8080/oauth/token\"", code);
-		return curl;
-	}
+//	@Bean
+//	public TokenStore JdbcTokenStore(DataSource dataSource) {
+//		return new JdbcTokenStore(dataSource);
+//	}
 }
