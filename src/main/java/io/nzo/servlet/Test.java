@@ -1,4 +1,4 @@
-package io.nzo.breadboard.servlet;
+package io.nzo.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

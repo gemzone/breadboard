@@ -1,11 +1,11 @@
-package io.nzo.breadboard;
+package io.nzo.servlet;
 
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class RequestManager implements ServletRequestListener
+public class ServletRequestManager implements ServletRequestListener
 {
 	@Override
 	public void requestDestroyed(ServletRequestEvent servletRequestEvent)

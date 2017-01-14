@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import io.nzo.breadboard.service.BoardService;
@@ -56,5 +58,20 @@ public class AdminController
 	public String main(Model model, HttpServletRequest request)
 	{
 		return "admin";
+	}
+	
+	
+    @RequestMapping(path = "/authorization-code" )
+	@ResponseBody
+	public String authorizationCodeTest(@RequestParam("code") String code) {
+		String curl = String.format("curl " +
+				"-F \"grant_type=authorization_code\" " +
+				"-F \"code=%s\" " +
+				"-F \"scope=read\" " +
+				"-F \"client_id=data\" " +
+				"-F \"client_secret=test\" " +
+				"-F \"redirect_uri=https://test.nzo.io/breadboard/authorization-code\" " +
+				"\"http://data:test@test.nzo.io/oauth/token\"", code);
+		return curl;
 	}
 }

@@ -11,5 +11,4 @@ public class ServletInitializer extends SpringBootServletInitializer
 		System.out.println("application.sources(BreadBoardApplication.class);");
 		return application.sources(BreadBoardApplication.class);
 	}
-
 }

@@ -11,6 +11,7 @@ import de.neuland.jade4j.exceptions.JadeException;
 import de.neuland.jade4j.template.FileTemplateLoader;
 import de.neuland.jade4j.template.JadeTemplate;
 import de.neuland.jade4j.template.TemplateLoader;
+import io.nzo.servlet.ServletContextManager;
 
 public class JadeConfig extends DefaultServlet 
 {
@@ -21,7 +22,7 @@ public class JadeConfig extends DefaultServlet
     
     public JadeConfig()  // tomcat이 실행될때 생성자를 load-on-startup가 1일경우 호출하게된다.
     {
-        TemplateLoader loader = new FileTemplateLoader(ContextManager.servletContext.getRealPath("WEB-INF/views/"), "UTF-8");
+        TemplateLoader loader = new FileTemplateLoader(ServletContextManager.servletContext.getRealPath("WEB-INF/views/"), "UTF-8");
         config.setTemplateLoader(loader);
         config.setMode(Jade4J.Mode.XHTML);  // <input checked="true" />
         config.setPrettyPrint(false);

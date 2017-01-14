@@ -1,4 +1,4 @@
-package io.nzo.breadboard;
+package io.nzo.servlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebListener;
 
 
 @WebListener
-public class ContextManager implements ServletContextListener
+public class ServletContextManager implements ServletContextListener
 {
 	public static ServletContext servletContext = null;
 	
