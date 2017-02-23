@@ -9,7 +9,7 @@ BBS모듈을 Restful API와 View Template 제공합니다.
 
 - SQL Server 2016 (2008+)
 - JDK 8+
-- Spring Framework 2.0
+- spring boot 2.0
 - Tomcat 9+
 
 ## 개발 위키
@@ -19,16 +19,13 @@ a
  
 ## 참고
 
-- spring framework 2.0
-- hibernate ORM 5.2.4
+- spring boot 2.0
+- hibernate 5.2.4
 - thymeleaf 3.0.0
-- jade4j 1.2.5
 - hikariCP 2.5.1
 - tinymce 4.4.3
-- angularjs 1.5
 - jquery 3.1.1
 - moment 2.15.2
-- tinymce 4.4.3
 
 ## 라이센스
 
